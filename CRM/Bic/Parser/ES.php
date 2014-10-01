@@ -58,7 +58,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
         $banks[] = array(
           'value' => $excel_row[$column_ids["BIC"]],
           'name' => $this->country_code . $excel_row[$column_ids["COD_BE"]],
-          'title' => $excel_row[$column_ids["NOMBRE105"]],
+          'label' => $excel_row[$column_ids["NOMBRE105"]],
           'description' => 'CIF: ' . $excel_row[$column_ids["CODIGOCIF"]],
         );
       }
