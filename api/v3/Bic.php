@@ -26,12 +26,7 @@ function civicrm_api3_bic_update($params) {
 
   $countries = array();
   if ($params['country']=='all') {
-    // TODO: get the list from somewhere
-    $countries[] = 'DE';
-    $countries[] = 'ES';
-    $countries[] = 'BE';
-    $countries[] = 'NL';
-
+    $countries = CRM_Bic_Parser_Parser::getParserList();
   } else {
     $countries[] = $params['country'];
   }

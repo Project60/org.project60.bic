@@ -44,9 +44,13 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
     $excel_rows = $excel_object->getActiveSheet()->toArray();
 
     // Process Excel data
+    $skip_lines = 2;
     $banks[] = array();
     foreach($excel_rows as $excel_row) {
-      // Process every row
+      $skip_lines -= 1;
+      if ($skip_lines >= 0) continue;
+
+      // Process row
       $bank = array(
         'value' => $excel_row[0],
         'name' => str_replace(' ', '', $excel_row[1]),

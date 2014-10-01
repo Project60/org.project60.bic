@@ -31,6 +31,17 @@ abstract class CRM_Bic_Parser_Parser {
   }
 
   /**
+   * static function to get all known parsers
+   * 
+   * @return an array of countries
+   */
+  public static function getParserList() {
+    return array('DE', 'ES', 'BE', 'NL', 'LU');
+  }
+
+
+
+  /**
    * Triggers the parser instance to prepare a full update
    *
    * @return array(   'count' => nr of banks found

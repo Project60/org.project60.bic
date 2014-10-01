@@ -20,15 +20,15 @@ require_once 'dependencies/PHPExcel.php';
 /**
  * Abstract class defining the basis for national bank info parsers
  */
-class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
+class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.betaalvereniging.nl/wp-uploads/2013/07/BIC-lijst-NL.xlsx';
-  static $country_code = 'NL';
+  static $page_url = 'http://www.abbl.lu/download/15222/iban-bic-codes-updated-on-30-september-2014.xlsx';
+  static $country_code = 'LU';
 
   public function update() {
     // First, download the file
-    $file_name = sys_get_temp_dir() . '/nl-banks.xls';
-    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_NL::$page_url);
+    $file_name = sys_get_temp_dir() . '/lu-banks.xls';
+    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_LU::$page_url);
     file_put_contents($file_name, $downloaded_file);
     unset($downloaded_file);
 
@@ -52,9 +52,9 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
       // Process row
       $bank = array(
-        'value' => $excel_row[0],
-        'name' => $excel_row[2],
-        'label' => $excel_row[2],
+        'value' => $excel_row[1],
+        'name' => str_replace(' ', '', $excel_row[2]),
+        'label' => $excel_row[0],
         'description' => ''
       );
       $banks[] = $bank;
@@ -67,6 +67,6 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     unlink($file_name);
 
     // Finally, update DB
-    return $this->updateEntries(CRM_Bic_Parser_NL::$country_code, $banks);
+    return $this->updateEntries(CRM_Bic_Parser_LU::$country_code, $banks);
   }
 }
