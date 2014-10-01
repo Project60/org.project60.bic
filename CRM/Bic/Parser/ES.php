@@ -64,6 +64,9 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
         );
       }
     }
+    unset($excel_rows);
+    unset($excel_object);
+    unset($excel_reader);
 
     // Finally, update DB
     return $this->updateEntries(CRM_Bic_Parser_ES::$country_code, $banks);
