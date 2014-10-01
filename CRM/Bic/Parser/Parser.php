@@ -44,7 +44,7 @@ abstract class CRM_Bic_Parser_Parser {
    * Will update all entries for a given  
    * 
    * @param  $coutry   ISO country code
-   * @param  $entries  a set of array('value'=>national_code, 'title'=>bank_name, 'name'=>BIC, 'description'=>optional data);
+   * @param  $entries  a set of array('value'=>national_code, 'label'=>bank_name, 'name'=>BIC, 'description'=>optional data);
    */
   protected function updateEntries($country, $entries) {
     try {
@@ -54,14 +54,81 @@ abstract class CRM_Bic_Parser_Parser {
       return $this->createError("OptionGroup not found. Reinstall extension!");
     }
 
-    foreach ($entries as $key => $value) {
-      // TODO: code...
+    // init stats
+    $stats = array(
+      'count_processed'  => 0,
+      'count_added'      => 0,
+      'count_deleted'    => 0,
+      'count_ignored'    => 0,
+      'count_updated'    => 0);
+
+    // get all data sets
+    $current_data_query = "
+    SELECT
+      id, value, name, label
+    FROM
+      civicrm_option_value
+    WHERE
+      value LIKE '$country%'
+    AND
+      option_group_id = $option_group_id;";
+    $current_data = array();
+    error_log($current_data_query);
+    $query = CRM_Core_DAO::executeQuery($current_data_query);
+    while ($query->fetch()) {
+      $current_data[$query->value] = array(
+        'id'          => $query->id,
+        'value'       => $query->value,
+        'name'        => $query->name,
+        'label'       => $query->label,
+        'description' => $query->description
+        );
     }
 
-    return array(
-      'count' => 0,
-      'error' => $message
-      );    
+    // iterate through the data sets
+    foreach ($entries as $bank) {
+      $trimmed_value = trim($bank['value']);
+      $trimmed_name = trim($bank['name']);
+      if (empty($trimmed_value) || empty($trimmed_name)) {
+        $stats['count_ignored'] += 1;
+        continue;
+      } else {
+        $stats['count_processed'] += 1;
+      }
+
+      // set country prefix
+      $bank['name'] = $country . $bank['name'];
+
+      // now compare with the given data
+      if (isset($current_data[$bank['value']])) {
+        $oldbank = $current_data[$bank['value']];
+        // it already exists -> update?
+        if (   $bank['value']       != $oldbank['value']
+            || $bank['name']        != $oldbank['name']
+            || $bank['label']       != $oldbank['label']
+            || $bank['description'] != $oldbank['description']) {
+          
+          // this has changed... UPDATE
+          $bank['id'] = $oldbank['id'];
+          civicrm_api3('OptionValue', 'create', $bank);
+          $stats['count_updated'] += 1;
+        }  
+        unset($current_data[$bank['value']]);
+      } else {
+        // this is new: add new option value
+        $bank['option_group_id'] = $option_group_id;
+        civicrm_api3('OptionValue', 'create', $bank);
+        $stats['count_added'] += 1;
+      }
+    }
+
+    // finally, delete the remaining (obsolete) banks
+    foreach ($current_data as $value => $bank) {
+      civicrm_api3('OptionValue', 'delete', $bank);
+      $stats['count_deleted'] += 1;
+    }
+
+    return $stats;
   }
 
   /**

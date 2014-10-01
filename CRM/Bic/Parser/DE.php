@@ -41,7 +41,6 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
 
     // finally, download the data file
     $data_url = CRM_Bic_Parser_DE::$base_url.$match['link'];
-    error_log($data_url);
     $data = $this->downloadFile($data_url);
     if (empty($data)) {
       return $this->createError("Couldn't download basic page. Please contact us.");
@@ -52,9 +51,9 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     $lines = explode(PHP_EOL, $data);
     foreach ($lines as $line) {
       $banks[] = array(
-        'value'       => substr($line, 0, 9),
-        'name'        => substr($line, 140, 11),
-        'title'       => trim(substr($line, 9, 58)),
+        'value'       => trim(substr($line, 0, 9)),
+        'name'        => trim(substr($line, 140, 11)),
+        'label'       => trim(substr($line, 9, 58)),
         'description' => substr($line, 67, 5).' '.trim(substr($line, 72, 35))
         );
     }

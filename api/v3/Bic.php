@@ -80,7 +80,6 @@ function civicrm_api3_bic_stats($params) {
   WHERE 
    option_group_id = $option_group_id;
   ";
-  error_log($query);
   $result = array();
   $query_result = CRM_Core_DAO::executeQuery($query);
   while ($query_result->fetch()) {
