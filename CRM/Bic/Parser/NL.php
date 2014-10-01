@@ -20,15 +20,15 @@ require_once 'dependencies/PHPExcel.php';
 /**
  * Abstract class defining the basis for national bank info parsers
  */
-class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
+class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.nbb.be/doc/gg/Protocol/R_FullList_of_Codes_Current.xls';
-  static $country_code = 'BE';
+  static $page_url = 'http://www.betaalvereniging.nl/wp-uploads/2013/07/BIC-lijst-NL.xlsx';
+  static $country_code = 'NL';
 
   public function update() {
     // First, download the file
-    $file_name = sys_get_temp_dir() . '/be-banks.xls';
-    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_BE::$page_url);
+    $file_name = sys_get_temp_dir() . '/nl-banks.xls';
+    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_NL::$page_url);
     file_put_contents($file_name, $downloaded_file);
     unset($downloaded_file);
 
@@ -37,7 +37,7 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
     // Set reader options
     $excel_reader->setReadDataOnly();
-    $excel_reader->setLoadSheetsOnly(array("Q_FULL_LIST_XLS_REPORT"));
+    //$excel_reader->setLoadSheetsOnly(array("BIC-lijst"));
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -49,9 +49,9 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
       // Process every row
       $bank = array(
         'value' => $excel_row[0],
-        'name' => str_replace(' ', '', $excel_row[1]),
-        'label' => $excel_row[2] . ' / ' . $excel_row[3],
-        'description' => '',
+        'name' => $excel_row[1],
+        'label' => $excel_row[2],
+        'description' => ''
       );
       $banks[] = $bank;
     }
@@ -63,6 +63,6 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
     unlink($file_name);
 
     // Finally, update DB
-    return $this->updateEntries(CRM_Bic_Parser_BE::$country_code, $banks);
+    return $this->updateEntries(CRM_Bic_Parser_NL::$country_code, $banks);
   }
 }

@@ -30,6 +30,7 @@ function civicrm_api3_bic_update($params) {
     $countries[] = 'DE';
     $countries[] = 'ES';
     $countries[] = 'BE';
+    $countries[] = 'NL';
 
   } else {
     $countries[] = $params['country'];

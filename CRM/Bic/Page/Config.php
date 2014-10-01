@@ -20,7 +20,7 @@ class CRM_Bic_Page_Config extends CRM_Core_Page {
   function run() {
 
     // TODO: get this from somewhere
-    $countries = array('DE', 'ES', 'BE'); 
+    $countries = array('DE', 'ES', 'BE', 'NL'); 
 
     $stats = civicrm_api3('Bic', 'stats');
     $total_count = 0;
