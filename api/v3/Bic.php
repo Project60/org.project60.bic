@@ -29,6 +29,7 @@ function civicrm_api3_bic_update($params) {
     // TODO: get the list from somewhere
     $countries[] = 'DE';
     $countries[] = 'ES';
+    $countries[] = 'BE';
 
   } else {
     $countries[] = $params['country'];
@@ -78,7 +79,8 @@ function civicrm_api3_bic_stats($params) {
   FROM
    civicrm_option_value
   WHERE 
-   option_group_id = $option_group_id;
+   option_group_id = $option_group_id
+  GROUP BY country_code;
   ";
   $result = array();
   $query_result = CRM_Core_DAO::executeQuery($query);
