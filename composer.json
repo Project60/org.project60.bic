@@ -1,6 +1,0 @@
-{
- "require":
-   {
-      "phpoffice/phpexcel": "dev-develop"
-   }
-}
