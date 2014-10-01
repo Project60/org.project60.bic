@@ -19,7 +19,7 @@ require_once 'CRM/Bic/Parser/Parser.php';
 /**
  * Abstract class defining the basis for national bank info parsers
  */
-class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
+class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
   static $page_url = 'http://www.bde.es/f/webbde/IFI/servicio/regis/ficheros/es/REGBANESP_CONESTAB_A.XLS';
   static $country_code = 'ES';
