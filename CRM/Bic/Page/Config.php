@@ -18,8 +18,24 @@ require_once 'CRM/Core/Page.php';
 
 class CRM_Bic_Page_Config extends CRM_Core_Page {
   function run() {
-    
-    $this->assign('total_count', 0);
+
+    // TODO: get this from somewhere
+    $countries = array('DE', 'ES'); 
+
+    $stats = civicrm_api3('Bic', 'stats');
+    $total_count = 0;
+    foreach ($countries as $country) {
+      if (isset($stats['values'][$country])) {
+        $total_count += $stats['values'][$country];
+      } else {
+        $stats['values'][$country] = 0;
+      }
+    }
+
+
+    $this->assign('countries', $countries);
+    $this->assign('stats', $stats['values']);
+    $this->assign('total_count', $total_count);
 
     parent::run();
   }

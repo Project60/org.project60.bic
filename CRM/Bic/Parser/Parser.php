@@ -44,10 +44,24 @@ abstract class CRM_Bic_Parser_Parser {
    * Will update all entries for a given  
    * 
    * @param  $coutry   ISO country code
-   * @param  $entries  a set of array('value'=>national_code, 'title'=>bank_name, 'name'=>BIC);
+   * @param  $entries  a set of array('value'=>national_code, 'title'=>bank_name, 'name'=>BIC, 'description'=>optional data);
    */
   protected function updateEntries($country, $entries) {
-    // TODO:
+    try {
+      $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
+      $option_group_id = (int) $option_group['id'];
+    } catch (Exception $e) {
+      return $this->createError("OptionGroup not found. Reinstall extension!");
+    }
+
+    foreach ($entries as $key => $value) {
+      // TODO: code...
+    }
+
+    return array(
+      'count' => 0,
+      'error' => $message
+      );    
   }
 
   /**
@@ -56,6 +70,17 @@ abstract class CRM_Bic_Parser_Parser {
    * @return file content or NULL on error
    */
   protected function downloadFile($url) {
-    // TODO:
+    // TODO: is this enough
+    return file_get_contents($url);
+  }
+
+  /**
+   * generate a compliant error reply for the updateEntries method
+   */
+  protected function createError($message) {
+    return array(
+      'count' => 0,
+      'error' => $message
+      );
   }
 }

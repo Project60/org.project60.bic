@@ -36,8 +36,6 @@ function bic_civicrm_uninstall() {
  * Implementation of hook_civicrm_enable
  */
 function bic_civicrm_enable() {
-  return _bic_civix_civicrm_enable();
-
   // check if option group is there, and create if it isn't
   try {
     $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
@@ -49,12 +47,14 @@ function bic_civicrm_enable() {
           'title'        => ts('List of banks'),
           'is_reserved'  => 0,
           'is_active'    => 1,
-          ));      
+          )); 
     } catch (Exception $create_ex) {
       // TODO: more info?
       error_log("Couldn't create 'bank_list' OptionGroup.");
     }
   }
+
+  return _bic_civix_civicrm_enable();  
 }
 
 /**

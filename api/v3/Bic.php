@@ -19,8 +19,7 @@
  *
  * @param 'country'   country code to update or 'all'
  */
-function civicrm_api3_bic_bla($params) {
-  error_log("HERE");
+function civicrm_api3_bic_update($params) {
   if (empty($params['country'])) {
     return civicrm_api3_create_error("No country given");
   }
@@ -36,7 +35,8 @@ function civicrm_api3_bic_bla($params) {
   }
 
   // now, loop through the given countries
-  $result = array('values' => array(), 'total_count' => 0);
+  $result = array();
+  $total_count =0;
   foreach ($countries as $country) {
     $parser = CRM_Bic_Parser_Parser::getParser($country);
     if (empty($parser)) {
@@ -44,10 +44,48 @@ function civicrm_api3_bic_bla($params) {
     }
     
     // and execute update for each
-    $country_result = $parser->update();
-    $result['values'][$country] = $country_result;
-    $result['total_count'] += $country_result['count'];
+    // TODO: process errors
+    $result[$country] = $parser->update();
+    $total_count += $result[$country]['count'];
   }
 
-  return civicrm_api3_create_success($result);
+  $null = NULL;
+  return civicrm_api3_create_success($result, $params, $null, $null, $null, array('total_count' => $total_count));
+}
+
+
+/**
+ * API call get stats about the stored banks
+ *
+ * @return a array of item_count per country
+ */
+function civicrm_api3_bic_stats($params) {
+  try {
+    $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
+  } catch (Exception $e) {
+    return civicrm_api3_create_error("OptionGroup not found. Reinstall extension!");
+  }
+
+  $option_group_id = (int) $option_group['id'];
+  if (empty($option_group_id)) {
+    return civicrm_api3_create_error("OptionGroup not found. Reinstall extension!");
+  }
+
+  $query = "
+  SELECT
+   LEFT(value, 2) AS country_code,
+   COUNT(value)   AS count
+  FROM
+   civicrm_option_value
+  WHERE 
+   option_group_id = $option_group_id;
+  ";
+  error_log($query);
+  $result = array();
+  $query_result = CRM_Core_DAO::executeQuery($query);
+  while ($query_result->fetch()) {
+    $result[$query_result->country_code] = (int) $query_result->count;
+  }
+
+  return civicrm_api3_create_success($result, $params);
 }
