@@ -2,8 +2,7 @@
 /*-------------------------------------------------------+
 | Project 60 - Little BIC extension                      |
 | Copyright (C) 2014                                     |
-| Author: B. Endres (endres -at- systopia.de)            |
-| http://www.systopia.de/                                |
+| Author: Carlos Capote                                  |
 +--------------------------------------------------------+
 | This program is released as free software under the    |
 | Affero GPL license. You can redistribute it and/or     |
@@ -30,6 +29,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
     $file_name = sys_get_temp_dir() . '/es-banks.xls';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_ES::$page_url);
     file_put_contents($file_name, $downloaded_file);
+    unset($downloaded_file);
 
     // Automatically detect the correct reader to load for this file type
     $excel_reader = PHPExcel_IOFactory::createReaderForFile($file_name);
