@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/bic</path>
+    <page_callback>CRM_Bic_Page_Config</page_callback>
+    <title>Bank Information (BIC)</title>
+    <access_arguments>access CiviCRM</access_arguments>
+    <adminGroup>CiviContribute</adminGroup>
+    <icon>admin/small/online_contribution_pages.png</icon>
+  </item>
+</menu>
