@@ -65,7 +65,7 @@ abstract class CRM_Bic_Parser_Parser {
     // get all data sets
     $current_data_query = "
     SELECT
-      id, value, name, label
+      id, value, name, label, description
     FROM
       civicrm_option_value
     WHERE
