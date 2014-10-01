@@ -84,6 +84,7 @@ abstract class CRM_Bic_Parser_Parser {
         'description' => $query->description
         );
     }
+    unset($query);
 
     // iterate through the data sets
     foreach ($entries as $bank) {
@@ -110,6 +111,7 @@ abstract class CRM_Bic_Parser_Parser {
           
           // this has changed... UPDATE
           $bank['id'] = $oldbank['id'];
+          $bank['option_group_id'] = $option_group_id;
           civicrm_api3('OptionValue', 'create', $bank);
           $stats['count_updated'] += 1;
         }  

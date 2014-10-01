@@ -28,21 +28,23 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
 
   public function update() {
     // first, download the page
-    $page = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
-    if (empty($page)) {
-      return $this->createError("Couldn't download basic page. You either have no internect connection, or the extension is outdated. In this case, please contact us.");
-    }
+    // $page = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
+    // if (empty($page)) {
+    //   return $this->createError("Couldn't download basic page. You either have no internect connection, or the extension is outdated. In this case, please contact us.");
+    // }
 
-    // now, find the download link
-    $match = array();
-    if (!preg_match(CRM_Bic_Parser_DE::$link_regex, $page, $match)) {
-      return $this->createError("The information source at www.bundesbank.de has changed, and the extension is outdated. Please contact us.");
-    }
+    // // now, find the download link
+    // $match = array();
+    // if (!preg_match(CRM_Bic_Parser_DE::$link_regex, $page, $match)) {
+    //   return $this->createError("The information source at www.bundesbank.de has changed, and the extension is outdated. Please contact us.");
+    // }
 
-    // finally, download the data file
-    unset($page); // save some memory
-    $data_url = CRM_Bic_Parser_DE::$base_url.$match['link'];
+    // // finally, download the data file
+    // unset($page); // save some memory
+    // $data_url = CRM_Bic_Parser_DE::$base_url.$match['link'];
+    $data_url = '/Users/didonai/bic.txt';
     $data = $this->downloadFile($data_url);
+
     if (empty($data)) {
       return $this->createError("Couldn't download basic page. Please contact us.");
     }
@@ -56,7 +58,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
         'value'       => trim(substr($line, 0, 9)),
         'name'        => trim(substr($line, 140, 11)),
         'label'       => trim(substr($line, 9, 58)),
-        'description' => substr($line, 67, 5).' '.trim(substr($line, 72, 35))
+        //'description' => substr($line, 67, 5).' '.trim(substr($line, 72, 35))
         );
     }
 
