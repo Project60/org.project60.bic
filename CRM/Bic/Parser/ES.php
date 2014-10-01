@@ -27,7 +27,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
   public function update() {
     // First, download the file
-    $file_name = sys_get_temp_dir() . 'es-banks.xls';
+    $file_name = sys_get_temp_dir() . '/es-banks.xls';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
     file_put_contents($file_name, $downloaded_file);
 
@@ -36,10 +36,10 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
     // Set reader options
     $excel_reader->setReadDataOnly();
-    $excel_reader->setLoadSheetsOnly("ENTIDADES");
+    $excel_reader->setLoadSheetsOnly(array("ENTIDADES"));
 
     // Read Excel file
-    $excel_object = $excel_reader->load($file_name);
+    //$excel_object = $excel_reader->load($file_name);
     $excel_rows = $excel_object->getActiveSheet()->toArray();
 
     // Process Excel data
