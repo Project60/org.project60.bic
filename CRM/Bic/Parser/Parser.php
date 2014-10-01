@@ -73,7 +73,6 @@ abstract class CRM_Bic_Parser_Parser {
     AND
       option_group_id = $option_group_id;";
     $current_data = array();
-    error_log($current_data_query);
     $query = CRM_Core_DAO::executeQuery($current_data_query);
     while ($query->fetch()) {
       $current_data[$query->value] = array(
