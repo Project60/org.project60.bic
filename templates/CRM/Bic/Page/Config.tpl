@@ -27,7 +27,7 @@
 {foreach from=$countries item=country}
     <tr>
       <td>{$country_names.$country}</td>
-      <td>{$stats.$country}</td>
+      <td><div id='number'>{$stats.$country}</div><img id='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/></td>
       <td style="text-align:right">
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('{$country}', this);">
@@ -43,7 +43,7 @@
   <tfoot>
     <tr>
       <td></td>
-      <td>{$total_count}</td>
+      <td><img id='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/><div id='number'>{$total_count}</div></td>
       <td>
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('all', this);">
@@ -59,11 +59,17 @@
 {literal}
 <script type="text/javascript">
 function update(country_code, button) {
-  console.log('updating ' + country_code);
-  cj(button).attr('disabled', 'disabled');
+  if (cj(button).hasClass('disabled')) {
+    return;
+  }
+  
+  cj(button).addClass('disabled');
+  cj(button).parent().parent().parent().find('#busy').show();
+  cj(button).parent().parent().parent().find('#number').hide();
   CRM.api3('Bic', 'update', {"country": country_code}).done(
     function(result) {
-      console.log('done');
+      // TODO: update _in table
+      location.reload();
     });
 }
 </script>
