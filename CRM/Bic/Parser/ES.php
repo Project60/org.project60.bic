@@ -15,7 +15,7 @@
 +--------------------------------------------------------*/
 
 require_once 'CRM/Bic/Parser/Parser.php';
-require_once 'vendor/phpoffice/phpexcel/PHPExcel.php';
+require_once 'dependencies/PHPExcel.php';
 
 /**
  * Abstract class defining the basis for national bank info parsers
