@@ -30,8 +30,20 @@ class CRM_Bic_Page_Config extends CRM_Core_Page {
       }
     }
 
+    // gather the names
+    $country_names = array();
+    $id2code = CRM_Core_PseudoConstant::countryIsoCode();
+    $code2id = array_flip($id2code);
+    $id2country = CRM_Core_PseudoConstant::country(FALSE, FALSE);
+    foreach ($countries as $code) {
+      $country_id = $code2id[$code];
+      $country_name = $id2country[$country_id];
+      $country_names[$code] = $country_name;
+    }
+
 
     $this->assign('countries', $countries);
+    $this->assign('country_names', $country_names);
     $this->assign('stats', $stats['values']);
     $this->assign('total_count', $total_count);
 

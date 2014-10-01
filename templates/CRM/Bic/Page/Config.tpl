@@ -16,8 +16,8 @@
 <table class="display dataTable" role="grid" border="0">
   <thead>
     <tr>
-      <td>{ts}Country{/ts}</td>
-      <td>{ts}Count{/ts}</td>
+      <td><b>{ts}Country{/ts}</b></td>
+      <td><b>{ts}Count{/ts}</b></td>
       <td></td>
     </tr>
   </thead>
@@ -26,9 +26,9 @@
   <tbody>
 {foreach from=$countries item=country}
     <tr>
-      <td>{$country}</td>
+      <td>{$country_names.$country}</td>
       <td>{$stats.$country}</td>
-      <td>
+      <td style="text-align:right">
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('{$country}', this);">
             <span><div class="icon refresh-icon"></div>{ts}Update{/ts}</span>
