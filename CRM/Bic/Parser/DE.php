@@ -40,6 +40,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     }
 
     // finally, download the data file
+    unset($page); // save some memory
     $data_url = CRM_Bic_Parser_DE::$base_url.$match['link'];
     $data = $this->downloadFile($data_url);
     if (empty($data)) {
@@ -49,6 +50,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     // parse the lines and build up data structure
     $banks = array();
     $lines = explode(PHP_EOL, $data);
+    unset($data); // save some memory
     foreach ($lines as $line) {
       $banks[] = array(
         'value'       => trim(substr($line, 0, 9)),
