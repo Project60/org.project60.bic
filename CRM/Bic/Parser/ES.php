@@ -44,7 +44,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $is_header = true;
-    banks = array();
+    $banks[] = array();
     foreach($excel_rows as $excel_row) {
       if($is_header) {
         // Get column Ids from first row
