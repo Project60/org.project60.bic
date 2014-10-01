@@ -13,12 +13,12 @@
 +-------------------------------------------------------*}
 
 {* TODO: make this more beatiful ;) *}
-<table class="display dataTable" role="grid" border="0">
+<table class="display" role="grid">
   <thead>
     <tr>
       <td><b>{ts}Country{/ts}</b></td>
       <td><b>{ts}Count{/ts}</b></td>
-      <td></td>
+      <td><b>{ts}Actions{/ts}</b></td>
     </tr>
   </thead>
 
@@ -27,7 +27,7 @@
 {foreach from=$countries item=country}
     <tr>
       <td>{$country_names.$country}</td>
-      <td><div id='number'>{$stats.$country}</div><img id='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/></td>
+      <td><div name='number'>{$stats.$country}</div><img name='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/></td>
       <td style="text-align:right">
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('{$country}', this);">
@@ -42,12 +42,12 @@
 
   <tfoot>
     <tr>
-      <td></td>
-      <td><img id='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/><div id='number'>{$total_count}</div></td>
+      <td><b>{ts}Total{/ts}</b></td>
+      <td><b><img name='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/><div name='number'>{$total_count}</div></b></td>
       <td>
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('all', this);">
-            <span><div class="icon refresh-icon"></div>{ts}Update{/ts}</span>
+            <span><div class="icon refresh-icon"></div>{ts}Update All{/ts}</span>
           </a>
         </div>
       </td>
@@ -58,14 +58,26 @@
 
 {literal}
 <script type="text/javascript">
+// general cleanup
+cj("#printer-friendly").hide();
+cj("#access").hide();
+
 function update(country_code, button) {
   if (cj(button).hasClass('disabled')) {
     return;
   }
   
-  cj(button).addClass('disabled');
-  cj(button).parent().parent().parent().find('#busy').show();
-  cj(button).parent().parent().parent().find('#number').hide();
+  if (country_code=='all') {
+    // set ALL to busy
+    cj('.button').addClass('disabled');
+    cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').show();
+    cj(button).parent().parent().parent().parent().parent().find('[name="number"]').hide();
+  } else {
+    // set line to busy
+    cj(button).addClass('disabled');
+    cj(button).parent().parent().parent().find('[name="busy"]').show();
+    cj(button).parent().parent().parent().find('[name="number"]').hide();
+  }
   CRM.api3('Bic', 'update', {"country": country_code}).done(
     function(result) {
       // TODO: update _in table
