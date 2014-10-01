@@ -57,13 +57,18 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
       } else {
         // Process every row
         $banks[] = array(
-          'value' => CRM_Bic_Parser_ES::$country_code . $excel_row[$column_ids["COD_BE"]],
-          'name' => $excel_row[$column_ids["BIC"]],
-          'label' => $excel_row[$column_ids["NOMBRE105"]],
+          'value'       => $excel_row[$column_ids["COD_BE"]],
+          'name'        => $excel_row[$column_ids["BIC"]],
+          'label'       => $excel_row[$column_ids["NOMBRE105"]],
           'description' => 'CIF: ' . $excel_row[$column_ids["CODIGOCIF"]],
         );
       }
     }
+
+    // Remove temporary file
+    unlink($file_name);
+
+    // Free some memory
     unset($excel_rows);
     unset($excel_object);
     unset($excel_reader);
