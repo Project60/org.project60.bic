@@ -55,6 +55,9 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
         $is_header = false;
       } else {
+        // If there's no bank code, I may assume we're at the end of the file
+        if(!$excel_row[$column_ids["COD_BE"]]) { break; }
+
         // Process every row
         $banks[] = array(
           'value'       => $excel_row[$column_ids["COD_BE"]],
