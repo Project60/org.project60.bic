@@ -97,7 +97,7 @@ abstract class CRM_Bic_Parser_Parser {
       }
 
       // set country prefix
-      $bank['name'] = $country . $bank['name'];
+      $bank['value'] = $country . $bank['value'];
 
       // now compare with the given data
       if (isset($current_data[$bank['value']])) {
