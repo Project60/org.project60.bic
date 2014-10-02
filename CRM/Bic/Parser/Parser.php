@@ -40,7 +40,6 @@ abstract class CRM_Bic_Parser_Parser {
     $iterator = new DirectoryIterator($dir);
 
     // Iterates through the CRM/Bic/Parser folder looking for country files
-    $countries[] = array();
     foreach ($iterator as $fileinfo) {
       $file_name = $fileinfo->getFilename();
       $file_name_parts = explode(".", $file_name);
