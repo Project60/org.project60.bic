@@ -52,4 +52,4 @@ According to the philosophy of making the CiviSEPA improvements as generic as po
 
 This new extension (Björn and I like to call it the "little BIC extension"), will create an option group called bank_list. When you install the extension, this list will be created but empty. Then, the extension will offer you the possibility of automatically fill this list by downloading information from the corresponding institution (Bundesbank, Banco de España, etc).
 
-P.S.: Actually, we've already created the skeleton for the extension in GitHub, so if you know how to programatically obtain the list of BIC codes for any other country from an official source, your contribution will be more than welcome!
+> P.S.: Actually, we've already created the skeleton for the extension in GitHub, so if you know how to programatically obtain the list of BIC codes for any other country from an official source, your contribution will be more than welcome!
