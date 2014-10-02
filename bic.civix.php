@@ -4,6 +4,8 @@
 
 /**
  * (Delegated) Implementation of hook_civicrm_config
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_config
  */
 function _bic_civix_civicrm_config(&$config = NULL) {
   static $configured = FALSE;
@@ -29,6 +31,7 @@ function _bic_civix_civicrm_config(&$config = NULL) {
  * (Delegated) Implementation of hook_civicrm_xmlMenu
  *
  * @param $files array(string)
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_xmlMenu
  */
 function _bic_civix_civicrm_xmlMenu(&$files) {
   foreach (_bic_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) {
@@ -38,44 +41,53 @@ function _bic_civix_civicrm_xmlMenu(&$files) {
 
 /**
  * Implementation of hook_civicrm_install
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_install
  */
 function _bic_civix_civicrm_install() {
   _bic_civix_civicrm_config();
   if ($upgrader = _bic_civix_upgrader()) {
-    return $upgrader->onInstall();
+    $upgrader->onInstall();
   }
 }
 
 /**
  * Implementation of hook_civicrm_uninstall
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_uninstall
  */
 function _bic_civix_civicrm_uninstall() {
   _bic_civix_civicrm_config();
   if ($upgrader = _bic_civix_upgrader()) {
-    return $upgrader->onUninstall();
+    $upgrader->onUninstall();
   }
 }
 
 /**
  * (Delegated) Implementation of hook_civicrm_enable
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_enable
  */
 function _bic_civix_civicrm_enable() {
   _bic_civix_civicrm_config();
   if ($upgrader = _bic_civix_upgrader()) {
     if (is_callable(array($upgrader, 'onEnable'))) {
-      return $upgrader->onEnable();
+      $upgrader->onEnable();
     }
   }
 }
 
 /**
  * (Delegated) Implementation of hook_civicrm_disable
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_disable
+ * @return mixed
  */
 function _bic_civix_civicrm_disable() {
   _bic_civix_civicrm_config();
   if ($upgrader = _bic_civix_upgrader()) {
     if (is_callable(array($upgrader, 'onDisable'))) {
-      return $upgrader->onDisable();
+      $upgrader->onDisable();
     }
   }
 }
@@ -88,6 +100,8 @@ function _bic_civix_civicrm_disable() {
  *
  * @return mixed  based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
  *                for 'enqueue', returns void
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_upgrade
  */
 function _bic_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
   if ($upgrader = _bic_civix_upgrader()) {
@@ -95,6 +109,9 @@ function _bic_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
   }
 }
 
+/**
+ * @return CRM_Bic_Upgrader
+ */
 function _bic_civix_upgrader() {
   if (!file_exists(__DIR__.'/CRM/Bic/Upgrader.php')) {
     return NULL;
@@ -144,6 +161,8 @@ function _bic_civix_find_files($dir, $pattern) {
  * (Delegated) Implementation of hook_civicrm_managed
  *
  * Find any *.mgd.php files, merge their content, and return.
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_managed
  */
 function _bic_civix_civicrm_managed(&$entities) {
   $mgdFiles = _bic_civix_find_files(__DIR__, '*.mgd.php');
@@ -164,6 +183,8 @@ function _bic_civix_civicrm_managed(&$entities) {
  * Find any and return any files matching "xml/case/*.xml"
  *
  * Note: This hook only runs in CiviCRM 4.4+.
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
  */
 function _bic_civix_civicrm_caseTypes(&$caseTypes) {
   if (!is_dir(__DIR__ . '/xml/case')) {
@@ -193,7 +214,7 @@ function _bic_civix_civicrm_caseTypes(&$caseTypes) {
  * result for an empty match is sometimes array() and sometimes FALSE.
  * This wrapper provides consistency.
  *
- * @see http://php.net/glob
+ * @link http://php.net/glob
  * @param string $pattern
  * @return array, possibly empty
  */
@@ -238,5 +259,21 @@ function _bic_civix_insert_navigation_menu(&$menu, $path, $item, $parentId = NUL
       }
     }
     return $found;
+  }
+}
+
+/**
+ * (Delegated) Implementation of hook_civicrm_alterSettingsFolders
+ *
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_alterSettingsFolders
+ */
+function _bic_civix_civicrm_alterSettingsFolders(&$metaDataFolders = NULL) {
+  static $configured = FALSE;
+  if ($configured) return;
+  $configured = TRUE;
+
+  $settingsDir = __DIR__ . DIRECTORY_SEPARATOR . 'settings';
+  if(is_dir($settingsDir) && !in_array($settingsDir, $metaDataFolders)) {
+    $metaDataFolders[] = $settingsDir;
   }
 }

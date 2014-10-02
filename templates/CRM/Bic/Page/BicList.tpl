@@ -12,53 +12,42 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
-<div id="help">{ts}
-  If you click the Update button, next to the name of one of the listed countries,
-  CiviCRM will try to connect to the official source of financial institutions
-  in this country and retrieve its bank information. Then, you'll be able to
-  query this information in the <a href="civicrm/bicList">Banks List</a> page.
-{/ts}</div>
-
-{* TODO: make this more beatiful ;) *}
 <table class="display" role="grid">
   <thead>
     <tr class="columnheader">
-      <th>{ts}Country{/ts}</b></th>
-      <th>{ts}Count{/ts}</b></th>
-      <th>{ts}Actions{/ts}</th>
+      <th>{ts}BIC{/ts}</b></th>
+      <th>{ts}National Bank ID{/ts}</b></th>
+      <th>{ts}Country{/ts}</th>
     </tr>
   </thead>
 
   <tbody>
-{foreach from=$countries item=country}
-    <tr class='{cycle values="odd-row,even-row"}'>
-      <td>{$country_names.$country}</td>
-      <td><div name='number'>{$stats.$country}</div><img name='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/></td>
-      <td style="text-align:right">
-        <div class="action-link">
-          <a class="button crm-extensions-refresh" id="new" onClick="update('{$country}', this);">
-            <span><div class="icon refresh-icon"></div>{ts}Update{/ts}</span>
-          </a>
-        </div>
-      </td>
-    </tr>
-{/foreach}
-  </tbody>
-
-
-  <tfoot>
-    <tr class="mceLast">
-      <td><b>{ts}Total{/ts}</b></td>
-      <td><b><img name='busy' src="{$config->resourceBase}i/loading.gif" hidden="1"/><div name='number'>{$total_count}</div></b></td>
+    <tr>
+      <td><input type="text" value="" name="bic" id="bic"></td>
+      <td><input type="text" value="" name="nbid" id="nbid"></td>
       <td>
-        <div class="action-link">
-          <a class="button crm-extensions-refresh" id="new" onClick="update('all', this);">
-            <span><div class="icon refresh-icon"></div>{ts}Update All{/ts}</span>
-          </a>
-        </div>
+        <select value="" name="country" id="country">
+{foreach from=$countries item=country}
+          <option value="{$country}">{$country_names.$country}</option>
+{/foreach}
+        </select>      
       </td>
     </tr>
-  </tfoot>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr class="columnheader">
+      <th>{ts}Name{/ts}</th>
+      <th>{ts}BIC{/ts}</th>
+      <th>{ts}Description{/ts}</th>
+      <th>{ts}Country{/ts}</th>
+      <th>{ts}National Bank ID{/ts}</th>
+    </tr>
+  </thead>
+  <tbody id="results">
+  </tbody>
 </table>
 
 {literal}
@@ -66,6 +55,62 @@
 // general cleanup
 cj("#printer-friendly").hide();
 cj("#access").hide();
+
+// add accordion
+cj(function() {
+   cj().crmAccordions();
+});
+
+// add functions
+cj("#bic").val('');
+cj("#bic").change(sendQuery);
+cj("#nbid").change(sendQuery);
+cj("#bic").keypress(enteringBIC);
+cj("#nbid").keypress(enteringNBID);
+
+// LOOKUP BUTTONS
+function sendQuery() {
+  // finally, send query
+  var query = {};
+  if (cj("#bic").val().length > 0) {
+    query['bic'] = cj("#bic").val();
+  } else {
+    query['nbid'] = cj("#nbid").val();
+    query['country'] = cj("#country").val();
+  }
+  
+  // clear table
+  cj("#results").empty();
+
+  CRM.api3('Bic', 'get', query).done(
+    function(result) {
+      if (result.count > 0 ) {
+        var rowstyle = 'odd-row';
+        for (var key in result.values) {
+          var line = "<tr class='" + rowstyle + "'>" +
+                       "<td>" + result.values[key].title + "</td>" +
+                       "<td>" + result.values[key].bic + "</td>" +
+                       "<td>" + result.values[key].description + "</td>" +
+                       "<td>" + result.values[key].country + "</td>" +
+                       "<td>" + result.values[key].nbid + "</td>" +
+                     "</tr>";
+          cj("#results").append(line);
+          if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
+        }
+      } else {
+        alert("No entries found!");
+      }
+    });
+}
+
+function enteringBIC() {
+  cj("#nbid").val('');
+}
+
+function enteringNBID() {
+  cj("#bic").val('');
+}
+
 
 // UPDATE BUTTONS
 function update(country_code, button) {

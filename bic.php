@@ -97,3 +97,88 @@ function bic_civicrm_managed(&$entities) {
 function bic_civicrm_caseTypes(&$caseTypes) {
   _bic_civix_civicrm_caseTypes($caseTypes);
 }
+
+/**
+* Implementation of hook_civicrm_navigationMenu
+*/
+function bic_civicrm_navigationMenu(&$params) {
+  // Find the CiviContribute menu
+  $contribute_menu_id = get_menu_id_by_name($params, 'Contributions');
+
+  // If CiviContribute menu exists...
+  if ($contribute_menu_id) {
+  
+    // Create new menu option if it didn't exist
+    $new_nav_id = get_next_menu_id();
+    if(!url_exists_in_menu('civicrm/bicList')) {
+      $params[$contribute_menu_id]['child'][$new_nav_id] = array(
+        'attributes' => array (
+          'label' => ts('Bank Lists', array('domain' => 'org.project60.bic')),
+          'name' => 'BankLists',
+          'url' => 'civicrm/bicList',
+          'permission' => 'access CiviContribute',
+          'operator' => null,
+          'separator' => 2,
+          'parentID' => $contribute_menu_id,
+          'navID' => $new_nav_id,
+          'active' => 1
+        )
+      );
+      
+      $new_nav_id++;
+    }
+   
+    // Create new menu option if it didn't exist
+    if(!url_exists_in_menu('civicrm/bicImport')) {
+      $params[$contribute_menu_id]['child'][$new_nav_id] = array(
+        'attributes' => array (
+          'label' => ts('Import Bank Lists', array('domain' => 'org.project60.bic')),
+          'name' => 'Dashboard',
+          'url' => 'civicrm/bicImport',
+          'permission' => 'administer CiviCRM',
+          'operator' => null,
+          'separator' => 1,
+          'parentID' => $contribute_menu_id,
+          'navID' => $new_nav_id,
+          'active' => 1
+        )
+      );
+    }
+  }
+}
+
+/*
+ * Looks for an URL in the menu
+ */
+function url_exists_in_menu($url) {
+  // Check that our item doesn't already exist
+  $menu_item_search = array('url' => $url);
+  $menu_items = array();
+  CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
+
+  return (!empty($menu_items));
+}
+
+/*
+ * Obtains the id for a new menu item.
+ */
+function get_next_menu_id() {
+  $new_nav_id = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
+  if (is_integer($new_nav_id)) {
+    $new_nav_id++;
+  }
+}
+
+/*
+ * Obtains the id of a menu option from its id.
+ */
+function get_menu_id_by_name($menu_params, $name) {
+  $contribute_menu_id = null;
+  foreach($menu_params as $key => $value) {
+    if($value['attributes']['name'] == $name) {
+      $contribute_menu_id = $key;
+    }
+  }
+  
+  return $contribute_menu_id;
+}

@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
 <menu>
   <item>
-    <path>civicrm/bic</path>
+    <path>civicrm/bicImport</path>
     <page_callback>CRM_Bic_Page_Config</page_callback>
-    <title>Bank Information (BIC)</title>
+    <title>Import Bank Lists</title>
     <access_arguments>administer CiviCRM</access_arguments>
     <adminGroup>CiviContribute</adminGroup>
     <icon>admin/small/online_contribution_pages.png</icon>
+  </item>
+  <item>
+    <path>civicrm/bicList</path>
+    <page_callback>CRM_Bic_Page_BicList</page_callback>
+    <title>List of Bank Entities</title>
+    <access_arguments>access CiviContribute</access_arguments>
   </item>
 </menu>
