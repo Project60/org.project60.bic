@@ -164,6 +164,6 @@ function civicrm_api3_bic_stats($params) {
   while ($query_result->fetch()) {
     $result[$query_result->country_code] = (int) $query_result->count;
   }
-
+ 
   return civicrm_api3_create_success($result, $params);
 }

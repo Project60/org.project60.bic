@@ -5,7 +5,12 @@ require_once 'CRM/Core/Page.php';
 class CRM_Bic_Page_BicList extends CRM_Core_Page {
   function run() {
     // Prepares variables for being sent to Smarty
-    $countries = CRM_Bic_Parser_Parser::getParserList();
+
+    //Only show countries with attached information
+    $stats = civicrm_api3('Bic', 'stats');
+    foreach($stats['values'] as $country => $count) {
+      $countries[] = $country;
+    }
     
     // Get country names
     $country_names = array();

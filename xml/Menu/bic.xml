@@ -11,7 +11,7 @@
   <item>
     <path>civicrm/bicList</path>
     <page_callback>CRM_Bic_Page_BicList</page_callback>
-    <title>List of Bank Entities</title>
+    <title>Find Banks</title>
     <access_arguments>access CiviContribute</access_arguments>
   </item>
 </menu>

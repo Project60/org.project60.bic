@@ -102,21 +102,19 @@ function bic_civicrm_caseTypes(&$caseTypes) {
 * Implementation of hook_civicrm_navigationMenu
 */
 function bic_civicrm_navigationMenu(&$params) {
-  // Find the CiviContribute menu
-  $contribute_menu_id = get_menu_id_by_name($params, 'Contributions');
-
   // If CiviContribute menu exists...
-  if ($contribute_menu_id) {
+  $contribute_menu_id = get_menu_id_by_name($params, 'Contributions');
   
+  if ($contribute_menu_id) {
     // Create new menu option if it didn't exist
     $new_nav_id = get_next_menu_id();
     if(!url_exists_in_menu('civicrm/bicList')) {
       $params[$contribute_menu_id]['child'][$new_nav_id] = array(
         'attributes' => array (
-          'label' => ts('Bank Lists', array('domain' => 'org.project60.bic')),
-          'name' => 'BankLists',
-          'url' => 'civicrm/bicList',
-          'permission' => 'access CiviContribute',
+          'label' => ts('Import Bank Lists', array('domain' => 'org.project60.bic')),
+          'name' => 'Dashboard',
+          'url' => 'civicrm/bicImport',
+          'permission' => 'administer CiviCRM',
           'operator' => null,
           'separator' => 2,
           'parentID' => $contribute_menu_id,
@@ -127,18 +125,23 @@ function bic_civicrm_navigationMenu(&$params) {
       
       $new_nav_id++;
     }
-   
-    // Create new menu option if it didn't exist
+  }
+  
+  // If CiviSearch menu exists...
+  $search_menu_id = get_menu_id_by_name($params, 'Search...');
+  
+  if ($search_menu_id) {
+    // Create new menu option if it didn't exist    
     if(!url_exists_in_menu('civicrm/bicImport')) {
-      $params[$contribute_menu_id]['child'][$new_nav_id] = array(
+      $params[$search_menu_id]['child'][$new_nav_id] = array(
         'attributes' => array (
-          'label' => ts('Import Bank Lists', array('domain' => 'org.project60.bic')),
-          'name' => 'Dashboard',
-          'url' => 'civicrm/bicImport',
-          'permission' => 'administer CiviCRM',
+          'label' => ts('Find Banks', array('domain' => 'org.project60.bic')),
+          'name' => 'BankLists',
+          'url' => 'civicrm/bicList',
+          'permission' => 'access CiviContribute',
           'operator' => null,
-          'separator' => 1,
-          'parentID' => $contribute_menu_id,
+          'separator' => 2,
+          'parentID' => $search_menu_id,
           'navID' => $new_nav_id,
           'active' => 1
         )
