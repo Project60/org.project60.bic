@@ -21,8 +21,8 @@
   <thead>
     <tr class="columnheader">
       <th>{ts}Country{/ts}</th>
-      <th>{ts}BIC{/ts}</b></th>
       <th>{ts}National Bank ID{/ts}</b></th>
+      <th>{ts}BIC{/ts}</b></th>
     </tr>
   </thead>
 
@@ -35,8 +35,8 @@
 {/foreach}
         </select>      
       </td>
-      <td><input type="text" value="" name="bic" id="bic" style="text-transform:uppercase;"></td>
       <td><input type="text" value="" name="nbid" id="nbid"></td>
+      <td><input type="text" value="" name="bic" id="bic" style="text-transform:uppercase;"></td>
     </tr>
   </tbody>
 </table>

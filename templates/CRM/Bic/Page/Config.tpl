@@ -61,48 +61,64 @@
   </tfoot>
 </table>
 
+<div class="crm-accordion-wrapper open" id="test-search">
+  <div class="crm-accordion-header">
+    Find Banks
+  </div>
+  <div class="crm-accordion-body">
+     <div class="crm-block crm-form-block crm-form-title-here-form-block">
+       {include file="CRM/Bic/Page/BicList.tpl"}
+     </div>
+   </div>
+</div>
+
 {literal}
 <script type="text/javascript">
-// general cleanup
-cj("#printer-friendly").hide();
-cj("#access").hide();
-
-// UPDATE BUTTONS
-function update(country_code, button) {
-  if (cj(button).hasClass('disabled')) {
-    return;
-  }
-
-  // disable buttons
-  cj('.button').addClass('disabled');
+  cj("#test-search .crm-accordion-header").click(showHideTestSearch);
   
-  if (country_code=='all') {
-    // set ALL to busy
-    cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').show();
-    cj(button).parent().parent().parent().parent().parent().find('[name="number"]').hide();
-  } else {
-    // set only this row to busy
-    cj(button).parent().parent().parent().find('[name="busy"]').show();
-    cj(button).parent().parent().parent().find('[name="number"]').hide();
+  function showHideTestSearch() {
+    cj("#test-search").toggleClass("open, collapsed");
   }
 
-  // finally, send query
-  var call = CRM.api3('Bic', 'update', {"country": country_code});
-  call.done(
-    function(result) {
-      for (var key in result.values) {
-        if (result.values[key].error != undefined) {
-          alert(result.values[key].error);
-        }
-      }
+  cj("#printer-friendly").hide();
+  cj("#access").hide();
 
-      location.reload();
-    });
-  call.fail(
-    function(result) {
-      alert("The update timed out, but maybe it was partially succesful. You might want to try again.");
-      location.reload();
-    });
-}
+  // UPDATE BUTTONS
+  function update(country_code, button) {
+    if (cj(button).hasClass('disabled')) {
+      return;
+    }
+
+    // disable buttons
+    cj('.button').addClass('disabled');
+    
+    if (country_code=='all') {
+      // set ALL to busy
+      cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').show();
+      cj(button).parent().parent().parent().parent().parent().find('[name="number"]').hide();
+    } else {
+      // set only this row to busy
+      cj(button).parent().parent().parent().find('[name="busy"]').show();
+      cj(button).parent().parent().parent().find('[name="number"]').hide();
+    }
+
+    // finally, send query
+    var call = CRM.api3('Bic', 'update', {"country": country_code});
+    call.done(
+      function(result) {
+        for (var key in result.values) {
+          if (result.values[key].error != undefined) {
+            alert(result.values[key].error);
+          }
+        }
+
+        location.reload();
+      });
+    call.fail(
+      function(result) {
+        alert("The update timed out, but maybe it was partially succesful. You might want to try again.");
+        location.reload();
+      });
+  }
 </script>
 {/literal}
