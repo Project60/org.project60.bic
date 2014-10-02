@@ -105,6 +105,11 @@
 cj("#printer-friendly").hide();
 cj("#access").hide();
 
+// add accordion
+cj(function() {
+   cj().crmAccordions();
+});
+
 // add functions
 cj("#bic").val('');
 cj("#bic").change(sendQuery);
