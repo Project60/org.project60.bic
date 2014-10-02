@@ -80,7 +80,8 @@ function civicrm_api3_bic_get($params) {
         'bic'         => $value['name'],
         'country'     => substr($value['value'], 0, 2),
         'nbid'        => substr($value['value'], 2),
-        'description' => $value['description']
+        'description' => $value['description'],
+        'title'       => $value['label']
         );
     }
   } catch (Exception $e) {

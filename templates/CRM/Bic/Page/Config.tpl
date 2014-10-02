@@ -59,7 +59,7 @@
 {* Add lookup test *}
 <div class="crm-block crm-form-block crm-basic-criteria-form-block">
   <div class="crm-accordion-wrapper crm-case_search-accordion collapsed">
-    <div class="crm-accordion-header crm-master-accordion-header">{ts}Lookup Test{/ts}</div>
+    <div class="crm-accordion-header crm-master-accordion-header">{ts}Query Database{/ts}</div>
     
     <div style="display: none;" class="crm-accordion-body">
       <div class="crm-section">
@@ -89,6 +89,7 @@
             <td><b>{ts}Country{/ts}</b></td>
             <td><b>{ts}National Bank ID{/ts}</b></td>
             <td><b>{ts}BIC{/ts}</b></td>
+            <td><b>{ts}Name{/ts}</b></td>
           </tr>
         </thead>
         <tbody id="results">
@@ -129,7 +130,7 @@ function sendQuery() {
     function(result) {
       if (result.count > 0 ) {
         for (var key in result.values) {
-          var line = "<tr><td>" + result.values[key].country + "</td><td>" + result.values[key].nbid + "</td><td>" + result.values[key].bic + "</td></tr>";
+          var line = "<tr><td>" + result.values[key].country + "</td><td>" + result.values[key].nbid + "</td><td>" + result.values[key].bic + "</td><td>" + result.values[key].title + "</td></tr>";
           cj("#results").append(line);
         }
       } else {
