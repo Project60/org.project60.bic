@@ -17,13 +17,17 @@ require_once 'CRM/Bic/Parser/Parser.php';
 require_once 'dependencies/PHPExcel.php';
 
 /**
- * Abstract class defining the basis for national bank info parsers
+ * Implements CRM_Bic_Parser_Parser for the Spanish case.
  */
 class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
   static $page_url = 'http://www.bde.es/f/webbde/IFI/servicio/regis/ficheros/es/REGBANESP_CONESTAB_A.XLS';
   static $country_code = 'ES';
 
+  /**
+   * Dowloads the Spanish list of banks (from bde.es) and
+   * creates/updates/deletes the corresponding BIC records.
+   */
   public function update() {
     // First, download the file
     $file_name = sys_get_temp_dir() . '/' . CRM_Bic_Parser_ES::$country_code . '-banks.xls';
@@ -31,7 +35,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
     if(!$downloaded_file) {
       return $this->createError("Couldn't download the Spanish list of banks. Please contact us.");
     }
-    
+
     // Save the downloaded file
     file_put_contents($file_name, $downloaded_file);
     unset($downloaded_file);
@@ -69,7 +73,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
         } else {
           $value = $excel_row[$column_ids['COD_BE']] . $excel_row[$column_ids['CODENTSUC']];
         }
-        
+
         // If there's a "closed date", we don't import this bank
         if(!$excel_row[$column_ids['FCHBAJA']]) {
           $banks[] = array(
@@ -96,5 +100,15 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
     // Finally, update DB
     return $this->updateEntries(CRM_Bic_Parser_ES::$country_code, $banks);
+  }
+
+  /*
+   * Extracts the National Bank Identifier from an Spanish IBAN.
+   */
+  public function extractNBIDfromIBAN($iban) {
+    return array(
+      CRM_Bic_Parser_ES::$country_code . substr($iban, 4, 4),
+      CRM_Bic_Parser_ES::$country_code . substr($iban, 4, 8)
+    );
   }
 }
