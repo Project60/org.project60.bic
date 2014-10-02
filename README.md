@@ -41,7 +41,9 @@ The Society for Worldwide Interbank Financial Telecommunication (SWIFT) is the o
 
 Nevertheless, some of the institutions that are responsible of the SEPA implementation in different countries, are making available its corresponding list of entities. In Germany, you can download the list of German BIC codes from the [Deutsche Bundesbank website](http://www.bundesbank.de/Redaktion/DE/Standardartikel/Aufgaben/Unbarer_Zahlungsverkehr/bankleitzahlen_download.html). In Spain, you can download the list of Spanish BIC codes from the [Banco de España website](http://www.bde.es/bde/es/secciones/servicios/Particulares_y_e/Registros_de_Ent/).
 
-If we agree that having a list of BIC codes updated in CiviCRM can be practical... then... let's go do it!
+That made us think that, if we created an extension that downloaded this information and updated it into CiviCRM, we would be avoiding legal problems and, at the same time, letting CiviCRM users freely work with BIC codes.
+
+So... if we agree that having a list of BIC codes updated in CiviCRM can be practical... then... let's go do it!
 
 How to Keep the List of Banks Updated?
 --------------------------------------
