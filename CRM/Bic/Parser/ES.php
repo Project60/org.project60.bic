@@ -26,8 +26,13 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
   public function update() {
     // First, download the file
-    $file_name = sys_get_temp_dir() . '/es-banks.xls';
+    $file_name = sys_get_temp_dir() . '/' . CRM_Bic_Parser_ES::$country_code . '-banks.xls';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_ES::$page_url);
+    if(!$downloaded_file) {
+      return $this->createError("Couldn't download the Spanish list of banks. Please contact us.");
+    }
+    
+    // Save the downloaded file
     file_put_contents($file_name, $downloaded_file);
     unset($downloaded_file);
 
@@ -36,7 +41,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
     // Set reader options
     $excel_reader->setReadDataOnly();
-    $excel_reader->setLoadSheetsOnly(array("ENTIDADES"));
+    $excel_reader->setLoadSheetsOnly(array('ENTIDADES'));
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -56,15 +61,28 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
         $is_header = false;
       } else {
         // If there's no bank code, I may assume we're at the end of the file
-        if(!$excel_row[$column_ids["COD_BE"]]) { break; }
+        if(!$excel_row[$column_ids['COD_BE']]) { break; }
 
-        // Process every row
-        $banks[] = array(
-          'value'       => $excel_row[$column_ids["COD_BE"]],
-          'name'        => $excel_row[$column_ids["BIC"]],
-          'label'       => $excel_row[$column_ids["NOMBRE105"]],
-          'description' => 'CIF: ' . $excel_row[$column_ids["CODIGOCIF"]],
-        );
+        // Add the office code, if it exists
+        if($excel_row[$column_ids['CODENTSUC']] == '0000') {
+          $value = $excel_row[$column_ids['COD_BE']];
+        } else {
+          $value = $excel_row[$column_ids['COD_BE']] . $excel_row[$column_ids['CODENTSUC']];
+        }
+        
+        // If there's a "closed date", we don't import this bank
+        if(!$excel_row[$column_ids['FCHBAJA']]) {
+          $banks[] = array(
+            'value'       => $value,
+            'name'        => $excel_row[$column_ids['BIC']],
+            'label'       => $excel_row[$column_ids['ANAGRAMA']],
+            'description' => '<b>CIF</b>: ' . $excel_row[$column_ids['CODIGOCIF']] . '<br>' .
+                             '<b>Phone</b>: ' . $excel_row[$column_ids['TELEFONO']] . '<br>' .
+                             '<b>Fax</b>: ' . $excel_row[$column_ids['NUMFAX']] . '<br>' .
+                             '<b>Web</b>: <a href="' . strtolower($excel_row[$column_ids['DIRINTERNET']]) . '">' .
+                               strtolower($excel_row[$column_ids['DIRINTERNET']]) . '</a><br>',
+          );
+        }
       }
     }
 
