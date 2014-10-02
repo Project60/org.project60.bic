@@ -101,38 +101,13 @@ function bic_civicrm_caseTypes(&$caseTypes) {
 /**
 * Implementation of hook_civicrm_navigationMenu
 */
-function bic_civicrm_navigationMenu(&$params) {
-  // If CiviContribute menu exists...
-  $contribute_menu_id = get_menu_id_by_name($params, 'Contributions');
-  
-  if ($contribute_menu_id) {
-    // Create new menu option if it didn't exist
-    $new_nav_id = get_next_menu_id();
-    if(!url_exists_in_menu('civicrm/bicList')) {
-      $params[$contribute_menu_id]['child'][$new_nav_id] = array(
-        'attributes' => array (
-          'label' => ts('Import Bank Lists', array('domain' => 'org.project60.bic')),
-          'name' => 'Dashboard',
-          'url' => 'civicrm/bicImport',
-          'permission' => 'administer CiviCRM',
-          'operator' => null,
-          'separator' => 2,
-          'parentID' => $contribute_menu_id,
-          'navID' => $new_nav_id,
-          'active' => 1
-        )
-      );
-      
-      $new_nav_id++;
-    }
-  }
-  
+function bic_civicrm_navigationMenu(&$params) { 
   // If CiviSearch menu exists...
-  $search_menu_id = get_menu_id_by_name($params, 'Search...');
+  $search_menu_id = get_mainmenu_id_by_name($params, 'Search...');
   
   if ($search_menu_id) {
     // Create new menu option if it didn't exist    
-    if(!url_exists_in_menu('civicrm/bicImport')) {
+    if(!url_exists_in_menu('civicrm/bicList')) {
       $params[$search_menu_id]['child'][$new_nav_id] = array(
         'attributes' => array (
           'label' => ts('Find Banks', array('domain' => 'org.project60.bic')),
@@ -175,13 +150,12 @@ function get_next_menu_id() {
 /*
  * Obtains the id of a menu option from its id.
  */
-function get_menu_id_by_name($menu_params, $name) {
-  $contribute_menu_id = null;
-  foreach($menu_params as $key => $value) {
+function get_mainmenu_id_by_name($menu_array, $name) {
+  foreach($menu_array as $key => $value) {
     if($value['attributes']['name'] == $name) {
-      $contribute_menu_id = $key;
+      return $key;
     }
   }
   
-  return $contribute_menu_id;
+  return null;
 }
