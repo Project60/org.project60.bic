@@ -69,4 +69,14 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     // Finally, update DB
     return $this->updateEntries(CRM_Bic_Parser_NL::$country_code, $banks);
   }
+
+  /*
+   * Extracts the National Bank Identifier from an IBAN.
+   */
+  public function extractNBIDfromIBAN($iban) {
+    return array(
+      substr($iban, 4, 4),
+    );
+  }
+
 }

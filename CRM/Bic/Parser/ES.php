@@ -107,8 +107,8 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
    */
   public function extractNBIDfromIBAN($iban) {
     return array(
-      CRM_Bic_Parser_ES::$country_code . substr($iban, 4, 4),
-      CRM_Bic_Parser_ES::$country_code . substr($iban, 4, 8)
+      substr($iban, 4, 4),
+      substr($iban, 4, 8)
     );
   }
 }
