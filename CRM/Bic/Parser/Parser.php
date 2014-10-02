@@ -183,8 +183,19 @@ abstract class CRM_Bic_Parser_Parser {
    * @return file content or NULL on error
    */
   protected function downloadFile($url) {
-    // TODO: is this enough
-    return file_get_contents($url);
+    $ch = curl_init();
+    $timeout = 10;
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    if (!curl_errno($ch)) { 
+       return $data;
+    } else {
+      return NULL;
+    }
   }
 
   /**
