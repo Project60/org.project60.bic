@@ -129,7 +129,6 @@ function sendQuery() {
     function(result) {
       if (result.count > 0 ) {
         for (var key in result.values) {
-          console.log(result.values[key]);
           var line = "<tr><td>" + result.values[key].country + "</td><td>" + result.values[key].nbid + "</td><td>" + result.values[key].bic + "</td></tr>";
           cj("#results").append(line);
         }
@@ -168,9 +167,20 @@ function update(country_code, button) {
   }
 
   // finally, send query
-  CRM.api3('Bic', 'update', {"country": country_code}).done(
+  var call = CRM.api3('Bic', 'update', {"country": country_code});
+  call.done(
     function(result) {
-      // TODO: update _in table
+      for (var key in result.values) {
+        if (result.values[key].error != undefined) {
+          alert(result.values[key].error);
+        }
+      }
+
+      location.reload();
+    });
+  call.fail(
+    function(result) {
+      alert("The update timed out, but maybe it was partially succesful. You might want to try again.");
       location.reload();
     });
 }
