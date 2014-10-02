@@ -15,16 +15,14 @@
 <table class="display" role="grid">
   <thead>
     <tr class="columnheader">
+      <th>{ts}Country{/ts}</th>
       <th>{ts}BIC{/ts}</b></th>
       <th>{ts}National Bank ID{/ts}</b></th>
-      <th>{ts}Country{/ts}</th>
     </tr>
   </thead>
 
   <tbody>
     <tr>
-      <td><input type="text" value="" name="bic" id="bic"></td>
-      <td><input type="text" value="" name="nbid" id="nbid"></td>
       <td>
         <select value="" name="country" id="country">
 {foreach from=$countries item=country}
@@ -32,6 +30,8 @@
 {/foreach}
         </select>      
       </td>
+      <td><input type="text" value="" name="bic" id="bic" style="text-transform:uppercase;"></td>
+      <td><input type="text" value="" name="nbid" id="nbid"></td>
     </tr>
   </tbody>
 </table>
@@ -52,102 +52,69 @@
 
 {literal}
 <script type="text/javascript">
-// general cleanup
-cj("#printer-friendly").hide();
-cj("#access").hide();
+  // Empty fields when loading the page
+  cleanFilters();
+  
+  // Perform a search when a field changes
+  cj("#country").change(sendQuery);
+  cj("#bic").change(sendQuery);
+  cj("#nbid").change(sendQuery);
+  
+  // Empty BIC when writting NBID and viceversa
+  cj("#bic").keyup(enteringBIC);
+  cj("#nbid").keyup(enteringNBID);
 
-// add accordion
-cj(function() {
-   cj().crmAccordions();
-});
-
-// add functions
-cj("#bic").val('');
-cj("#bic").change(sendQuery);
-cj("#nbid").change(sendQuery);
-cj("#bic").keypress(enteringBIC);
-cj("#nbid").keypress(enteringNBID);
-
-// LOOKUP BUTTONS
-function sendQuery() {
-  // finally, send query
-  var query = {};
-  if (cj("#bic").val().length > 0) {
+  function sendQuery() {
+    // Update list of banks
+    var query = {};
     query['bic'] = cj("#bic").val();
-  } else {
     query['nbid'] = cj("#nbid").val();
     query['country'] = cj("#country").val();
-  }
-  
-  // clear table
-  cj("#results").empty();
+    
+    // Clear results
+    cj("#results").empty();
 
-  CRM.api3('Bic', 'get', query).done(
-    function(result) {
-      if (result.count > 0 ) {
-        var rowstyle = 'odd-row';
-        for (var key in result.values) {
-          var line = "<tr class='" + rowstyle + "'>" +
-                       "<td>" + result.values[key].title + "</td>" +
-                       "<td>" + result.values[key].bic + "</td>" +
-                       "<td>" + result.values[key].description + "</td>" +
-                       "<td>" + result.values[key].country + "</td>" +
-                       "<td>" + result.values[key].nbid + "</td>" +
-                     "</tr>";
+    CRM.api3('Bic', 'get', query).done(
+      function(result) {
+        if (result.count > 0 ) {
+          var rowstyle = 'odd-row';
+          for (var key in result.values) {
+            var line = "<tr class='" + rowstyle + "'>" +
+                        "<td>" + result.values[key].title + "</td>" +
+                        "<td>" + result.values[key].bic + "</td>" +
+                        "<td>" + result.values[key].description + "</td>" +
+                        "<td>" + result.values[key].country + "</td>" +
+                        "<td>" + result.values[key].nbid + "</td>" +
+                      "</tr>";
+            cj("#results").append(line);
+            if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
+          }
+        } else {
+          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria</td></tr>";
           cj("#results").append(line);
-          if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
         }
-      } else {
-        alert("No entries found!");
-      }
-    });
-}
-
-function enteringBIC() {
-  cj("#nbid").val('');
-}
-
-function enteringNBID() {
-  cj("#bic").val('');
-}
-
-
-// UPDATE BUTTONS
-function update(country_code, button) {
-  if (cj(button).hasClass('disabled')) {
-    return;
+      });
   }
 
-  // disable buttons
-  cj('.button').addClass('disabled');
+  function enteringBIC() {
+    cj("#nbid").val('');
+
+    if(cj("#bic").val().length() >= 3) {
+      sendQuery();
+    }
+  }
+
+  function enteringNBID() {
+    cj("#bic").val('');
+
+    if(cj("#nbid").val().length() >= 3) {
+      sendQuery();
+    }
+  }
   
-  if (country_code=='all') {
-    // set ALL to busy
-    cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').show();
-    cj(button).parent().parent().parent().parent().parent().find('[name="number"]').hide();
-  } else {
-    // set only this row to busy
-    cj(button).parent().parent().parent().find('[name="busy"]').show();
-    cj(button).parent().parent().parent().find('[name="number"]').hide();
+  function cleanFilters() {
+    cj("#nbid").val('');
+    cj("#bic").val('');
   }
-
-  // finally, send query
-  var call = CRM.api3('Bic', 'update', {"country": country_code});
-  call.done(
-    function(result) {
-      for (var key in result.values) {
-        if (result.values[key].error != undefined) {
-          alert(result.values[key].error);
-        }
-      }
-
-      location.reload();
-    });
-  call.fail(
-    function(result) {
-      alert("The update timed out, but maybe it was partially succesful. You might want to try again.");
-      location.reload();
-    });
-}
 </script>
 {/literal}
