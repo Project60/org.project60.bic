@@ -52,6 +52,14 @@ abstract class CRM_Bic_Parser_Parser {
 
 
   /**
+   * Extracts the national bank ID from a given IBAN
+   *
+   * @return NBID
+   */
+  public abstract function extractNBIDfromIBAN($iban);
+
+
+  /**
    * Will update all entries for a given  
    * 
    * @param  $coutry   ISO country code
