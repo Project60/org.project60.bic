@@ -56,10 +56,11 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     $lines = explode(PHP_EOL, $data);
     unset($data); // save some memory
     foreach ($lines as $line) {
-      $key = trim(substr($line, 0, 9));
+      $key = trim(substr($line, 0, 8));
+      if (isset($banks[$key])) continue;
       $banks[$key] = array(
         'value'       => $key,
-        'name'        => trim(substr($line, 140, 11)),
+        'name'        => trim(substr($line, 139, 11)),
         'label'       => trim(substr($line, 9, 58)),
         'description' => substr($line, 67, 5).' '.trim(substr($line, 72, 35))
         );
