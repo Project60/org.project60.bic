@@ -13,8 +13,8 @@
 +-------------------------------------------------------*}
 
 <div id="help">{ts}
-  This page allows you to find information about a bank by
-  specifying its BIC or National ID.
+  This page allows you to find information about a bank by specifying its BIC or National ID.
+  If you don't find any information here, you may want to <a href='bicImport'>update your bank list</a>.
 {/ts}</div>
 
 <table class="display" role="grid">
