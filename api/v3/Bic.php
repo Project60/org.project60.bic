@@ -19,7 +19,7 @@
  * 
  * @param 'iban'  an IBAN number
  */
-function civicrm_api3_bic_get($params) {
+function civicrm_api3_bic_getfromiban($params) {
   if (empty($params['iban'])) {
     return civicrm_api3_create_error("You need to provied an 'iban'.");
   }
