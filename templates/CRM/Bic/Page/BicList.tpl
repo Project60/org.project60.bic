@@ -98,6 +98,7 @@
           
         } else {
           var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
+          cj("#results").empty();
           cj("#results").append(line);
         }
       });
