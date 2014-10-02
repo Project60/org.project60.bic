@@ -56,7 +56,10 @@ abstract class CRM_Bic_Parser_Parser {
    *
    * @return NBID
    */
-  public abstract function extractNBIDfromIBAN($iban);
+  public function extractNBIDfromIBAN($iban) {
+    // please override!
+    return FALSE;
+  }
 
 
   /**

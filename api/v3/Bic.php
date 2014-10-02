@@ -15,6 +15,31 @@
 +--------------------------------------------------------*/
 
 /**
+ * API call to look up BIC codes for a given IBAN
+ * 
+ * @param 'iban'  an IBAN number
+ */
+function civicrm_api3_bic_get($params) {
+  if (empty($params['iban'])) {
+    return civicrm_api3_create_error("You need to provied an 'iban'.");
+  }
+
+  $country = strtoupper(substr($params['iban'], 0, 2));
+  $parser = CRM_Bic_Parser_Parser::getParser($country);
+  if (empty($parser)) {
+    return civicrm_api3_create_error("Parser for '$country' not found!");
+  }
+
+  $nbid = $parser->extractNBIDfromIBAN($params['iban']);
+  if ($nbid==FALSE) {
+    return civicrm_api3_create_error("IBAN parsing not supported for country '$country'!");
+  }
+
+  return civicrm_api3_bic_get(array('country' => $country, 'nbid' => $nbid));
+}
+
+
+/**
  * API call to look up BIC codes or national IDs
  * 
  * You can either provide the BIC in the 'bic' parameter,
