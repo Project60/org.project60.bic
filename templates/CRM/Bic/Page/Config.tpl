@@ -61,7 +61,7 @@
   </tfoot>
 </table>
 
-<div class="crm-accordion-wrapper open" id="test-search">
+<div class="crm-accordion-wrapper collapsed" id="test-search">
   <div class="crm-accordion-header">
     Find Banks
   </div>
@@ -74,14 +74,10 @@
 
 {literal}
 <script type="text/javascript">
-  cj("#test-search .crm-accordion-header").click(showHideTestSearch);
-  
-  function showHideTestSearch() {
-    cj("#test-search").toggleClass("open, collapsed");
-  }
-
   cj("#printer-friendly").hide();
   cj("#access").hide();
+  
+  cj().crmAccordions();
 
   // UPDATE BUTTONS
   function update(country_code, button) {
