@@ -12,10 +12,12 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
-<div id="help">{ts}
-  This page allows you to find information about a bank by specifying its BIC or National ID.
-  If you don't find any information here, you may want to <a href='bicImport'>update your bank list</a>.
-{/ts}</div>
+{if $show_message}
+  <div id="help">{ts}
+    This page allows you to find information about a bank by specifying its BIC or National ID.
+    If you don't find any information here, you may want to <a href='bicImport'>update your bank list</a>.
+  {/ts}</div>
+{/if}
 
 <table class="display" role="grid">
   <thead>

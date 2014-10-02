@@ -67,7 +67,7 @@
   </div>
   <div class="crm-accordion-body">
      <div class="crm-block crm-form-block crm-form-title-here-form-block">
-       {include file="CRM/Bic/Page/BicList.tpl"}
+       {include file="CRM/Bic/Page/BicList.tpl" show_message=false}
      </div>
    </div>
 </div>

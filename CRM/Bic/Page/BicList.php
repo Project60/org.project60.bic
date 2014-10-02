@@ -30,6 +30,7 @@ class CRM_Bic_Page_BicList extends CRM_Core_Page {
     // Sends variables to Smarty
     $this->assign('countries', $countries);
     $this->assign('country_names', $country_names);
+    $this->assign('show_message', true);
     
     parent::run();
   }
