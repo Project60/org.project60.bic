@@ -56,10 +56,20 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
       if ($skip_lines >= 0) continue;
 
       // Process row
+
+      // compile bank name
+      $bank_name = '';
+      for ($i=2; $i<5; $i++) {
+        $localized_name = trim($excel_row[$i]);
+        if (!empty($localized_name)) {
+          if (!empty($bank_name)) $bank_name .= ' / ';
+          $bank_name .= $localized_name;
+        }
+      }
       $bank = array(
         'value' => $excel_row[0],
         'name' => str_replace(' ', '', $excel_row[1]),
-        'label' => $excel_row[2] . ' / ' . $excel_row[3],
+        'label' => $bank_name,
         'description' => '',
       );
       $banks[] = $bank;
