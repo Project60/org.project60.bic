@@ -76,24 +76,26 @@
     query['nbid'] = cj("#nbid").val();
     query['country'] = cj("#country").val();
     
-    // Clear results
-    cj("#results").empty();
-
     CRM.api3('Bic', 'get', query).done(
       function(result) {
         if (result.count > 0 ) {
           var rowstyle = 'odd-row';
+          var line;
           for (var key in result.values) {
-            var line = "<tr class='" + rowstyle + "'>" +
+            line += "<tr class='" + rowstyle + "'>" +
                         "<td>" + result.values[key].title + "</td>" +
                         "<td>" + result.values[key].bic + "</td>" +
                         "<td>" + result.values[key].description + "</td>" +
                         "<td>" + result.values[key].country + "</td>" +
                         "<td>" + result.values[key].nbid + "</td>" +
                       "</tr>";
-            cj("#results").append(line);
+                      
             if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
           }
+          
+          cj("#results").empty();
+          cj("#results").append(line);
+          
         } else {
           var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
           cj("#results").append(line);
