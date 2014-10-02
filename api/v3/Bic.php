@@ -15,6 +15,50 @@
 +--------------------------------------------------------*/
 
 /**
+ * API call to look up BIC codes or national IDs
+ * 
+ * You can either provide the BIC in the 'bic' parameter,
+ * or you would have to give the ISO country code in 'country'
+ * along with the national bank ID in 'nbid'
+ *
+ */
+function civicrm_api3_bic_get($params) {
+  $query = array();
+  if (!empty($params['bic'])) {
+    $query['name'] = $params['bic'];
+  } elseif (!empty($params['country']) && !empty($params['nbid'])) {
+    $query['value'] = $params['country'] . $params['nbid'];
+  } else {
+    return civicrm_api3_create_error("You have to either provide 'bic' or 'country'+'nbid' parameters.");
+  }
+
+  try {
+    $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
+    $query['option_group_id'] = $option_group['id'];
+  } catch (Exception $e) {
+    return civicrm_api3_create_error("OptionGroup not found. Reinstall extension!");
+  }
+
+  try {
+    $data = array();
+    $option_values = civicrm_api3('OptionValue', 'get', $query);
+    foreach ($option_values['values'] as $key => $value) {
+      $data[$key] = array(
+        'bic'         => $value['name'],
+        'country'     => substr($value['value'], 0, 2),
+        'nbid'        => substr($value['value'], 2),
+        'description' => $value['description']
+        );
+    }
+  } catch (Exception $e) {
+    return civicrm_api3_create_error("Entity does not exist.");
+  }
+  
+  return civicrm_api3_create_success($data, $params);
+}
+
+
+/**
  * API call to update the stored bank data
  *
  * @param 'country'   country code to update or 'all'
