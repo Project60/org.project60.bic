@@ -57,7 +57,16 @@ abstract class CRM_Bic_Parser_Parser {
    * @return array list of NBIDs to look for
    */
   public function extractNBIDfromIBAN($iban) {
-    // please override!
+    /*
+     * The Wikipedia page about IBAN has a list with details
+     * about the structure of IBAN accounts for every
+     * SEPA country. You may consider useful reading it
+     * to find the information about how override this
+     * when adding support for a new country.
+     *
+     * Link: http://en.wikipedia.org/wiki/International_Bank_Account_Number
+     */
+    
     return FALSE;
   }
 
