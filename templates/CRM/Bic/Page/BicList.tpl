@@ -12,6 +12,11 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
+<div id="help">{ts}
+  This page allows you to find information about a bank by
+  specifying its BIC or National ID.
+{/ts}</div>
+
 <table class="display" role="grid">
   <thead>
     <tr class="columnheader">
@@ -90,7 +95,7 @@
             if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
           }
         } else {
-          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria</td></tr>";
+          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
           cj("#results").append(line);
         }
       });
@@ -99,7 +104,7 @@
   function enteringBIC() {
     cj("#nbid").val('');
 
-    if(cj("#bic").val().length() >= 3) {
+    if(cj("#bic").val().length >= 3) {
       sendQuery();
     }
   }
@@ -107,7 +112,7 @@
   function enteringNBID() {
     cj("#bic").val('');
 
-    if(cj("#nbid").val().length() >= 3) {
+    if(cj("#nbid").val().length >= 3) {
       sendQuery();
     }
   }

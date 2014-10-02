@@ -16,7 +16,7 @@
   If you click the Update button, next to the name of one of the listed countries,
   CiviCRM will try to connect to the official source of financial institutions
   in this country and retrieve its bank information. Then, you'll be able to
-  query this information in the <a href="civicrm/bicList">Banks List</a> page.
+  query this information in the <a href="bicList">Banks List</a> page.
 {/ts}</div>
 
 {* TODO: make this more beatiful ;) *}
