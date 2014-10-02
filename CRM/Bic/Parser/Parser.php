@@ -44,7 +44,9 @@ abstract class CRM_Bic_Parser_Parser {
       $file_name = $fileinfo->getFilename();
       $file_name_parts = explode(".", $file_name);
 
-      if ((end($file_name_parts) == "php") && (reset($file_name_parts) != "Parser")) {
+      if ((end($file_name_parts) == "php") &&
+          (strlen(reset($file_name_parts)) == 2) &&
+          (reset($file_name_parts) != "Parser")) {
         $countries[] = reset($file_name_parts);
       }
     }
@@ -53,13 +55,12 @@ abstract class CRM_Bic_Parser_Parser {
   }
 
 
-
   /**
    * Triggers the parser instance to prepare a full update
    *
    * @return array(   'count' => nr of banks found
    *                  'error' => in case of an error
-   *                  
+   *
    */
   public abstract function update();
 
