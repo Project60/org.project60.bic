@@ -32,11 +32,25 @@ abstract class CRM_Bic_Parser_Parser {
 
   /**
    * static function to get all known parsers
-   * 
+   *
    * @return an array of countries
    */
   public static function getParserList() {
-    return array('DE', 'ES', 'BE', 'NL', 'LU');
+    $dir = dirname(__FILE__);
+    $iterator = new DirectoryIterator($dir);
+
+    // Iterates through the CRM/Bic/Parser folder looking for country files
+    $countries[] = array();
+    foreach ($iterator as $fileinfo) {
+      $file_name = $fileinfo->getFilename();
+      $file_name_parts = explode(".", $file_name);
+
+      if ((end($file_name_parts) == "php") && (reset($file_name_parts) != "Parser")) {
+        $countries[] = reset($file_name_parts);
+      }
+    }
+
+    return $countries;
   }
 
 
@@ -64,7 +78,7 @@ abstract class CRM_Bic_Parser_Parser {
      * to find the information about how override this
      * when adding support for a new country.
      *
-     * Link: http://en.wikipedia.org/wiki/International_Bank_Account_Number
+     * @link http://en.wikipedia.org/wiki/International_Bank_Account_Number
      */
     
     return FALSE;
