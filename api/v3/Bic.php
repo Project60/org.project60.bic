@@ -30,12 +30,20 @@ function civicrm_api3_bic_getfromiban($params) {
     return civicrm_api3_create_error("Parser for '$country' not found!");
   }
 
-  $nbid = $parser->extractNBIDfromIBAN($params['iban']);
-  if ($nbid==FALSE) {
+  $nbids = $parser->extractNBIDfromIBAN($params['iban']);
+  if ($nbids==FALSE) {
     return civicrm_api3_create_error("IBAN parsing not supported for country '$country'!");
   }
 
-  return civicrm_api3_bic_get(array('country' => $country, 'nbid' => $nbid));
+  foreach ($nbids as $nbid) {
+    try {
+      return civicrm_api3('Bic', 'getsingle', array('country' => $country, 'nbid' => $nbid));
+    } catch (Exception $e) {
+      // not found? no problem, just keep looking
+    }
+  }
+
+  return civicrm_api3_create_error("BIC for the given IBAN not found.");
 }
 
 

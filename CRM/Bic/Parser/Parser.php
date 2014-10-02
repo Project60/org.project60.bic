@@ -54,7 +54,7 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * Extracts the national bank ID from a given IBAN
    *
-   * @return NBID
+   * @return array list of NBIDs to look for
    */
   public function extractNBIDfromIBAN($iban) {
     // please override!
