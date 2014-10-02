@@ -43,7 +43,7 @@ Nevertheless, some of the institutions that are responsible of the SEPA implemen
 
 That made us think that, if we created an extension that downloaded this information and updated it into CiviCRM, we would be avoiding legal problems and, at the same time, letting CiviCRM users freely work with BIC codes.
 
-So... if we agree that having a list of BIC codes updated in CiviCRM can be practical... then... let's go do it!
+So... if we agree that having a list of BIC codes updated in CiviCRM can be practical... and we've found a viable way to do it... then... let's go do it!
 
 How to Keep the List of Banks Updated?
 --------------------------------------
