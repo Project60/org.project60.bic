@@ -183,6 +183,12 @@ abstract class CRM_Bic_Parser_Parser {
    * @return file content or NULL on error
    */
   protected function downloadFile($url) {
+    if (substr($url, 0, 1)=='/') {
+      // local files we just read
+      return file_get_contents($url);
+    }
+
+    // on other sources we use CURL
     $ch = curl_init();
     $timeout = 10;
     curl_setopt($ch, CURLOPT_URL, $url);
