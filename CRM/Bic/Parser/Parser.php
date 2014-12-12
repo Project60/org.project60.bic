@@ -25,9 +25,14 @@ abstract class CRM_Bic_Parser_Parser {
    * @return a parser object
    */
   public static function getParser($country_code) {
-    // TODO: error handling
-    $parser_class = 'CRM_Bic_Parser_' . $country_code;
-    return new $parser_class();
+    // since class_exists() also causes fatal errors, we'll just try to find the .php file
+    $parser_implementation = dirname(__FILE__) . DIRECTORY_SEPARATOR . $country_code . '.php';
+    if (file_exists($parser_implementation)) {
+      $parser_class = 'CRM_Bic_Parser_' . $country_code;
+      return new $parser_class();
+    } else {
+      return NULL;
+    }
   }
 
   /**
