@@ -46,6 +46,26 @@ function civicrm_api3_bic_getfromiban($params) {
   return civicrm_api3_create_error("BIC for the given IBAN not found.");
 }
 
+/**
+ * API call to search BIC codes for a given IBAN
+ *
+ * other than getfromiban, this method won't return errors, if nothing was found
+ * 
+ * @param 'iban'  an IBAN number
+ */
+function civicrm_api3_bic_findbyiban($params) {
+  if (empty($params['iban']) || strlen($params['iban']) < 7) {
+    return civicrm_api3_create_success(array(), $params);
+  }
+
+  $result = civicrm_api3_bic_getfromiban($params);
+  if (empty($result['is_error'])) {
+    return $result;
+  } else {
+    return civicrm_api3_create_success(array(), $params);
+  }
+}
+
 
 /**
  * API call to look up BIC codes or national IDs

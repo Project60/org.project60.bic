@@ -99,6 +99,17 @@ function bic_civicrm_caseTypes(&$caseTypes) {
 }
 
 /**
+ * Set permissions for runner/engine API call
+ */
+function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
+  // TODO: adjust to correct permission
+  $permissions['bic']['getfromiban'] = array('access CiviCRM');
+  $permissions['bic']['findbyiban']  = array('access AJAX API', 'access CiviCRM');
+  $permissions['bic']['get']         = array('access CiviCRM');
+}
+
+
+/**
 * Implementation of hook_civicrm_navigationMenu
 */
 function bic_civicrm_navigationMenu(&$params) { 
