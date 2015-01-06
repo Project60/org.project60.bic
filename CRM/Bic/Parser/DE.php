@@ -23,7 +23,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
 
   static $base_url = 'http://www.bundesbank.de';
   static $page_url = 'http://www.bundesbank.de/Redaktion/DE/Standardartikel/Aufgaben/Unbarer_Zahlungsverkehr/bankleitzahlen_download.html';
-  static $link_regex = '#href="(?P<link>/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/.*txt[?]__blob=publicationFile)"#';
+  static $link_regex = '#href="(?P<link>/Redaktion/DE/Downloads/Aufgaben/Unbarer_Zahlungsverkehr/Bankleitzahlen/.*.txt.*[?]__blob=publicationFile)"#';
 
 
   public function update() {
