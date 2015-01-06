@@ -47,14 +47,14 @@ function bic_civicrm_enable() {
           'title'        => ts('List of banks'),
           'is_reserved'  => 0,
           'is_active'    => 1,
-          )); 
+          ));
     } catch (Exception $create_ex) {
       // TODO: more info?
       error_log("Couldn't create 'bank_list' OptionGroup.");
     }
   }
 
-  return _bic_civix_civicrm_enable();  
+  return _bic_civix_civicrm_enable();
 }
 
 /**
@@ -104,7 +104,7 @@ function bic_civicrm_caseTypes(&$caseTypes) {
 function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   // TODO: adjust to correct permission
   $permissions['bic']['getfromiban'] = array('access CiviCRM');
-  $permissions['bic']['findbyiban']  = array('access AJAX API', 'access CiviCRM');
+  $permissions['bic']['findbyiban']  = array('access AJAX API');
   $permissions['bic']['get']         = array('access CiviCRM');
 }
 
@@ -112,12 +112,12 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
 /**
 * Implementation of hook_civicrm_navigationMenu
 */
-function bic_civicrm_navigationMenu(&$params) { 
+function bic_civicrm_navigationMenu(&$params) {
   // If CiviSearch menu exists...
   $search_menu_id = get_mainmenu_id_by_name($params, 'Search...');
-  
+
   if ($search_menu_id) {
-    // Create new menu option if it didn't exist    
+    // Create new menu option if it didn't exist
     if(!url_exists_in_menu('civicrm/bicList')) {
       $params[$search_menu_id]['child'][$new_nav_id] = array(
         'attributes' => array (
@@ -167,6 +167,6 @@ function get_mainmenu_id_by_name($menu_array, $name) {
       return $key;
     }
   }
-  
+
   return null;
 }
