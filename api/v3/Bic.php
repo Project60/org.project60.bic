@@ -144,9 +144,6 @@ function civicrm_api3_bic_update($params) {
     $total_count += $result[$country]['count'];
   }
 
-  // TODO: remove for release...
-  error_log(print_r($result,1));
-
   $null = NULL;
   return civicrm_api3_create_success($result, $params, $null, $null, $null, array('total_count' => $total_count));
 }
