@@ -108,65 +108,75 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
   $permissions['bic']['get']         = array('access CiviCRM');
 }
 
-
 /**
-* Implementation of hook_civicrm_navigationMenu
-*/
-function bic_civicrm_navigationMenu(&$params) {
-  // If CiviSearch menu exists...
-  $search_menu_id = get_mainmenu_id_by_name($params, 'Search...');
-
-  if ($search_menu_id) {
-    // Create new menu option if it didn't exist
-    if(!url_exists_in_menu('civicrm/bicList')) {
-      $params[$search_menu_id]['child'][$new_nav_id] = array(
-        'attributes' => array (
-          'label' => ts('Find Banks', array('domain' => 'org.project60.bic')),
-          'name' => 'BankLists',
-          'url' => 'civicrm/bicList',
-          'permission' => 'access CiviContribute',
-          'operator' => null,
-          'separator' => 2,
-          'parentID' => $search_menu_id,
-          'navID' => $new_nav_id,
-          'active' => 1
-        )
-      );
-    }
-  }
-}
-
-/*
- * Looks for an URL in the menu
+ * Implementation of hook_civicrm_navigationMenu
+ *
+ * Inject the 'civicrm/bicList' item unter the 'Search' top menu, unless it's already in there...
+ *
+ * based on https://github.com/Project60/sepa_dd/commit/f342a223c41d7fc940294f24999fc5bdf637b98b
  */
-function url_exists_in_menu($url) {
-  // Check that our item doesn't already exist
-  $menu_item_search = array('url' => $url);
+function bic_civicrm_navigationMenu(&$params) {
+  // see if it is already in the menu...
+  $menu_item_search = array('url' => 'civicrm/bicList');
   $menu_items = array();
   CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
 
-  return (!empty($menu_items));
-}
+  if (empty($menu_items)) {
+    // it's not already contained, so we want to add it to the menu
+    
+    // now, by default we want to add it to the Contributions menu -> find it
+    $search_menu_id = 0;
+    foreach ($params as $key => $value) {
+      if ($value['attributes']['name'] == 'Search...') {
+        $search_menu_id = $key;
+        break;
+      }
+    }
 
-/*
- * Obtains the id for a new menu item.
- */
-function get_next_menu_id() {
-  $new_nav_id = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
-  if (is_integer($new_nav_id)) {
-    $new_nav_id++;
-  }
-}
-
-/*
- * Obtains the id of a menu option from its id.
- */
-function get_mainmenu_id_by_name($menu_array, $name) {
-  foreach($menu_array as $key => $value) {
-    if($value['attributes']['name'] == $name) {
-      return $key;
+    if (empty($search_menu_id)) {
+      error_log("org.project60.bic: Connot find 'Contributions' menu item.");
+    } else {
+      // insert at the bottom
+      $params[$search_menu_id]['child'][] = array(
+          'attributes' => array (
+          'label' => ts('Find Banks',array('domain' => 'org.project60.bic')),
+          'name' => 'BankLists',
+          'url' => 'civicrm/bicList',
+          'permission' => 'access CiviContribute',
+          'operator' => NULL,
+          'separator' => 2,
+          'parentID' => $search_menu_id,
+          'navID' => CRM_Utils_SepaMenuTools::createUniqueNavID($params),
+          'active' => 1
+        ));
     }
   }
+}
 
-  return null;
+/**
+ * Helper function for civicrm_navigationMenu
+ * 
+ * Will create a new, unique ID for the navigation menu
+ */
+function bic_navhelper_create_unique_nav_id($menu) {
+  $max_stored_navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
+  $max_current_navId = bic_navhelper_get_max_nav_id($menu);
+  return max($max_stored_navId, $max_current_navId) + 1;  
+}
+
+/**
+ * Helper function for civicrm_navigationMenu
+ * 
+ * Will find the (currently) highest nav_item ID
+ */
+function bic_navhelper_get_max_nav_id($menu) {
+  $max_id = 1;
+  foreach ($menu as $entry) {
+    $max_id = max($max_id, $entry['attributes']['navID']);
+    if (!empty($entry['child'])) {
+      $max_id_children = bic_navhelper_get_max_nav_id($entry['child']);
+      $max_id = max($max_id, $max_id_children);
+    }
+  }
+  return $max_id;  
 }
