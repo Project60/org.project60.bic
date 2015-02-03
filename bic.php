@@ -146,7 +146,7 @@ function bic_civicrm_navigationMenu(&$params) {
           'operator' => NULL,
           'separator' => 2,
           'parentID' => $search_menu_id,
-          'navID' => CRM_Utils_SepaMenuTools::createUniqueNavID($params),
+          'navID' => bic_navhelper_create_unique_nav_id($params),
           'active' => 1
         ));
     }
