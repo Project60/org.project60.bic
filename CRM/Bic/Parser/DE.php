@@ -60,9 +60,9 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
       if (isset($banks[$key])) continue;
       $banks[$key] = array(
         'value'       => $key,
-        'name'        => trim(substr($line, 139, 11)),
-        'label'       => trim(substr($line, 9, 58)),
-        'description' => substr($line, 67, 5).' '.trim(substr($line, 72, 35))
+        'name'        => trim(mb_substr($line, 139, 11)),
+        'label'       => rtrim(mb_substr($line, 9, 58)),
+        'description' => mb_substr($line, 67, 5) . ' ' . rtrim(mb_substr($line, 72, 35))
         );
     }
     unset($lines);
