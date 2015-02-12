@@ -1,0 +1,69 @@
+#: bic.php
+msgid "List of banks"
+msgstr ""
+
+#: bic.php
+msgid "Find Banks"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid ""
+"\n"
+"    This page allows you to find information about a bank by specifying its "
+"BIC or National ID.\n"
+"    If you don't find any information here, you may want to <a "
+"href='bicImport'>update your bank list</a>.\n"
+"  "
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl templates/CRM/Bic/Page/Config.tpl
+msgid "Country"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "National Bank ID"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "BIC"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Name"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Description"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid ""
+"\n"
+"  If you click the Update button, next to the name of one of the listed "
+"countries,\n"
+"  CiviCRM will try to connect to the official source of financial "
+"institutions\n"
+"  in this country and retrieve its bank information. Then, you'll be able "
+"to\n"
+"  query this information in the <a href=\"bicList\">Banks List</a> page.\n"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Count"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Actions"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Update"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Total"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Update All"
+msgstr ""

@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Little BIC Extension\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Bjoern Endres <Bjoern.Endres@didonai.com>\n"
+"Language-Team: Project60 <endres@systopia.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+
+#: bic.php
+msgid "List of banks"
+msgstr "Bankenliste"
+
+#: bic.php
+msgid "Find Banks"
+msgstr "Bank finden"
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid ""
+"\n"
+"    This page allows you to find information about a bank by specifying its BIC or National ID.\n"
+"    If you don't find any information here, you may want to <a href='bicImport'>update your bank list</a>.\n"
+"  "
+msgstr ""
+"\n"
+"    Diese Seite ermöglicht die Suche nach Banken mittels der nationalen ID (BLZ) oder BIC.\n"
+"    Falls Sie die gesuchte Bank hier nicht finden, sollten Sie <a href='bicImport'>die Liste aktualsieren</a>.\n"
+"  "
+
+#: templates/CRM/Bic/Page/BicList.tpl templates/CRM/Bic/Page/Config.tpl
+msgid "Country"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "National Bank ID"
+msgstr "Nationale Bankleitzahl"
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "BIC"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Name"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Description"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid ""
+"\n"
+"  If you click the Update button, next to the name of one of the listed countries,\n"
+"  CiviCRM will try to connect to the official source of financial institutions\n"
+"  in this country and retrieve its bank information. Then, you'll be able to\n"
+"  query this information in the <a href=\"bicList\">Banks List</a> page.\n"
+msgstr ""
+"\n"
+"  Wenn Sie den Update Button neben den entsprechenden Ländern drücken,\n"
+"  wird das System versuchen die entsprechenden Informationen von der\n"
+"  jeweiligen Nationalbank herunterzuladen. Auf diese Liste können Sie\n"
+"  dann über die <a href=\"bicList\">Bankensuche</a> zugreifen.\n"
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Count"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Actions"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Update"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Total"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Update All"
+msgstr ""
+
