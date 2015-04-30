@@ -199,10 +199,14 @@ abstract class CRM_Bic_Parser_Parser {
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-    $data = curl_exec($ch);
-    curl_close($ch);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-    if (!curl_errno($ch)) { 
+    $data = curl_exec($ch);
+
+    $curl_errno = curl_errno($ch);
+    curl_close($ch);
+    
+    if (!$curl_errno) {
        return $data;
     } else {
       return NULL;
