@@ -13,12 +13,45 @@
 +-------------------------------------------------------*}
 
 {if $show_message}
-  <div id="help">{ts}
-    This page allows you to find information about a bank by specifying its BIC or National ID.
-    If you don't find any information here, you may want to <a href='bicImport'>update your bank list</a>.
-  {/ts}</div>
+  <div id="help">{ts}This page allows you to find banks and additional information. If you can't find the bank you're looking for, you may want to <a href='bicImport'>update your bank list</a>.{/ts}</div>
 {/if}
 
+
+<br/>
+<h3>{ts}Find Bank by IBAN{/ts}</h3>
+<table class="display" role="grid">
+  <thead>
+    <tr class="columnheader">
+      <th>{ts}IBAN{/ts}</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><input size="40" type="text" value="" name="iban" id="iban" style="text-transform:uppercase;"></td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr class="columnheader">
+      <th>{ts}Name{/ts}</th>
+      <th>{ts}BIC{/ts}</th>
+      <th>{ts}Description{/ts}</th>
+      <th>{ts}Country{/ts}</th>
+      <th>{ts}National Bank ID{/ts}</th>
+    </tr>
+  </thead>
+  <tbody id="iban_results">
+  </tbody>
+</table>
+
+
+
+
+<br/><br/>
+<h3>{ts}Find Bank by National ID{/ts}</h3>
 <table class="display" role="grid">
   <thead>
     <tr class="columnheader">
@@ -57,6 +90,9 @@
   </tbody>
 </table>
 
+
+
+
 {literal}
 <script type="text/javascript">
   // Empty fields when loading the page
@@ -66,10 +102,12 @@
   cj("#country").change(sendQuery);
   cj("#bic").change(sendQuery);
   cj("#nbid").change(sendQuery);
+  cj("#iban").change(sendIBANQuery);
   
   // Empty BIC when writting NBID and viceversa
   cj("#bic").keyup(enteringBIC);
   cj("#nbid").keyup(enteringNBID);
+  cj("#iban").keyup(enteringIBAN);
 
   function sendQuery() {
     // Update list of banks
@@ -106,6 +144,38 @@
       });
   }
 
+  function sendIBANQuery() {
+    // Update list of banks
+    var query = {};
+    query['iban'] = cj("#iban").val();
+
+    // strip whitespaces and format upper case
+    var reSpaceAndMinus = new RegExp('[\\s-]', 'g');
+    query['iban'] = query['iban'].replace(reSpaceAndMinus, "");
+    query['iban'] = query['iban'].toUpperCase();
+
+    
+    CRM.api3('Bic', 'findbyiban', query).done(
+      function(result) {
+        if (result.count != 0 ) {
+          line = "<tr class='odd-row'>" +
+                      "<td>" + result.title + "</td>" +
+                      "<td>" + result.bic + "</td>" +
+                      "<td>" + result.description + "</td>" +
+                      "<td>" + result.country + "</td>" +
+                      "<td>" + result.nbid + "</td>" +
+                    "</tr>";
+          
+          cj("#iban_results").empty();
+          cj("#iban_results").append(line);
+          
+        } else {
+          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
+          cj("#iban_results").empty();
+          cj("#iban_results").append(line);
+        }
+      });
+  }
   function enteringBIC() {
     cj("#nbid").val('');
 
@@ -122,6 +192,12 @@
     }
   }
   
+  function enteringIBAN() {
+    if(cj("#iban").val().length >= 10) {
+      sendIBANQuery();
+    }
+  }
+
   function cleanFilters() {
     cj("#nbid").val('');
     cj("#bic").val('');
