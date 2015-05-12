@@ -1,13 +1,66 @@
+# Copyright CiviCRM LLC (c) 2004-2015
+# This file is distributed under the same license as the CiviCRM package.
+# If you contribute heavily to a translation and deem your work copyrightable,
+# make sure you license it to CiviCRM LLC under Academic Free License 3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: Little BIC Extension\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Bjoern Endres <endres@systopia.de>\n"
-"Language-Team: Project60 <endres@systopia.de>\n"
+"Project-Id-Version: org.project60.bic\n"
+"POT-Creation-Date: 2015-05-12 12:06+0200\n"
+"Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: CRM/Bic/Parser/AT.php CRM/Bic/Parser/DE.php
+msgid "Couldn't download basic page"
+msgstr ""
+
+#: CRM/Bic/Parser/AT.php
+msgid "Couldn't find any bank information in the data source"
+msgstr ""
+
+#: CRM/Bic/Parser/BE.php CRM/Bic/Parser/LU.php CRM/Bic/Parser/NL.php
+msgid "Couldn't download data file"
+msgstr ""
+
+#: CRM/Bic/Parser/DE.php
+msgid "The information source at www.bundesbank.de has changed"
+msgstr ""
+
+#: CRM/Bic/Parser/ES.php
+msgid "Couldn't download the Spanish list of banks"
+msgstr ""
+
+#: CRM/Bic/Parser/ES.php
+msgid "The Spanish source file doesn't contain BICs"
+msgstr ""
+
+#: CRM/Bic/Parser/Parser.php
+msgid ""
+"<p>An error occurred while updating the bank information:<pre>%1</pre></p>"
+msgstr ""
+
+#: CRM/Bic/Parser/Parser.php
+msgid ""
+"<p>Please make sure your server is connected to the internet and try again.</"
+"p>"
+msgstr ""
+
+#: CRM/Bic/Parser/Parser.php
+msgid ""
+"<p>If the problem persists, the source file (provided by the bank) might "
+"have been changed. In this case the 'Little BIC Extension' needs to be "
+"updated. Please check <a href=\"https://github.com/Project60/org.project60."
+"bic/releases\">here</a> for a newer release.</p>"
+msgstr ""
+
+#: CRM/Bic/Parser/Parser.php
+msgid ""
+"<p>If you are already running the newest version, feel free to contact us "
+"via <a href=\"mailto:endres@systopia.de\">email</a> or on <a href=\"https://"
+"github.com/Project60/org.project60.bic/issues/new\">GitHub</a>. The sooner "
+"we know about this problem, the sooner it'll be fixed.</p>"
+msgstr ""
 
 #: bic.php
 msgid "List of banks"
@@ -19,12 +72,29 @@ msgstr ""
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid ""
-"\n"
-"    This page allows you to find information about a bank by specifying its "
-"BIC or National ID.\n"
-"    If you don't find any information here, you may want to <a "
-"href='bicImport'>update your bank list</a>.\n"
-"  "
+"This page allows you to find banks and additional information. If you can't "
+"find the bank you're looking for, you may want to <a href='bicImport'>update "
+"your bank list</a>."
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Find Bank by IBAN"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "IBAN"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Name"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "BIC"
+msgstr ""
+
+#: templates/CRM/Bic/Page/BicList.tpl
+msgid "Description"
 msgstr ""
 
 #: templates/CRM/Bic/Page/BicList.tpl templates/CRM/Bic/Page/Config.tpl
@@ -36,15 +106,7 @@ msgid "National Bank ID"
 msgstr ""
 
 #: templates/CRM/Bic/Page/BicList.tpl
-msgid "BIC"
-msgstr ""
-
-#: templates/CRM/Bic/Page/BicList.tpl
-msgid "Name"
-msgstr ""
-
-#: templates/CRM/Bic/Page/BicList.tpl
-msgid "Description"
+msgid "Find Bank by National ID"
 msgstr ""
 
 #: templates/CRM/Bic/Page/Config.tpl
@@ -77,4 +139,14 @@ msgstr ""
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Update All"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid "Update Problem"
+msgstr ""
+
+#: templates/CRM/Bic/Page/Config.tpl
+msgid ""
+"The update timed out, but maybe it was partially succesful. You might want "
+"to try again."
 msgstr ""
