@@ -102,18 +102,30 @@
     var call = CRM.api3('Bic', 'update', {"country": country_code});
     call.done(
       function(result) {
+        var is_error = false;
         for (var key in result.values) {
           if (result.values[key].error != undefined) {
-            alert(result.values[key].error);
+            is_error = true;
+            CRM.alert("{/literal}" + result.values[key].error, "{ts}Update Problem{/ts}{literal}", "error");
+
+            // reset busy state
+            cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').hide();
+            cj(button).parent().parent().parent().parent().parent().find('[name="number"]').show();
+            cj('.button').removeClass('disabled');
           }
         }
 
-        location.reload();
+        // reload only if error-free
+        if (!is_error) location.reload();
       });
     call.fail(
       function(result) {
-        alert("The update timed out, but maybe it was partially succesful. You might want to try again.");
-        location.reload();
+        CRM.alert("{/literal}{ts}The update timed out, but maybe it was partially succesful. You might want to try again.{/ts}", "{ts}Update Problem{/ts}{literal}", "error");
+
+        // reset busy state
+        cj(button).parent().parent().parent().parent().parent().find('[name="busy"]').hide();
+        cj(button).parent().parent().parent().parent().parent().find('[name="number"]').show();
+        cj('.button').removeClass('disabled');
       });
   }
 </script>

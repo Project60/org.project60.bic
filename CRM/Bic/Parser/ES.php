@@ -33,7 +33,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
     $file_name = sys_get_temp_dir() . '/' . CRM_Bic_Parser_ES::$country_code . '-banks.xls';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_ES::$page_url);
     if(!$downloaded_file) {
-      return $this->createError("Couldn't download the Spanish list of banks. Please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't download the Spanish list of banks"));
     }
 
     // Save the downloaded file
@@ -60,6 +60,11 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
         $column_ids = array();
         foreach($excel_row as $id => $column_name) {
           $column_ids[$column_name] = $id;
+        }
+
+        // check, if BIC is there
+        if (empty($column_ids['BIC'])) {
+          return $this->createParserOutdatedError(ts("The Spanish source file doesn't contain BICs"));
         }
 
         $is_header = false;

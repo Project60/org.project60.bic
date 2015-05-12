@@ -28,7 +28,7 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
     // first, download the page
     $data = $this->downloadFile(CRM_Bic_Parser_AT::$page_url);
     if (empty($data)) {
-      return $this->createError("Couldn't download page. Please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't download basic page"));
     }
 
     // convert to UTF8
@@ -38,7 +38,7 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
     $matches = array();
     $count = preg_match_all(CRM_Bic_Parser_AT::$regex, $data, $matches);
     if (empty($count)) {
-      return $this->createError("Couldn't find any bank information in the data source. Please try and update this org.project60.bic extension. If the problem persists, please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't find any bank information in the data source"));
     }
 
     // process matches

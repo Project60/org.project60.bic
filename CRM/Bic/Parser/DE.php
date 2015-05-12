@@ -30,13 +30,13 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     // first, download the page
     $page = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
     if (empty($page)) {
-      return $this->createError("Couldn't download basic page. You either have no internect connection, or the extension is outdated. In this case, please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't download basic page"));
     }
 
     // now, find the download link
     $match = array();
     if (!preg_match(CRM_Bic_Parser_DE::$link_regex, $page, $match)) {
-      return $this->createError("The information source at www.bundesbank.de has changed, and the extension is outdated. Please contact us.");
+      return $this->createParserOutdatedError(ts("The information source at www.bundesbank.de has changed"));
     }
 
     // finally, download the data file
@@ -48,7 +48,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
     $data = mb_convert_encoding($data, 'UTF-8', 'ISO-8859-1');
 
     if (empty($data)) {
-      return $this->createError("Couldn't download basic page. Please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't download basic page"));
     }
 
     // parse the lines and build up data structure

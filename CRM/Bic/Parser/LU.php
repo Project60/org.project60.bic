@@ -30,7 +30,7 @@ class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
     $file_name = sys_get_temp_dir() . '/lu-banks.xls';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_LU::$page_url);
     if (empty($downloaded_file)) {
-      return $this->createError("Couldn't download data file. You either have no internect connection, or the extension is outdated. In this case, please contact us.");
+      return $this->createParserOutdatedError(ts("Couldn't download data file"));
     }
 
     // store file

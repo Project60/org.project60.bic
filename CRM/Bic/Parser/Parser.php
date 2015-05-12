@@ -222,4 +222,17 @@ abstract class CRM_Bic_Parser_Parser {
       'error' => $message
       );
   }
+
+  /**
+   * generate a compliant error reply for the updateEntries method
+   */
+  protected function createParserOutdatedError($error_message) {
+    $message = ts("<p>An error occurred while updating the bank information:<pre>%1</pre></p>", array(1=>$error_message));
+    $message .= ts("<p>Please make sure your server is connected to the internet and try again.</p>");
+    $message .= "<br/>";
+    $message .= ts("<p>If the problem persists, the source file (provided by the bank) might have been changed. In this case the 'Little BIC Extension' needs to be updated. Please check <a href=\"https://github.com/Project60/org.project60.bic/releases\">here</a> for a newer release.</p>");
+    $message .= "<br/>";
+    $message .= ts("<p>If you are already running the newest version, feel free to contact us via <a href=\"mailto:endres@systopia.de\">email</a> or on <a href=\"https://github.com/Project60/org.project60.bic/issues/new\">GitHub</a>. The sooner we know about this problem, the sooner it'll be fixed.</p>");
+    return $this->createError($message);
+  }
 }
