@@ -134,7 +134,7 @@ function bic_civicrm_navigationMenu(&$params) {
     }
 
     if (empty($search_menu_id)) {
-      error_log("org.project60.bic: Connot find 'Contributions' menu item.");
+      error_log("org.project60.bic: Cannot find 'Contributions' menu item.");
     } else {
       // insert at the bottom
       $params[$search_menu_id]['child'][] = array(
