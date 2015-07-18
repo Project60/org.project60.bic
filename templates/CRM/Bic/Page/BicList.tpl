@@ -66,7 +66,7 @@
       <td>
         <select value="" name="country" id="country">
 {foreach from=$countries item=country}
-          <option value="{$country}">{$country_names.$country}</option>
+          <option value="{$country}" {if $country eq $default_country}selected{/if}>{$country_names.$country}</option>
 {/foreach}
         </select>      
       </td>
