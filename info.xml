@@ -8,9 +8,9 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate>2015-05-12</releaseDate>
-  <version>1.0.2</version>
-  <develStage>stable</develStage>
+  <releaseDate></releaseDate>
+  <version>1.1</version>
+  <develStage>devel</develStage>
   <urls>
     <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
     <url desc="Documentation">https://github.com/Project60/org.project60.bic/blob/master/README.md</url>
@@ -19,6 +19,7 @@
   <compatibility>
     <ver>4.4</ver>
     <ver>4.5</ver>
+    <ver>4.6</ver>
   </compatibility>
   <comments>Developed by Carlos Capote and Björn Endres</comments>
   <civix>
