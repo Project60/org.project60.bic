@@ -16,8 +16,12 @@ class CRM_Bic_Page_BicList extends CRM_Core_Page {
     // Get country names
     $country_names = null;
     if($countries) {
+
+      $config = CRM_Core_Config::singleton();
+
       $country_names = array();
       $id2code = CRM_Core_PseudoConstant::countryIsoCode();
+      $default_country = $id2code[$config->defaultContactCountry];
       $code2id = array_flip($id2code);
       $id2country = CRM_Core_PseudoConstant::country(false, false);
       foreach ($countries as $code) {
@@ -26,10 +30,11 @@ class CRM_Bic_Page_BicList extends CRM_Core_Page {
         $country_names[$code] = $country_name;
       }
     }
-    
+
     // Sends variables to Smarty
     $this->assign('countries', $countries);
     $this->assign('country_names', $country_names);
+    $this->assign('default_country', $default_country);
     $this->assign('show_message', true);
     
     parent::run();
