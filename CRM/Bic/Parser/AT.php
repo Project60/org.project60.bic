@@ -56,4 +56,13 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
     // // finally, update DB
     return $this->updateEntries('AT', $banks);
   }
+
+  /*
+   * Extracts the National Bank Identifier from an Austrian IBAN.
+   */
+  public function extractNBIDfromIBAN($iban) {
+    return array(
+      substr($iban, 4, 5),
+    );
+  }  
 }
