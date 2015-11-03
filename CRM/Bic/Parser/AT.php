@@ -21,8 +21,7 @@ require_once 'CRM/Bic/Parser/Parser.php';
  */
 class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.conserio.at/bankleitzahl/';
-  static $regex = '#<tr>[\n]<td>[\t](?P<NBIT>[0-9]{5})[\t]</td>[\n]<td>[\t](?P<BIC>[A-Z]{6,6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3,3}){0,1})[\t]</td>[\n]<td>[\t](?P<name>.*)[\t]</td>[\n]</tr>#';
+  static $page_url = 'http://www.oenb.at/idakilz/kiverzeichnis?action=downloadAllData';
 
   public function update() {
     // first, download the page
@@ -31,29 +30,60 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
       return $this->createParserOutdatedError(ts("Couldn't download basic page"));
     }
 
-    // convert to UTF8
-    $data = mb_convert_encoding($data, 'UTF-8');
+    // store data in temp file
+    $tmp_file = tempnam('/tmp', 'org.project60.bic_parserAT_');
+    file_put_contents($tmp_file, $data);
 
-    // parse the lines and build up data structure
-    $matches = array();
-    $count = preg_match_all(CRM_Bic_Parser_AT::$regex, $data, $matches);
-    if (empty($count)) {
-      return $this->createParserOutdatedError(ts("Couldn't find any bank information in the data source"));
+    // unzip data
+    $zip = new ZipArchive();
+    if ($zip->open($tmp_file) !== TRUE) {
+      return $this->createParserOutdatedError(ts("Couldn't unzip file"));
     }
 
-    // process matches
-    for ($i=0; $i<$count; $i++) {
-      $key = $matches[1][$i];
-      $banks[$key] = array(
-        'value'       => $key,
-        'name'        => $matches[2][$i],
-        'label'       => $matches[4][$i],
-        'description' => '',
-        );
+    if ($zip->numFiles <= 0) {
+      return $this->createParserOutdatedError(ts("Empty zipfile retrieved."));
     }
-    unset($matches);
+  
+    $file_info = $zip->statIndex(0);
+    $csv_data  = $zip->getStream($file_info['name']);
+    $header    = NULL;
+    $banks     = array();
+
+    // iterate CSV records
+    while (($line = fgetcsv($csv_data, 0, ';')) !== FALSE) {
+      if ($header === NULL) {
+        // FIND HEADER
+        if ($line[2] == 'Bankleitzahl') {
+          $header = $line;
+        } else {
+          // pre-header gibberish
+          continue;
+        }
+      } else {
+        // PROCESS LINE
+        $blz     = $line[2];
+        $bic     = $line[19]; // "SWIFT-Code"
+        $name    = mb_convert_encoding($line[6], 'UTF-8', 'CP1252');
+        $address = $line[7].', '.$line[8].' '.$line[9];
+        $address = mb_convert_encoding($address, 'UTF-8', 'CP1252');
+          
+        // we will only process banks with a BIC/SWIFT Code
+        if (empty($blz) || empty($bic)) continue;
+
+        $banks[$blz] = array(
+          'value'       => $blz,
+          'name'        => $bic,
+          'label'       => $name,
+          'description' => $address,
+          );
+      }
+    }
     
-    // // finally, update DB
+    // do some cleanup
+    fclose($csv_data);
+    unlink($tmp_file);
+
+    // finally, update DB
     return $this->updateEntries('AT', $banks);
   }
 
