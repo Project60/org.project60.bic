@@ -22,7 +22,7 @@ require_once 'dependencies/PHPExcel.php';
  */
 class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.nbb.be/doc/gg/Protocol/R_FullList_of_Codes_Current.xls';
+  static $page_url = 'http://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
   static $country_code = 'BE';
 
   public function update() {
