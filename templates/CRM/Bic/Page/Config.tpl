@@ -37,7 +37,7 @@
       <td style="text-align:right">
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('{$country}', this);">
-            <span><div class="icon refresh-icon"></div>{ts}Update{/ts}</span>
+            <span><div class="icon refresh-icon ui-icon-refresh"></div>{ts}Update{/ts}</span>
           </a>
         </div>
       </td>
@@ -53,7 +53,7 @@
       <td>
         <div class="action-link">
           <a class="button crm-extensions-refresh" id="new" onClick="update('all', this);">
-            <span><div class="icon refresh-icon"></div>{ts}Update All{/ts}</span>
+            <span><div class="icon refresh-icon ui-icon-refresh"></div>{ts}Update All{/ts}</span>
           </a>
         </div>
       </td>
