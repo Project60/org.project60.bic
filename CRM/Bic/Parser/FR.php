@@ -23,11 +23,11 @@ require_once 'CRM/Bic/Parser/Parser.php';
 class CRM_Bic_Parser_FR extends CRM_Bic_Parser_Parser {
 
   // temporary source
-  static $page_url = 'https://raw.githubusercontent.com/scardinius/org.project60.bic/fr-update/data/fr-bic-codes.csv';
+  static $page_url = '../../../data/fr-bic-codes.csv';
 
   public function update() {
     // first, download the page, it's a CSV file, so more convenient not to use built in method
-    $lines = file(self::$page_url);
+    $lines = file(dirname(__FILE__).'/'.self::$page_url);
     if (empty($lines)) {
       return $this->createParserOutdatedError(ts("Couldn't download CSV file"));
     }
