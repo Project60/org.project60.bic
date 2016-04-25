@@ -27,19 +27,17 @@ class CRM_Bic_Parser_FR extends CRM_Bic_Parser_Parser {
 
   public function update() {
     // first, download the page, it's a CSV file, so more convenient not to use built in method
-    $lines = file(CRM_Bic_Parser_PL::$page_url);
+    $lines = file(self::$page_url);
     if (empty($lines)) {
       return $this->createParserOutdatedError(ts("Couldn't download CSV file"));
     }
 
     $data = array();
     $count = 0;
-
     foreach ($lines as $line) {
       $data[] = str_getcsv($line, ";", '"');
       $count++;
     }
-   
     unset($lines);
 
     if (empty($count)) {
@@ -56,7 +54,6 @@ class CRM_Bic_Parser_FR extends CRM_Bic_Parser_Parser {
         'description' => '',
       );
     }
-
     unset($data);
 
     // finally, update DB
