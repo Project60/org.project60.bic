@@ -2,8 +2,8 @@
 /*-------------------------------------------------------+
 | Project 60 - Little BIC extension                      |
 | Copyright (C) 2014                                     |
-| Polish bank information
-| Author: Michał Mach (michal -at- civicrm.org)          |
+| French bank information                                |
+| Author: scardinius (scardinius -at- chords.pl)         |
 | http://www.systopia.de/                                |
 +--------------------------------------------------------+
 | This program is released as free software under the    |
