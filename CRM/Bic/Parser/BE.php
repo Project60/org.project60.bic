@@ -22,7 +22,7 @@ require_once 'dependencies/PHPExcel.php';
  */
 class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
+  static $page_url = 'https://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
   static $country_code = 'BE';
 
   public function update() {
@@ -56,6 +56,11 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
       if ($skip_lines >= 0) continue;
 
       // Process row
+      $bic = str_replace(' ', '', $excel_row[1]);
+      if (in_array(strtolower($bic), array('nav', 'nap', '-')) || substr($bic, 0, 4)=='VRIJ') {
+        // these are actually dummy entries
+        continue;
+      }
 
       // compile bank name
       $bank_name = '';
@@ -68,7 +73,7 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
       }
       $bank = array(
         'value' => $excel_row[0],
-        'name' => str_replace(' ', '', $excel_row[1]),
+        'name' => $bic,
         'label' => $bank_name,
         'description' => '',
       );
