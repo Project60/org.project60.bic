@@ -1,0 +1,13 @@
+{
+  "name": "project60/org.project60.bic",
+  "description": "Generates and maintains a list of banks",
+  "version": "1.2",
+  "type": "civicrm-module",
+  "authors": [
+    {
+      "name": "B. Endres",
+      "email": "endres@systopia.de"
+    }
+  ],
+  "license": "AGPL-3.0"
+}
