@@ -113,70 +113,17 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
  *
  * Inject the 'civicrm/bicList' item unter the 'Search' top menu, unless it's already in there...
  *
- * based on https://github.com/Project60/sepa_dd/commit/f342a223c41d7fc940294f24999fc5bdf637b98b
  */
-function bic_civicrm_navigationMenu(&$params) {
-  // see if it is already in the menu...
-  $menu_item_search = array('url' => 'civicrm/bicList');
-  $menu_items = array();
-  CRM_Core_BAO_Navigation::retrieve($menu_item_search, $menu_items);
+function bic_civicrm_navigationMenu(&$menu) {
+  _bic_civix_insert_navigation_menu($menu,'Search...',array (
+    'label' => ts('Find Banks',array('domain' => 'org.project60.bic')),
+    'name' => 'BankLists',
+    'url' => 'civicrm/bicList',
+    'permission' => 'access CiviContribute',
+    'operator' => NULL,
+    'separator' => 2,
+    'active' => 1
+  ));
 
-  if (empty($menu_items)) {
-    // it's not already contained, so we want to add it to the menu
-    
-    // now, by default we want to add it to the Contributions menu -> find it
-    $search_menu_id = 0;
-    foreach ($params as $key => $value) {
-      if ($value['attributes']['name'] == 'Search...') {
-        $search_menu_id = $key;
-        break;
-      }
-    }
-
-    if (empty($search_menu_id)) {
-      error_log("org.project60.bic: Cannot find 'Contributions' menu item.");
-    } else {
-      // insert at the bottom
-      $params[$search_menu_id]['child'][] = array(
-          'attributes' => array (
-          'label' => ts('Find Banks',array('domain' => 'org.project60.bic')),
-          'name' => 'BankLists',
-          'url' => 'civicrm/bicList',
-          'permission' => 'access CiviContribute',
-          'operator' => NULL,
-          'separator' => 2,
-          'parentID' => $search_menu_id,
-          'navID' => bic_navhelper_create_unique_nav_id($params),
-          'active' => 1
-        ));
-    }
-  }
-}
-
-/**
- * Helper function for civicrm_navigationMenu
- * 
- * Will create a new, unique ID for the navigation menu
- */
-function bic_navhelper_create_unique_nav_id($menu) {
-  $max_stored_navId = CRM_Core_DAO::singleValueQuery("SELECT max(id) FROM civicrm_navigation");
-  $max_current_navId = bic_navhelper_get_max_nav_id($menu);
-  return max($max_stored_navId, $max_current_navId) + 1;  
-}
-
-/**
- * Helper function for civicrm_navigationMenu
- * 
- * Will find the (currently) highest nav_item ID
- */
-function bic_navhelper_get_max_nav_id($menu) {
-  $max_id = 1;
-  foreach ($menu as $entry) {
-    $max_id = max($max_id, $entry['attributes']['navID']);
-    if (!empty($entry['child'])) {
-      $max_id_children = bic_navhelper_get_max_nav_id($entry['child']);
-      $max_id = max($max_id, $max_id_children);
-    }
-  }
-  return $max_id;  
+  _bic_civix_navigationMenu($menu);
 }
