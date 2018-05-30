@@ -22,7 +22,8 @@ require_once 'dependencies/PHPExcel.php';
  */
 class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.betaalvereniging.nl/wp-uploads/2013/07/BIC-lijst-NL.xlsx';
+  static $page_url = 'https://www.betaalvereniging.nl/wp-content/uploads/BIC-lijst-NL.xlsx';
+
   static $country_code = 'NL';
 
   public function update() {
