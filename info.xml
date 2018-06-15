@@ -8,9 +8,9 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate>2016-04-16</releaseDate>
-  <version>1.2</version>
-  <develStage>stable</develStage>
+  <releaseDate>2016-12-13</releaseDate>
+  <version>1.2.1.beta1</version>
+  <develStage>testing</develStage>
   <urls>
     <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
     <url desc="Documentation">https://github.com/Project60/org.project60.bic/blob/master/README.md</url>
