@@ -58,8 +58,8 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
       // Process row
       $bank = array(
-        'value' => $excel_row[0],
-        'name' => $excel_row[1],
+        'value' => $excel_row[1],
+        'name' => $excel_row[0],
         'label' => $excel_row[2],
         'description' => ''
       );
