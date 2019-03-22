@@ -109,20 +109,20 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
 }
 
 /**
- * Implementation of hook_civicrm_navigationMenu
+ * Implements hook_civicrm_navigationMenu().
  *
  * Inject the 'civicrm/bicList' item unter the 'Search' top menu, unless it's already in there...
  *
  */
 function bic_civicrm_navigationMenu(&$menu) {
-  _bic_civix_insert_navigation_menu($menu,'Search...',array (
-    'label' => ts('Find Banks',array('domain' => 'org.project60.bic')),
+  _bic_civix_insert_navigation_menu($menu, 'Search', array(
+    'label' => ts('Find Banks', array('domain' => 'org.project60.bic')),
     'name' => 'BankLists',
     'url' => 'civicrm/bicList',
     'permission' => 'access CiviContribute',
     'operator' => NULL,
     'separator' => 2,
-    'active' => 1
+    'active' => 1,
   ));
 
   _bic_civix_navigationMenu($menu);
