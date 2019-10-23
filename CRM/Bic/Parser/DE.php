@@ -1,8 +1,9 @@
 <?php
 /*-------------------------------------------------------+
 | Project 60 - Little BIC extension                      |
-| Copyright (C) 2014                                     |
-| Author: B. Endres (endres -at- systopia.de)            |
+| Copyright (C) 2019                                     |
+| Author: D. Sieber (detlev.sieber -at- civiservice.de)  |
+| based on code from B. Endres                           |
 | http://www.systopia.de/                                |
 +--------------------------------------------------------+
 | This program is released as free software under the    |
@@ -14,58 +15,76 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-require_once 'CRM/Bic/Parser/Parser.php';
+ require_once 'CRM/Bic/Parser/Parser.php';
+ require_once 'dependencies/PHPExcel.php';
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
-class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
+ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
 
-  protected static $base_url = 'https://www.bundesbank.de/de/aufgaben/unbarer-zahlungsverkehr/serviceangebot/bankleitzahlen/download---bankleitzahlen-602592';
-  protected static $page_url = 'https://www.bundesbank.de/resource/blob/602702/b6f18dadd412af2b8f47fac0cd8a8dd4/mL/blz-neu-txt-data.txt';
+  static $page_url = 'https://www.bundesbank.de/resource/blob/602630/1b5138f22cc648106b16a29ecc3117c1/mL/blz-aktuell-xls-data.xlsx';
+
+  static $country_code = 'DE';
 
   public function update() {
-    // first, download the page
-    $banks = array();
-    $data = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
-    if (empty($data)) {
-      return $this->createParserOutdatedError(ts("Couldn't download data set"));
+    // First, download the file
+    $file_name = sys_get_temp_dir() . '/DE-banks.xlsx';
+    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_DE::$page_url);
+
+    if (empty($downloaded_file)) {
+      return $this->createParserOutdatedError(ts("Couldn't download data file"));
     }
 
-    $lines = preg_split('/\n/', $data);
+    // store file
+    file_put_contents($file_name, $downloaded_file);
+    unset($downloaded_file);
 
-    foreach ($lines as $line) {
-      $bc_code = substr($line, 0, 8);
-      $bic     = trim(substr($line, 139, 11));
-      $name    = trim(substr($line, 107, 27));
-      $address = substr($line, 67, 5) . ' ' . trim(substr($line, 72, 35));
+    // Automatically detect the correct reader to load for this file type
+    $excel_reader = PHPExcel_IOFactory::createReaderForFile($file_name);
 
-      // we only want branches with BICs
-      if (empty($bic)) continue;
+    // Set reader options
+    // $excel_reader->setReadDataOnly();
+    $excel_reader->setLoadSheetsOnly(array("Daten"));
 
-      $name    = mb_convert_encoding($name,'UTF-8', 'ISO-8859-1');
-      $address = mb_convert_encoding($address,'UTF-8', 'ISO-8859-1');
+    // Read Excel file
+    $excel_object = $excel_reader->load($file_name);
+    $excel_rows = $excel_object->getActiveSheet()->toArray();
 
-      $banks[$bc_code] = array(
-          'value'       => $bc_code,
-          'name'        => $bic,
-          'label'       => $name,
-          'description' => $address,
+    // Process Excel data
+    //$skip_lines = 1;
+    $banks[] = array();
+    foreach($excel_rows as $excel_row) {
+      // skip entries with no bic
+      if (empty($excel_row[7])) continue;
+      if ($excel_row[1] != 1) continue;
+
+      // Process row
+      $bank = array(
+        'value' => $excel_row[0],
+        'name' => $excel_row[7],
+        'label' => $excel_row[5],
+        'description' => $excel_row[3] . ' ' . $excel_row[4]
       );
+      $banks[] = $bank;
     }
 
-    // some cleanup
-    unset($lines);
+    // clean up before importing
+    unset($excel_rows);
+    unset($excel_object);
+    unset($excel_reader);
+    unlink($file_name);
 
-    // finally, update DB
-    return $this->updateEntries('DE', $banks);
+    // Finally, update DB
+    return $this->updateEntries(CRM_Bic_Parser_DE::$country_code, $banks);
   }
+
   /*
    * Extracts the National Bank Identifier from an IBAN.
    */
   public function extractNBIDfromIBAN($iban) {
     return array(
-      substr($iban, 4, 8)
+      substr($iban, 4, 8),
     );
   }
 
