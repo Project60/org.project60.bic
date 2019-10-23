@@ -37,7 +37,29 @@ function civicrm_api3_bic_getfromiban($params) {
 
   foreach ($nbids as $nbid) {
     try {
-      return civicrm_api3('Bic', 'getsingle', array('country' => $country, 'nbid' => $nbid));
+      $search = civicrm_api3('Bic', 'get', ['country' => $country, 'nbid' => $nbid]);
+      // check if all entities are the same
+      $candidate = NULL;
+      foreach ($search['values'] as $entity) {
+        if ($candidate == NULL) {
+          $candidate = $entity;
+        } else {
+          if ($candidate != $entity) {
+            // two different matches found!
+            Civi::log()->debug("LittleBIC: contradicting bank records detected: {$country}{$nbid}");
+            return civicrm_api3_create_error("Contradicting bank records detected: {$country}{$nbid}");
+
+          } else {
+            // identical records!
+            Civi::log()->debug("LittleBIC: duplicate bank records detected: {$country}{$nbid}");
+          }
+        }
+      }
+
+      if ($candidate) {
+        return $candidate;
+      }
+
     } catch (Exception $e) {
       // not found? no problem, just keep looking
     }
