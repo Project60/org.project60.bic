@@ -2,6 +2,19 @@
 
 require_once 'bic.civix.php';
 
+use \Symfony\Component\DependencyInjection\ContainerBuilder;
+
+/**
+ * Implements hook_civicrm_container()
+ *
+ * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
+ */
+function bic_civicrm_container(ContainerBuilder $container) {
+    if (class_exists('\Civi\Bic\ContainerSpecs')) {
+        $container->addCompilerPass(new \Civi\Bic\ContainerSpecs());
+    }
+}
+
 /**
  * Implementation of hook_civicrm_config
  */
@@ -36,24 +49,6 @@ function bic_civicrm_uninstall() {
  * Implementation of hook_civicrm_enable
  */
 function bic_civicrm_enable() {
-  // check if option group is there, and create if it isn't
-  try {
-    $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
-  } catch (Exception $e) {
-    // group's not there yet, create:
-    try {
-      $option_group = civicrm_api3('OptionGroup', 'create', array(
-          'name'         => 'bank_list',
-          'title'        => ts('List of banks'),
-          'is_reserved'  => 0,
-          'is_active'    => 1,
-          ));
-    } catch (Exception $create_ex) {
-      // TODO: more info?
-      error_log("Couldn't create 'bank_list' OptionGroup.");
-    }
-  }
-
   return _bic_civix_civicrm_enable();
 }
 
