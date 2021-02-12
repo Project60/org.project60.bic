@@ -1,10 +1,14 @@
 <?php
 
 require_once 'CRM/Core/Page.php';
+use CRM_Bic_ExtensionUtil as E;
 
 class CRM_Bic_Page_BicList extends CRM_Core_Page {
   function run() {
     // Prepares variables for being sent to Smarty
+
+    CRM_Utils_System::setTitle(E::ts('Find Banks'));
+
 
     //Only show countries with attached information
     $countries = null;

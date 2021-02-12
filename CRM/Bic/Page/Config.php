@@ -15,9 +15,12 @@
 +--------------------------------------------------------*/
 
 require_once 'CRM/Core/Page.php';
+use CRM_Bic_ExtensionUtil as E;
 
 class CRM_Bic_Page_Config extends CRM_Core_Page {
   function run() {
+
+    CRM_Utils_System::setTitle(E::ts('Available Banks'));
 
     $countries = CRM_Bic_Parser_Parser::getParserList();
     $stats = civicrm_api3('Bic', 'stats');
