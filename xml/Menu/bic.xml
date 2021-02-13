@@ -3,7 +3,7 @@
   <item>
     <path>civicrm/bicImport</path>
     <page_callback>CRM_Bic_Page_Config</page_callback>
-    <title>Import Bank Lists</title>
+    <title>{ts}Import Bank Lists{/ts}</title>
     <access_arguments>administer CiviCRM</access_arguments>
     <adminGroup>CiviContribute</adminGroup>
     <icon>admin/small/online_contribution_pages.png</icon>
@@ -11,7 +11,7 @@
   <item>
     <path>civicrm/bicList</path>
     <page_callback>CRM_Bic_Page_BicList</page_callback>
-    <title>Find Banks</title>
+    <title>{ts}Find Banks{/ts}</title>
     <access_arguments>access CiviContribute</access_arguments>
   </item>
 </menu>
