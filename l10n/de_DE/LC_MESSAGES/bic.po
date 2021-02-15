@@ -1,19 +1,19 @@
-# Copyright CiviCRM LLC (c) 2004-2015
-# This file is distributed under the same license as the CiviCRM package.
-# If you contribute heavily to a translation and deem your work copyrightable,
-# make sure you license it to CiviCRM LLC under Academic Free License 3.0.
 msgid ""
 msgstr ""
-"Project-Id-Version: org.project60.bic\n"
+"Project-Id-Version: Little BIC Extension\n"
 "POT-Creation-Date: 2021-02-12 13:18+0100\n"
-"Language-Team: CiviCRM Translators <civicrm-translators@lists.civicrm.org>\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Bjoern Endres <Bjoern.Endres@didonai.com>\n"
+"Language-Team: Project60 <endres@systopia.de>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
 
 #: CRM/Bic/Page/BicList.php bic.php
 msgid "Find Banks"
-msgstr ""
+msgstr "Bank finden"
 
 #: CRM/Bic/Page/Config.php
 msgid "Available Banks"
@@ -21,11 +21,13 @@ msgstr ""
 
 #: CRM/Bic/Parser/AT.php
 msgid "Couldn't download basic page"
-msgstr ""
+msgstr "Datenquelle kann nicht geladen werden"
 
 #: CRM/Bic/Parser/AT.php
+#, fuzzy
+#| msgid "Couldn't download data file"
 msgid "Couldn't unzip file"
-msgstr ""
+msgstr "Datenquelle kann nicht heruntergeladen werden"
 
 #: CRM/Bic/Parser/AT.php
 msgid "Empty zipfile retrieved."
@@ -34,38 +36,45 @@ msgstr ""
 #: CRM/Bic/Parser/BE.php CRM/Bic/Parser/DE.php CRM/Bic/Parser/LU.php
 #: CRM/Bic/Parser/NL.php
 msgid "Couldn't download data file"
-msgstr ""
+msgstr "Datenquelle kann nicht heruntergeladen werden"
 
 #: CRM/Bic/Parser/CH.php
+#, fuzzy
+#| msgid "Couldn't download data file"
 msgid "Couldn't download data set"
-msgstr ""
+msgstr "Datenquelle kann nicht heruntergeladen werden"
 
 #: CRM/Bic/Parser/ES.php
 msgid "Couldn't download the Spanish list of banks"
-msgstr ""
+msgstr "Die Liste der spanischen Banken konnte nicht heruntergeladen werden"
 
 #: CRM/Bic/Parser/ES.php
 msgid "The Spanish source file doesn't contain BICs"
-msgstr ""
+msgstr "Die Liste der spanischen Banken enthält keine BICs"
 
 #: CRM/Bic/Parser/PL.php
+#, fuzzy
+#| msgid "Couldn't download data file"
 msgid "Couldn't download CSV file"
-msgstr ""
+msgstr "Datenquelle kann nicht heruntergeladen werden"
 
 #: CRM/Bic/Parser/PL.php
 msgid "Couldn't find any bank information in the data source"
-msgstr ""
+msgstr "Datenquelle enthält keine Bankdaten"
 
 #: CRM/Bic/Parser/Parser.php
 msgid ""
 "<p>An error occurred while updating the bank information:<pre>%1</pre></p>"
 msgstr ""
+"<p>Es gab einen Fehler beim Aktualisieren der Bankdaten:<pre>%1</pre></p>"
 
 #: CRM/Bic/Parser/Parser.php
 msgid ""
 "<p>Please make sure your server is connected to the internet and try again.</"
 "p>"
 msgstr ""
+"<p>Bitte stellen Sie sicher, dass der Server mit dem Internet verbunden ist "
+"und versuchen Sie das Update erneut.</p>"
 
 #: CRM/Bic/Parser/Parser.php
 msgid ""
@@ -74,6 +83,11 @@ msgid ""
 "updated. Please check <a href=\"https://github.com/Project60/org.project60."
 "bic/releases\">here</a> for a newer release.</p>"
 msgstr ""
+"<p>Falls das Problem weiterhin besteht, ist es möglich dass die Datenquelle "
+"(die von den Banken bereitgestellt wird) geändert wurde. In diesem Fall muss "
+"die 'Little BIC Extension' aktualisiert werden. Bitte prüfen Sie <a href="
+"\"https://github.com/Project60/org.project60.bic/releases\">hier</a>, ob "
+"eine neue Version verfügbar ist.</p>"
 
 #: CRM/Bic/Parser/Parser.php
 msgid ""
@@ -82,6 +96,11 @@ msgid ""
 "github.com/Project60/org.project60.bic/issues/new\">GitHub</a>. The sooner "
 "we know about this problem, the sooner it'll be fixed.</p>"
 msgstr ""
+"<p>Falls Sie bereits die neueste Version verwenden, würden wir uns über eine "
+"Nachricht via <a href=\"mailto:endres@systopia.de\">email</a>oder <a href="
+"\"https://github.com/Project60/org.project60.bic/issues/new\">GitHub</a> "
+"freuen. Je eher wir von dem Problem erfahren, desto schneller kann es "
+"behoben werden.</p>"
 
 #: CRM/Bic/Upgrader/Base.php
 msgid "Upgrade %1 to revision %2"
@@ -89,7 +108,7 @@ msgstr ""
 
 #: CRM/Bic/Upgrader.php
 msgid "List of banks"
-msgstr ""
+msgstr "Bankenliste"
 
 #: Civi/Bic/ActionProvider/Action/LookupBic.php
 msgid "No"
@@ -173,10 +192,13 @@ msgid ""
 "find the bank you're looking for, you may want to <a href='bicImport'>update "
 "your bank list</a>."
 msgstr ""
+"Diese Seite ermöglicht die Suche nach Banken und Zusatzinformationen. Falls "
+"Sie die gesuchte Bank hier nicht finden, sollten Sie <a href='bicImport'>die "
+"Liste aktualisieren</a>.  "
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid "Find Bank by IBAN"
-msgstr ""
+msgstr "Bank mittels IBAN Suchen"
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid "Name"
@@ -184,7 +206,7 @@ msgstr ""
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: templates/CRM/Bic/Page/BicList.tpl templates/CRM/Bic/Page/Config.tpl
 msgid "Country"
@@ -192,11 +214,11 @@ msgstr ""
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid "National Bank ID"
-msgstr ""
+msgstr "Nationale Bankleitzahl"
 
 #: templates/CRM/Bic/Page/BicList.tpl
 msgid "Find Bank by National ID"
-msgstr ""
+msgstr "Bank mittels BLZ Suchen"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid ""
@@ -209,33 +231,43 @@ msgid ""
 "to\n"
 "  query this information in the <a href=\"bicList\">Banks List</a> page.\n"
 msgstr ""
+"\n"
+"  Wenn Sie den Update Button neben den entsprechenden Ländern drücken,\n"
+"  wird das System versuchen die entsprechenden Informationen von der\n"
+"  jeweiligen Nationalbank herunterzuladen. Auf diese Liste können Sie\n"
+"  dann über die <a href=\"bicList\">Bankensuche</a> zugreifen.\n"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Count"
-msgstr ""
+msgstr "Anzahl"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Total"
-msgstr ""
+msgstr "Gesamtzahl"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Update All"
-msgstr ""
+msgstr "Alle Aktualisieren"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid "Update Problem"
-msgstr ""
+msgstr "Update Problem"
 
 #: templates/CRM/Bic/Page/Config.tpl
 msgid ""
 "The update timed out, but maybe it was partially succesful. You might want "
 "to try again."
 msgstr ""
+"Das Update wurde wegen Zeitüberschreitung abgebrochen. Es macht allerdings "
+"Sinn, es einfach noch einmal zu versuchen."
+
+#~ msgid "The information source at www.bundesbank.de has changed"
+#~ msgstr "Das Datenformat unter www.bundesbank.de wurde geändert."

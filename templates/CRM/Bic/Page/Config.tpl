@@ -12,6 +12,7 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
+{crmScope extensionKey='org.project60.bic'}
 <div id="help">{ts}
   If you click the Update button, next to the name of one of the listed countries,
   CiviCRM will try to connect to the official source of financial institutions
@@ -130,3 +131,4 @@
   }
 </script>
 {/literal}
+{/crmScope}

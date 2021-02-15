@@ -12,6 +12,7 @@
 | written permission from the original author(s).        |
 +-------------------------------------------------------*}
 
+{crmScope extensionKey='org.project60.bic'}
 {if $show_message}
   <div id="help">{ts}This page allows you to find banks and additional information. If you can't find the bank you're looking for, you may want to <a href='bicImport'>update your bank list</a>.{/ts}</div>
 {/if}
@@ -204,3 +205,4 @@
   }
 </script>
 {/literal}
+{/crmScope}
