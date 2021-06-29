@@ -90,7 +90,7 @@ class LookupBic extends AbstractAction
         $normalise = $this->configuration->getParameter('normalise');
         if ($normalise) {
             $iban = strtoupper($iban);
-            $iban = preg_replace('/\s/', '', $iban);
+            $iban = preg_replace('/^[A-Z0-9]/', '', $iban);
         }
         $output->setParameter('iban', $iban);
 
