@@ -8,8 +8,8 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate></releaseDate>
-  <version>1.5-dev</version>
+  <releaseDate>2021-06-29</releaseDate>
+  <version>1.5-beta2</version>
   <develStage></develStage>
   <urls>
     <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
@@ -17,10 +17,9 @@
     <url desc="Support">https://github.com/Project60/org.project60.bic/issues/new</url>
   </urls>
   <compatibility>
-    <ver>4.7</ver>
     <ver>5.13</ver>
   </compatibility>
-  <comments>Developed by Carlos Capote and Björn Endres</comments>
+  <comments>Originally developed by Carlos Capote and Björn Endres</comments>
   <civix>
     <namespace>CRM/Bic</namespace>
   </civix>
