@@ -39,7 +39,7 @@ class CRM_Bic_Page_Config extends CRM_Core_Page {
     $config = CRM_Core_Config::singleton();
 
     $id2code = CRM_Core_PseudoConstant::countryIsoCode();
-    $default_country = $id2code[$config->defaultContactCountry];
+    $default_country = $id2code[$config->defaultContactCountry] ?? '';
     $code2id = array_flip($id2code);
     $id2country = CRM_Core_PseudoConstant::country(FALSE, FALSE);
     foreach ($countries as $code) {

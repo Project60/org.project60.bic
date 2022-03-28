@@ -14,6 +14,8 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+use CRM_Bic_ExtensionUtil as E;
+
 /**
  * Abstract class defining the basis for national bank info parsers
  */
@@ -91,12 +93,22 @@ abstract class CRM_Bic_Parser_Parser {
 
 
   /**
-   * Will update all entries for a given  
+   * Will update all entries for a given country
    * 
-   * @param  $coutry   ISO country code
-   * @param  $entries  a set of array('value'=>national_code, 'label'=>bank_name, 'name'=>BIC, 'description'=>optional data);
+   * @param  string $country
+   *    ISO country code
+   * @param  array  $entries
+   *    a set of ['value'=>national_code, 'label'=>bank_name, 'name'=>BIC, 'description'=>optional data];
    */
   protected function updateEntries($country, $entries) {
+    // if there are no entries given, something probably went wrong.
+    // As a result, all existing entries would be deleted. To prevent this, we'll throw an exception
+    if (empty($entries)) {
+      $error_message = E::ts("No bank entries could be extracted from the source for country <code>%1</code>. It is possible that the source is outdated. If you can rule out network issues, please report this here: https://github.com/Project60/org.project60.bic/issues.", [1 => $country]);
+      CRM_Core_Session::setStatus($error_message, E::ts("Problem with %1 Data Source", [1 => $country]), 'error');
+      throw new CRM_Core_Exception($error_message);
+    }
+
     try {
       $option_group = civicrm_api3('OptionGroup', 'getsingle', array('name' => 'bank_list'));
       $option_group_id = (int) $option_group['id'];
