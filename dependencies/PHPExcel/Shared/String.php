@@ -526,8 +526,8 @@ class PHPExcel_Shared_String
 	 */
 	public static function utf16_decode($str, $bom_be = TRUE) {
 		if( strlen($str) < 2 ) return $str;
-		$c0 = ord($str{0});
-		$c1 = ord($str{1});
+		$c0 = ord($str[0]);
+		$c1 = ord($str[1]);
 		if( $c0 == 0xfe && $c1 == 0xff ) { $str = substr($str,2); }
 		elseif( $c0 == 0xff && $c1 == 0xfe ) { $str = substr($str,2); $bom_be = false; }
 		$len = strlen($str);
