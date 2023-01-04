@@ -1,7 +1,7 @@
 {
   "name": "project60/org.project60.bic",
   "description": "Imports and maintains a list of banks",
-  "version": "1.8.0-dev",
+  "version": "1.8.0-alpha1",
   "type": "civicrm-module",
   "authors": [
     {
