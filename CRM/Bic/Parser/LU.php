@@ -22,7 +22,7 @@ require_once 'dependencies/PHPExcel.php';
  */
 class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://www.abbl.lu/content/uploads/2017/12/IBAN_BIC_CODES_LUX_20180329.xlsx';
+  static $page_url = 'https://www.abbl.lu/media/file/global/dynamic/c0f7906fec3b33783c9f73c1f6109afdbbc9a66c/Luxembourg%20Register%20of%20IBAN-BIC%20Codes-01.12.2022.xlsx';
   static $country_code = 'LU';
 
   public function update() {
