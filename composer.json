@@ -9,5 +9,8 @@
       "email": "endres@systopia.de"
     }
   ],
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "require": {
+    "phpoffice/phpspreadsheet": "^1.26"
+  }
 }

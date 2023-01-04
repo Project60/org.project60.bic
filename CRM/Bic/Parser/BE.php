@@ -14,8 +14,10 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+// Include Composer's autoloader file.
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 require_once 'CRM/Bic/Parser/Parser.php';
-require_once 'dependencies/PHPExcel.php';
 
 /**
  * Abstract class defining the basis for national bank info parsers
@@ -38,11 +40,11 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
     unset($downloaded_file);
 
     // Automatically detect the correct reader to load for this file type
-    $excel_reader = PHPExcel_IOFactory::createReaderForFile($file_name);
+    $excel_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($file_name);
 
     // Set reader options
-    $excel_reader->setReadDataOnly();
-    $excel_reader->setLoadSheetsOnly(array("Q_FULL_LIST_XLS_REPORT"));
+    $excel_reader->setReadDataOnly(true);
+    $excel_reader->setLoadSheetsOnly(["Q_FULL_LIST_XLS_REPORT"]);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
