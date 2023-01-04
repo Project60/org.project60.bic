@@ -1,7 +1,7 @@
 {
   "name": "project60/org.project60.bic",
-  "description": "Generates and maintains a list of banks",
-  "version": "1.2",
+  "description": "Imports and maintains a list of banks",
+  "version": "1.8",
   "type": "civicrm-module",
   "authors": [
     {
@@ -11,6 +11,7 @@
   ],
   "license": "AGPL-3.0",
   "require": {
+    "php": "^8.0",
     "phpoffice/phpspreadsheet": "^1.26"
   }
 }
