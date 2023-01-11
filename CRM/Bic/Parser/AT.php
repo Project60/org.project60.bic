@@ -14,6 +14,8 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+use CRM_Bic_ExtensionUtil as E;
+
 require_once 'CRM/Bic/Parser/Parser.php';
 
 /**
@@ -21,78 +23,92 @@ require_once 'CRM/Bic/Parser/Parser.php';
  */
 class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'http://www.oenb.at/idakilz/kiverzeichnis?action=downloadAllData';
+  static $page_url = 'https://www.oenb.at/docroot/downloads_observ/sepa-zv-vz_gesamt.csv';
 
   public function update() {
     // first, download the page
-    $data = $this->downloadFile(CRM_Bic_Parser_AT::$page_url);
+    $raw = $this->downloadFile(CRM_Bic_Parser_AT::$page_url);
+    $data = preg_split('/\r\n|\r|\n/', $raw);
     if (empty($data)) {
-      return $this->createParserOutdatedError(ts("Couldn't download basic page"));
+      return $this->createParserOutdatedError(E::ts("Couldn't download source "));
     }
 
-    // store data in temp file
-    $tmp_file = tempnam('/tmp', 'org.project60.bic_parserAT_');
-    file_put_contents($tmp_file, $data);
-
-    // unzip data
-    $zip = new ZipArchive();
-    if ($zip->open($tmp_file) !== TRUE) {
-      return $this->createParserOutdatedError(ts("Couldn't unzip file"));
-    }
-
-    if ($zip->numFiles <= 0) {
-      return $this->createParserOutdatedError(ts("Empty zipfile retrieved."));
-    }
-  
-    $file_info = $zip->statIndex(0);
-    $csv_data  = $zip->getStream($file_info['name']);
-    $header    = NULL;
-    $banks     = array();
+    $banks   = [];
+    $headers = null;
 
     // iterate CSV records
-    while (($line = fgetcsv($csv_data, 0, ';')) !== FALSE) {
-      if ($header === NULL) {
-        // FIND HEADER
-        if ($line[2] == 'Bankleitzahl') {
-          $header = $line;
-        } else {
-          // pre-header gibberish
-          continue;
-        }
-      } else {
-        // PROCESS LINE
-        $blz     = $line[2];
-        $bic     = $line[19]; // "SWIFT-Code"
-        $name    = mb_convert_encoding($line[6], 'UTF-8', 'CP1252');
-        $address = $line[7].', '.$line[8].' '.$line[9];
-        $address = mb_convert_encoding($address, 'UTF-8', 'CP1252');
-          
-        // we will only process banks with a BIC/SWIFT Code
-        if (empty($blz) || empty($bic)) continue;
+    foreach ($data as $line) {
+      // process line
+      $line = iconv('ISO-8859-15', 'UTF-8', $line);
+      $fields = str_getcsv($line, ';');
 
-        $banks[$blz] = array(
-          'value'       => $blz,
-          'name'        => $bic,
-          'label'       => $name,
-          'description' => $address,
-          );
+      // skip some stuff: preamble
+      if (count($fields) < 20) continue;
+
+      if ($headers === NULL) {
+        // first 'real' line should be header
+        $headers = $fields;
+
+        if (  !in_array('Identnummer', $headers)
+           || !in_array('Bankleitzahl', $headers)
+           || !in_array('SWIFT-Code', $headers)) {
+          return $this->createParserOutdatedError(E::ts("Source file doesn't contain Identnummer/Bankleitzahl/SWIFT-Code"));
+        }
+      }
+      else {
+        // parse line
+        $data_set = array_combine($headers, $fields);
+
+        // we will only process banks with a BIC/SWIFT Code
+        if (   empty($data_set['Identnummer'])
+            || empty($data_set['Bankleitzahl'])
+            || empty($data_set['SWIFT-Code'])
+        ) continue;
+
+        // compile data set
+        $banks[$data_set['Bankleitzahl']] = array(
+            'value'       => $data_set['Bankleitzahl'],
+            'name'        => $data_set['SWIFT-Code'],
+            'label'       => $data_set['Bankenname'] ?? 'Unknown',
+            'description' => $this->getDescription($data_set)
+        );
       }
     }
-    
-    // do some cleanup
-    fclose($csv_data);
-    unlink($tmp_file);
 
     // finally, update DB
     return $this->updateEntries('AT', $banks);
   }
 
-  /*
-   * Extracts the National Bank Identifier from an Austrian IBAN.
+  /**
+   * Extract the description part from the data set
+   *
+   * @param array $data_set
+   *   the data set for this bank
+   *
+   * @return string
+   *   the description
    */
+  protected function getDescription($data_set)
+  {
+    $description = '';
+    if (!empty($data_set['Straße'])) {
+      $description .= $data_set['Straße'] . ',';
+    }
+    if (!empty($data_set['PLZ'])) {
+      $description .= ' ' . $data_set['PLZ'];
+    }
+    if (!empty($data_set['Ort'])) {
+      $description .= ' ' . $data_set['Ort'];
+    }
+    return $description;
+  }
+
+  /*
+ * Extracts the National Bank Identifier from an Austrian IBAN.
+ */
   public function extractNBIDfromIBAN($iban) {
     return array(
-      substr($iban, 4, 5),
+        substr($iban, 4, 5),
     );
-  }  
+  }
 }
