@@ -67,6 +67,7 @@ class LookupBic extends AbstractAction
         return new SpecificationBag([
             new Specification('iban', 'String', E::ts('IBAN'), true, null, null, null, false),
             new Specification('bic', 'String', E::ts('BIC'), false, null, null, null, false),
+            new Specification('title', 'String', E::ts('Title'), false, null, null, null, false),
             new Specification('error', 'String', E::ts('Error'), false, null, null, null, false),
         ]);
     }
@@ -109,6 +110,7 @@ class LookupBic extends AbstractAction
         } else {
             // BIC found
             $output->setParameter('bic', $lookup['bic']);
+            $output->setParameter('title', $lookup['title']);
             $output->setParameter('error', '');
         }
     }
