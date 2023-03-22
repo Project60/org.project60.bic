@@ -23,7 +23,7 @@ require_once 'CRM/Bic/Parser/Parser.php';
 class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
 
   // official source of Polish National Bank
-  static $page_url = 'http://www.nbp.pl/banki_w_polsce/ewidencja/dz_bank_jorg.txt';
+  static $page_url = 'https://ewib.nbp.pl/plewibnra?dokNazwa=plewibnra.txt';
 
   public function update() {
     // first, download the page, it's a CSV file, so more convenient not to use built in method
@@ -42,7 +42,7 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
       $data[] = array_map('trim', str_getcsv($line, "\t"));
       $count++;
     }
-   
+
     unset($lines);
 
     if (empty($count)) {
