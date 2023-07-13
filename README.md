@@ -8,6 +8,14 @@ The extension also offers an API lookup service.
 
 **Remark**: the included PHPExcel might require a PHP memory limit of 256M or higher.
 
+How to get started
+------------------
+After installing the extension, you'll find a new entry in the administration console
+called "Bank Information (BIC)". This is where you can download the BIC data for the
+countries you need. Revisit the site if you feel that your BIC data is out of date.
+
+This page also has a "Find Banks" section to do manual test lookups on bank information.
+
 Contextual Information
 ----------------------
 
