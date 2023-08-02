@@ -19,6 +19,12 @@
   <compatibility>
     <ver>5.13</ver>
   </compatibility>
+  <phpCompatibility>
+    <ver>7.4</ver>
+  </phpCompatibility>
+  <phpIncompatibility>
+    <ver>8.0</ver>
+  </phpIncompatibility>
   <comments>Originally Developed by Carlos Capote and Björn Endres</comments>
   <civix>
     <namespace>CRM/Bic</namespace>
