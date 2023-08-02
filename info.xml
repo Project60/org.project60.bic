@@ -8,8 +8,8 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate>2023-01-18</releaseDate>
-  <version>1.7.5</version>
+  <releaseDate>2023-08-02</releaseDate>
+  <version>1.7.6</version>
   <develStage>stable</develStage>
   <urls>
     <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
