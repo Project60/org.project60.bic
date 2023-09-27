@@ -16,15 +16,9 @@
     <url desc="Documentation">https://github.com/Project60/org.project60.bic/blob/master/README.md</url>
     <url desc="Support">https://github.com/Project60/org.project60.bic/issues/new</url>
   </urls>
-  <compatibility>
-    <ver>5.13</ver>
-  </compatibility>
-  <phpCompatibility>
-    <ver>7.4</ver>
-  </phpCompatibility>
-  <phpIncompatibility>
-    <ver>8.0</ver>
-  </phpIncompatibility>
+  <requires>
+    <php>&gt;=7.3.0 &lt;8.0.0</php>
+  </requires>
   <comments>Originally Developed by Carlos Capote and Björn Endres</comments>
   <civix>
     <namespace>CRM/Bic</namespace>
