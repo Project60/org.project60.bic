@@ -95,13 +95,7 @@ function _bic_civix_civicrm_config(&$config = NULL) {
 
   $extRoot = __DIR__ . DIRECTORY_SEPARATOR;
   $extDir = $extRoot . 'templates';
-
-  if (is_array($template->template_dir)) {
-    array_unshift($template->template_dir, $extDir);
-  }
-  else {
-    $template->template_dir = [$extDir, $template->template_dir];
-  }
+  $template->addTemplateDir($extDir);
 
   $include_path = $extRoot . PATH_SEPARATOR . get_include_path();
   set_include_path($include_path);
