@@ -18,6 +18,18 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet as PhpspreadsheetWorksheet;
 
 class Worksheet extends WriterPart
 {
+    /** @var string */
+    private $numberStoredAsText = '';
+
+    /** @var string */
+    private $formula = '';
+
+    /** @var string */
+    private $twoDigitTextYear = '';
+
+    /** @var string */
+    private $evalError = '';
+
     /**
      * Write worksheet to XML format.
      *
@@ -28,6 +40,10 @@ class Worksheet extends WriterPart
      */
     public function writeWorksheet(PhpspreadsheetWorksheet $worksheet, $stringTable = [], $includeCharts = false)
     {
+        $this->numberStoredAsText = '';
+        $this->formula = '';
+        $this->twoDigitTextYear = '';
+        $this->evalError = '';
         // Create XML writer
         $objWriter = null;
         if ($this->getParentWriter()->getUseDiskCaching()) {
@@ -118,6 +134,9 @@ class Worksheet extends WriterPart
         // AlternateContent
         $this->writeAlternateContent($objWriter, $worksheet);
 
+        // IgnoredErrors
+        $this->writeIgnoredErrors($objWriter);
+
         // Table
         $this->writeTable($objWriter, $worksheet);
 
@@ -131,6 +150,32 @@ class Worksheet extends WriterPart
         return $objWriter->getData();
     }
 
+    private function writeIgnoredError(XMLWriter $objWriter, bool &$started, string $attr, string $cells): void
+    {
+        if ($cells !== '') {
+            if (!$started) {
+                $objWriter->startElement('ignoredErrors');
+                $started = true;
+            }
+            $objWriter->startElement('ignoredError');
+            $objWriter->writeAttribute('sqref', substr($cells, 1));
+            $objWriter->writeAttribute($attr, '1');
+            $objWriter->endElement();
+        }
+    }
+
+    private function writeIgnoredErrors(XMLWriter $objWriter): void
+    {
+        $started = false;
+        $this->writeIgnoredError($objWriter, $started, 'numberStoredAsText', $this->numberStoredAsText);
+        $this->writeIgnoredError($objWriter, $started, 'formula', $this->formula);
+        $this->writeIgnoredError($objWriter, $started, 'twoDigitTextYear', $this->twoDigitTextYear);
+        $this->writeIgnoredError($objWriter, $started, 'evalError', $this->evalError);
+        if ($started) {
+            $objWriter->endElement();
+        }
+    }
+
     /**
      * Write SheetPr.
      */
@@ -138,7 +183,7 @@ class Worksheet extends WriterPart
     {
         // sheetPr
         $objWriter->startElement('sheetPr');
-        if ($worksheet->getParent()->hasMacros()) {
+        if ($worksheet->getParentOrThrow()->hasMacros()) {
             //if the workbook have macros, we need to have codeName for the sheet
             if (!$worksheet->hasCodeName()) {
                 $worksheet->setCodeName($worksheet->getTitle());
@@ -681,7 +726,7 @@ class Worksheet extends WriterPart
                 $objWriter->writeAttribute('type', $conditional->getConditionType());
                 self::writeAttributeIf(
                     $objWriter,
-                    ($conditional->getConditionType() != Conditional::CONDITION_DATABAR),
+                    ($conditional->getConditionType() !== Conditional::CONDITION_DATABAR && $conditional->getNoFormatSet() === false),
                     'dxfId',
                     (string) $this->getParentWriter()->getStylesConditionalHashTable()->getIndexForHashCode($conditional->getHashCode())
                 );
@@ -969,7 +1014,7 @@ class Worksheet extends WriterPart
         }
         $objWriter->writeAttribute('pageOrder', $worksheet->getPageSetup()->getPageOrder());
 
-        $getUnparsedLoadedData = $worksheet->getParent()->getUnparsedLoadedData();
+        $getUnparsedLoadedData = $worksheet->getParentOrThrow()->getUnparsedLoadedData();
         if (isset($getUnparsedLoadedData['sheets'][$worksheet->getCodeName()]['pageSetupRelId'])) {
             $objWriter->writeAttribute('r:id', $getUnparsedLoadedData['sheets'][$worksheet->getCodeName()]['pageSetupRelId']);
         }
@@ -1006,12 +1051,11 @@ class Worksheet extends WriterPart
         // Get row and column breaks
         $aRowBreaks = [];
         $aColumnBreaks = [];
-        foreach ($worksheet->getBreaks() as $cell => $breakType) {
-            if ($breakType == PhpspreadsheetWorksheet::BREAK_ROW) {
-                $aRowBreaks[] = $cell;
-            } elseif ($breakType == PhpspreadsheetWorksheet::BREAK_COLUMN) {
-                $aColumnBreaks[] = $cell;
-            }
+        foreach ($worksheet->getRowBreaks() as $cell => $break) {
+            $aRowBreaks[$cell] = $break;
+        }
+        foreach ($worksheet->getColumnBreaks() as $cell => $break) {
+            $aColumnBreaks[$cell] = $break;
         }
 
         // rowBreaks
@@ -1020,12 +1064,16 @@ class Worksheet extends WriterPart
             $objWriter->writeAttribute('count', (string) count($aRowBreaks));
             $objWriter->writeAttribute('manualBreakCount', (string) count($aRowBreaks));
 
-            foreach ($aRowBreaks as $cell) {
+            foreach ($aRowBreaks as $cell => $break) {
                 $coords = Coordinate::coordinateFromString($cell);
 
                 $objWriter->startElement('brk');
                 $objWriter->writeAttribute('id', $coords[1]);
                 $objWriter->writeAttribute('man', '1');
+                $rowBreakMax = $break->getMaxColOrRow();
+                if ($rowBreakMax >= 0) {
+                    $objWriter->writeAttribute('max', "$rowBreakMax");
+                }
                 $objWriter->endElement();
             }
 
@@ -1038,11 +1086,11 @@ class Worksheet extends WriterPart
             $objWriter->writeAttribute('count', (string) count($aColumnBreaks));
             $objWriter->writeAttribute('manualBreakCount', (string) count($aColumnBreaks));
 
-            foreach ($aColumnBreaks as $cell) {
+            foreach ($aColumnBreaks as $cell => $break) {
                 $coords = Coordinate::coordinateFromString($cell);
 
                 $objWriter->startElement('brk');
-                $objWriter->writeAttribute('id', (string) (Coordinate::columnIndexFromString($coords[0]) - 1));
+                $objWriter->writeAttribute('id', (string) ((int) $coords[0] - 1));
                 $objWriter->writeAttribute('man', '1');
                 $objWriter->endElement();
             }
@@ -1131,7 +1179,20 @@ class Worksheet extends WriterPart
                         array_pop($columnsInRow);
                         foreach ($columnsInRow as $column) {
                             // Write cell
-                            $this->writeCell($objWriter, $worksheet, "{$column}{$currentRow}", $aFlippedStringTable);
+                            $coord = "$column$currentRow";
+                            if ($worksheet->getCell($coord)->getIgnoredErrors()->getNumberStoredAsText()) {
+                                $this->numberStoredAsText .= " $coord";
+                            }
+                            if ($worksheet->getCell($coord)->getIgnoredErrors()->getFormula()) {
+                                $this->formula .= " $coord";
+                            }
+                            if ($worksheet->getCell($coord)->getIgnoredErrors()->getTwoDigitTextYear()) {
+                                $this->twoDigitTextYear .= " $coord";
+                            }
+                            if ($worksheet->getCell($coord)->getIgnoredErrors()->getEvalError()) {
+                                $this->evalError .= " $coord";
+                            }
+                            $this->writeCell($objWriter, $worksheet, $coord, $aFlippedStringTable);
                         }
                     }
 
@@ -1231,7 +1292,7 @@ class Worksheet extends WriterPart
             $objWriter->writeAttribute('ref', $cell->getCoordinate());
             $objWriter->writeAttribute('aca', '1');
             $objWriter->writeAttribute('ca', '1');
-            $objWriter->text(substr($cellValue, 1));
+            $objWriter->text(FunctionPrefix::addFunctionPrefixStripEquals($cellValue));
             $objWriter->endElement();
         } else {
             $objWriter->writeElement('f', FunctionPrefix::addFunctionPrefixStripEquals($cellValue));
@@ -1305,7 +1366,7 @@ class Worksheet extends WriterPart
      */
     private function writeDrawings(XMLWriter $objWriter, PhpspreadsheetWorksheet $worksheet, $includeCharts = false): void
     {
-        $unparsedLoadedData = $worksheet->getParent()->getUnparsedLoadedData();
+        $unparsedLoadedData = $worksheet->getParentOrThrow()->getUnparsedLoadedData();
         $hasUnparsedDrawing = isset($unparsedLoadedData['sheets'][$worksheet->getCodeName()]['drawingOriginalIds']);
         $chartCount = ($includeCharts) ? $worksheet->getChartCollection()->count() : 0;
         if ($chartCount == 0 && $worksheet->getDrawingCollection()->count() == 0 && !$hasUnparsedDrawing) {
@@ -1333,7 +1394,8 @@ class Worksheet extends WriterPart
     private function writeLegacyDrawing(XMLWriter $objWriter, PhpspreadsheetWorksheet $worksheet): void
     {
         // If sheet contains comments, add the relationships
-        if (count($worksheet->getComments()) > 0) {
+        $unparsedLoadedData = $worksheet->getParentOrThrow()->getUnparsedLoadedData();
+        if (count($worksheet->getComments()) > 0 || isset($unparsedLoadedData['sheets'][$worksheet->getCodeName()]['legacyDrawing'])) {
             $objWriter->startElement('legacyDrawing');
             $objWriter->writeAttribute('r:id', 'rId_comments_vml1');
             $objWriter->endElement();
@@ -1355,11 +1417,11 @@ class Worksheet extends WriterPart
 
     private function writeAlternateContent(XMLWriter $objWriter, PhpspreadsheetWorksheet $worksheet): void
     {
-        if (empty($worksheet->getParent()->getUnparsedLoadedData()['sheets'][$worksheet->getCodeName()]['AlternateContents'])) {
+        if (empty($worksheet->getParentOrThrow()->getUnparsedLoadedData()['sheets'][$worksheet->getCodeName()]['AlternateContents'])) {
             return;
         }
 
-        foreach ($worksheet->getParent()->getUnparsedLoadedData()['sheets'][$worksheet->getCodeName()]['AlternateContents'] as $alternateContent) {
+        foreach ($worksheet->getParentOrThrow()->getUnparsedLoadedData()['sheets'][$worksheet->getCodeName()]['AlternateContents'] as $alternateContent) {
             $objWriter->writeRaw($alternateContent);
         }
     }
