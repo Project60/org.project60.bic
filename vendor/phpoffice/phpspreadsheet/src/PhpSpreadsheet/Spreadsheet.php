@@ -203,6 +203,14 @@ class Spreadsheet implements JsonSerializable
      */
     private $tabRatio = 600;
 
+    /** @var Theme */
+    private $theme;
+
+    public function getTheme(): Theme
+    {
+        return $this->theme;
+    }
+
     /**
      * The workbook has macros ?
      *
@@ -476,6 +484,7 @@ class Spreadsheet implements JsonSerializable
     {
         $this->uniqueID = uniqid('', true);
         $this->calculationEngine = new Calculation($this);
+        $this->theme = new Theme();
 
         // Initialise worksheet collection and add one worksheet
         $this->workSheetCollection = [];
@@ -643,7 +652,7 @@ class Spreadsheet implements JsonSerializable
             }
         }
 
-        if ($worksheet->getParent() === null) { // @phpstan-ignore-line
+        if ($worksheet->getParent() === null) {
             $worksheet->rebindParent($this);
         }
 
@@ -871,7 +880,7 @@ class Spreadsheet implements JsonSerializable
         $countCellXfs = count($this->cellXfCollection);
 
         // copy all the shared cellXfs from the external workbook and append them to the current
-        foreach ($worksheet->getParent()->getCellXfCollection() as $cellXf) {
+        foreach ($worksheet->getParentOrThrow()->getCellXfCollection() as $cellXf) {
             $this->addCellXf(clone $cellXf);
         }
 
@@ -1653,5 +1662,27 @@ class Spreadsheet implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         throw new Exception('Spreadsheet objects cannot be json encoded');
+    }
+
+    public function resetThemeFonts(): void
+    {
+        $majorFontLatin = $this->theme->getMajorFontLatin();
+        $minorFontLatin = $this->theme->getMinorFontLatin();
+        foreach ($this->cellXfCollection as $cellStyleXf) {
+            $scheme = $cellStyleXf->getFont()->getScheme();
+            if ($scheme === 'major') {
+                $cellStyleXf->getFont()->setName($majorFontLatin)->setScheme($scheme);
+            } elseif ($scheme === 'minor') {
+                $cellStyleXf->getFont()->setName($minorFontLatin)->setScheme($scheme);
+            }
+        }
+        foreach ($this->cellStyleXfCollection as $cellStyleXf) {
+            $scheme = $cellStyleXf->getFont()->getScheme();
+            if ($scheme === 'major') {
+                $cellStyleXf->getFont()->setName($majorFontLatin)->setScheme($scheme);
+            } elseif ($scheme === 'minor') {
+                $cellStyleXf->getFont()->setName($minorFontLatin)->setScheme($scheme);
+            }
+        }
     }
 }
