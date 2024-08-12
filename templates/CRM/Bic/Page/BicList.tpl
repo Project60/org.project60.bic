@@ -69,7 +69,7 @@
 {foreach from=$countries item=country}
           <option value="{$country}" {if $country eq $default_country}selected{/if}>{$country_names.$country}</option>
 {/foreach}
-        </select>      
+        </select>
       </td>
       <td><input type="text" value="" name="nbid" id="nbid"></td>
       <td><input type="text" value="" name="bic" id="bic" style="text-transform:uppercase;"></td>
@@ -98,13 +98,13 @@
 <script type="text/javascript">
   // Empty fields when loading the page
   cleanFilters();
-  
+
   // Perform a search when a field changes
   cj("#country").change(sendQuery);
   cj("#bic").change(sendQuery);
   cj("#nbid").change(sendQuery);
   cj("#iban").change(sendIBANQuery);
-  
+
   // Empty BIC when writting NBID and viceversa
   cj("#bic").keyup(enteringBIC);
   cj("#nbid").keyup(enteringNBID);
@@ -116,7 +116,7 @@
     query['bic'] = cj("#bic").val();
     query['nbid'] = cj("#nbid").val();
     query['country'] = cj("#country").val();
-    
+
     CRM.api3('Bic', 'get', query).done(
       function(result) {
         if (result.count > 0 ) {
@@ -130,15 +130,15 @@
                         "<td>" + result.values[key].country + "</td>" +
                         "<td>" + result.values[key].nbid + "</td>" +
                       "</tr>";
-                      
+
             if (rowstyle == 'odd-row') { rowstyle = 'even-row'; } else { rowstyle = 'odd-row'; }
           }
-          
+
           cj("#results").empty();
           cj("#results").append(line);
-          
+
         } else {
-          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
+          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href="/civicrm/bicImport">update your bank list</a>.</td></tr>";
           cj("#results").empty();
           cj("#results").append(line);
         }
@@ -155,7 +155,7 @@
     query['iban'] = query['iban'].replace(reSpaceAndMinus, "");
     query['iban'] = query['iban'].toUpperCase();
 
-    
+
     CRM.api3('Bic', 'findbyiban', query).done(
       function(result) {
         if (result.count != 0 ) {
@@ -166,10 +166,10 @@
                       "<td>" + result.country + "</td>" +
                       "<td>" + result.nbid + "</td>" +
                     "</tr>";
-          
+
           cj("#iban_results").empty();
           cj("#iban_results").append(line);
-          
+
         } else {
           var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='bicImport'>update your bank list</a>.</td></tr>";
           cj("#iban_results").empty();
@@ -192,7 +192,7 @@
       sendQuery();
     }
   }
-  
+
   function enteringIBAN() {
     if(cj("#iban").val().length >= 10) {
       sendIBANQuery();
