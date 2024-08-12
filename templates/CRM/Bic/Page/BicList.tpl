@@ -14,7 +14,7 @@
 
 {crmScope extensionKey='org.project60.bic'}
 {if $show_message}
-  <div id="help">{ts}This page allows you to find banks and additional information. If you can't find the bank you're looking for, you may want to <a href="/civicrm/bicImport">update your bank list</a>.{/ts}</div>
+  <div id="help">{ts}This page allows you to find banks and additional information. If you can't find the bank you're looking for, you may want to <a href='/civicrm/bicImport'>update your bank list</a>.{/ts}</div>
 {/if}
 
 
@@ -138,7 +138,7 @@
           cj("#results").append(line);
 
         } else {
-          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href="/civicrm/bicImport">update your bank list</a>.</td></tr>";
+          var line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='/civicrm/bicImport'>update your bank list</a>.</td></tr>";
           cj("#results").empty();
           cj("#results").append(line);
         }
@@ -171,6 +171,7 @@
           cj("#iban_results").append(line);
 
         } else {
+          let line = "<tr class='odd-row'><td colspan='5'>Could not find any match with this criteria. You may want to <a href='/civicrm/bicImport'>update your bank list</a>.</td></tr>";
           cj("#iban_results").empty();
           cj("#iban_results").append(line);
         }
