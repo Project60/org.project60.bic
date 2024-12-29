@@ -60,11 +60,13 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
             // Process row
             $bank = array(
                 'value' => $data[0],
-                'name' => $data[7],
-                'label' => $data[5],
-                'description' => $data[3] . ' ' . $data[4]
+                'name' => mb_convert_encoding($data[7], 'UTF-8', 'ISO-8859-1'),
+                'label' => mb_convert_encoding($data[5], 'UTF-8', 'ISO-8859-1'),
+                'description' => mb_convert_encoding($data[3], 'UTF-8', 'ISO-8859-1') . ' '
+                               . mb_convert_encoding($data[4], 'UTF-8', 'ISO-8859-1'),
             );
-            $banks[] = $bank;
+
+          $banks[] = $bank;
         }
 
         fclose($handle);
