@@ -19,7 +19,7 @@ use CRM_Bic_ExtensionUtil as E;
 /**
  * Collection of upgrade steps.
  */
-class CRM_Bic_Upgrader extends CRM_Bic_Upgrader_Base
+class CRM_Bic_Upgrader extends CRM_Extension_Upgrader_Base
 {
 
     /**
