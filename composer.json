@@ -12,6 +12,6 @@
   "license": "AGPL-3.0",
   "require": {
     "php": "^8.0",
-    "phpoffice/phpspreadsheet": "^1.26"
+    "phpoffice/phpspreadsheet": "^1.30"
   }
 }
