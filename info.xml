@@ -8,13 +8,13 @@
     <author>B. Endres</author>
     <email>endres@systopia.de</email>
   </maintainer>
-  <releaseDate>2025-08-26</releaseDate>
-  <version>1.10.0-beta1</version>
-  <develStage>beta</develStage>
+  <releaseDate>2025-09-03</releaseDate>
+  <version>1.10.0</version>
+  <develStage>stable</develStage>
   <urls>
     <url desc="Main Extension Page">https://github.com/Project60/org.project60.bic</url>
     <url desc="Documentation">https://github.com/Project60/org.project60.bic/blob/master/README.md</url>
-    <url desc="Support">https://github.com/Project60/org.project60.bic/issues/new</url>
+    <url desc="Support">https://github.com/Project60/org.project60.bic/issues</url>
   </urls>
   <compatibility>
     <ver>5.45</ver>
