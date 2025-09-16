@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class ContainerSpecs implements CompilerPassInterface {
 
   /**
-   * Register BIC Actions
+   * {@inheritDoc}
    */
   public function process(ContainerBuilder $container) {
     if (!$container->hasDefinition('action_provider')) {
