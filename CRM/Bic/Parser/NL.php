@@ -44,8 +44,8 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     $excel_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($file_name);
 
     // Set reader options
-    $excel_reader->setReadDataOnly(true);
-    $excel_reader->setLoadSheetsOnly(["BIC-lijst"]);
+    $excel_reader->setReadDataOnly(TRUE);
+    $excel_reader->setLoadSheetsOnly(['BIC-lijst']);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -53,18 +53,20 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = array();
-    foreach($excel_rows as $excel_row) {
+    $banks[] = [];
+    foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
-      if ($skip_lines >= 0) continue;
+      if ($skip_lines >= 0) {
+        continue;
+      }
 
       // Process row
-      $bank = array(
+      $bank = [
         'value' => $excel_row[1],
         'name' => $excel_row[0],
         'label' => $excel_row[2],
-        'description' => ''
-      );
+        'description' => '',
+      ];
       $banks[] = $bank;
     }
 
@@ -78,13 +80,15 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     return $this->updateEntries(CRM_Bic_Parser_NL::$country_code, $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an IBAN.
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
+    return [
       substr($iban, 4, 4),
-    );
+    ];
   }
 
 }

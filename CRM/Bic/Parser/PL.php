@@ -32,12 +32,12 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
       return $this->createParserOutdatedError(ts("Couldn't download CSV file"));
     }
 
-    $data = array();
+    $data = [];
     $count = 0;
 
-    foreach( $lines as $line ) {
+    foreach ($lines as $line) {
       // convert to UTF8 - original encoding is IBM Latin 2 (CP852)
-      $line = iconv('CP852', 'UTF-8', $line );
+      $line = iconv('CP852', 'UTF-8', $line);
       // it's tab delimited file with a lot of extra whitespace - splitting, trimming
       $data[] = array_map('trim', str_getcsv($line, "\t"));
       $count++;
@@ -50,14 +50,14 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
     }
 
     // process lines
-    for ($i=0; $i<$count; $i++) {
+    for ($i = 0; $i < $count; $i++) {
       $key = $data[$i][4];
-      $banks[$key] = array(
+      $banks[$key] = [
         'value'       => $key,
         'name'        => $data[$i][20],
         'label'       => $data[$i][1] . ', ' . $data[$i][5],
         'description' => '',
-        );
+      ];
     }
 
     unset($data);
@@ -66,13 +66,16 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
     return $this->updateEntries('PL', $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an IBAN.
    * In Poland it's 8 digits after checksum
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
-      substr($iban, 4, 8)
-    );
+    return [
+      substr($iban, 4, 8),
+    ];
   }
+
 }

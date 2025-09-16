@@ -25,7 +25,7 @@ class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
 
   public function update() {
     // first, download the page
-    $banks = array();
+    $banks = [];
     $data = $this->downloadFile(CRM_Bic_Parser_CH::$page_url);
     if (empty($data)) {
       return $this->createParserOutdatedError(ts("Couldn't download data set"));
@@ -40,30 +40,35 @@ class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
       $address = substr($line, 184, 4) . ' ' . trim(substr($line, 194, 35));
 
       // we only want branches with BICs
-      if (empty($bic)) continue;
+      if (empty($bic)) {
+        continue;
+      }
 
       // encode names
-      $name    = mb_convert_encoding($name,    'UTF-8', 'ISO-8859-1');
+      $name    = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');
       $address = mb_convert_encoding($address, 'UTF-8', 'ISO-8859-1');
-      
-      $banks[$bc_code] = array(
+
+      $banks[$bc_code] = [
         'value'       => $bc_code,
         'name'        => $bic,
         'label'       => $name,
         'description' => $address,
-        );
+      ];
     }
 
     // // finally, update DB
     return $this->updateEntries('CH', $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an Austrian IBAN.
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
+    return [
       substr($iban, 4, 5),
-    );
-  }  
+    ];
+  }
+
 }

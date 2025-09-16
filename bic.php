@@ -2,7 +2,7 @@
 
 require_once 'bic.civix.php';
 
-use \Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Implements hook_civicrm_container()
@@ -10,9 +10,9 @@ use \Symfony\Component\DependencyInjection\ContainerBuilder;
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_container/
  */
 function bic_civicrm_container(ContainerBuilder $container) {
-    if (class_exists('\Civi\Bic\ContainerSpecs')) {
-        $container->addCompilerPass(new \Civi\Bic\ContainerSpecs());
-    }
+  if (class_exists('\Civi\Bic\ContainerSpecs')) {
+    $container->addCompilerPass(new \Civi\Bic\ContainerSpecs());
+  }
 }
 
 /**
@@ -41,9 +41,9 @@ function bic_civicrm_enable() {
  */
 function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissions) {
   // TODO: adjust to correct permission
-  $permissions['bic']['getfromiban'] = array('access CiviCRM');
-  $permissions['bic']['findbyiban']  = array('access AJAX API');
-  $permissions['bic']['get']         = array('access CiviCRM');
+  $permissions['bic']['getfromiban'] = ['access CiviCRM'];
+  $permissions['bic']['findbyiban']  = ['access AJAX API'];
+  $permissions['bic']['get']         = ['access CiviCRM'];
 }
 
 /**
@@ -53,15 +53,15 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
  *
  */
 function bic_civicrm_navigationMenu(&$menu) {
-  _bic_civix_insert_navigation_menu($menu, 'Search', array(
-    'label' => ts('Find Banks', array('domain' => 'org.project60.bic')),
+  _bic_civix_insert_navigation_menu($menu, 'Search', [
+    'label' => ts('Find Banks', ['domain' => 'org.project60.bic']),
     'name' => 'BankLists',
     'url' => 'civicrm/bicList',
     'permission' => 'access CiviContribute',
     'operator' => NULL,
     'separator' => 2,
     'active' => 1,
-  ));
+  ]);
 
   _bic_civix_navigationMenu($menu);
 }

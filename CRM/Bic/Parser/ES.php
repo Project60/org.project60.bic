@@ -29,7 +29,7 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
       return $this->createParserOutdatedError(ts("Couldn't download basic page"));
     }
     $header    = NULL;
-    $banks     = array();
+    $banks     = [];
 
     // iterate CSV records
     foreach ($data as $line) {
@@ -49,12 +49,12 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
           continue;
         }
 
-        $banks[$code] = array(
+        $banks[$code] = [
           'value'       => $code,
           'name'        => $bic,
           'label'       => $name,
           'description' => $name,
-        );
+        ];
       }
     }
 
@@ -66,19 +66,19 @@ class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
    * Extracts the National Bank Identifier from an Spanish IBAN.
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
+    return [
       substr($iban, 4, 4),
       substr($iban, 4, 8),
-    );
+    ];
   }
 
   /**
    * Returns csv line as array
    */
   private function csvLineToArray($str) {
-    $expr = "/,(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))/";
+    $expr = '/,(?=(?:[^"]*"[^"]*")*(?![^"]*"))/';
     $results = preg_split($expr, trim($str));
-    return preg_replace("/^\"(.*)\"$/", "$1", $results);
+    return preg_replace('/^"(.*)"$/', '$1', $results);
   }
 
 }

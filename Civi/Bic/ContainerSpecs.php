@@ -22,23 +22,24 @@ use CRM_Bic_ExtensionUtil as E;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class ContainerSpecs implements CompilerPassInterface
-{
+class ContainerSpecs implements CompilerPassInterface {
 
-    /**
-     * Register BIC Actions
-     */
-    public function process(ContainerBuilder $container)
-    {
-        if (!$container->hasDefinition('action_provider')) {
-            return;
-        }
-        $typeFactoryDefinition = $container->getDefinition('action_provider');
-        $typeFactoryDefinition->addMethodCall('addAction', ['LookupBIC', 'Civi\Bic\ActionProvider\Action\LookupBic', E::ts('Look up BIC for IBAN'), [
-            \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
-        ]]);
-        $typeFactoryDefinition->addMethodCall('addAction', ['VerifyBIC', 'Civi\Bic\ActionProvider\Action\VerifyBic', E::ts('Verify BIC'), [
-            \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
-        ]]);
+  /**
+   * Register BIC Actions
+   */
+  public function process(ContainerBuilder $container) {
+    if (!$container->hasDefinition('action_provider')) {
+      return;
     }
+    $typeFactoryDefinition = $container->getDefinition('action_provider');
+    $typeFactoryDefinition->addMethodCall('addAction', ['LookupBIC', 'Civi\Bic\ActionProvider\Action\LookupBic', E::ts('Look up BIC for IBAN'), [
+      \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
+    ],
+    ]);
+    $typeFactoryDefinition->addMethodCall('addAction', ['VerifyBIC', 'Civi\Bic\ActionProvider\Action\VerifyBic', E::ts('Verify BIC'), [
+      \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
+    ],
+    ]);
+  }
+
 }
