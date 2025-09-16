@@ -704,6 +704,12 @@ parameters:
 			path: Civi/Bic/ActionProvider/Action/LookupBic.php
 
 		-
+			message: '#^Method Civi\\Bic\\ContainerSpecs\:\:process\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Bic/ContainerSpecs.php
+
+		-
 			message: '#^Access to an undefined property object\:\:\$count\.$#'
 			identifier: property.notFound
 			count: 1
