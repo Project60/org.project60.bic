@@ -14,18 +14,18 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-// Include Composer's autoloader file.
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://www.abbl.lu/media/file/global/dynamic/c0f7906fec3b33783c9f73c1f6109afdbbc9a66c/Luxembourg%20Register%20of%20IBAN-BIC%20Codes-01.12.2022.xlsx';
-  static $country_code = 'LU';
+  // phpcs:disable Generic.Files.LineLength.TooLong
+  public static $page_url =
+    'https://www.abbl.lu/media/file/global/dynamic/c0f7906fec3b33783c9f73c1f6109afdbbc9a66c/Luxembourg%20Register%20of%20IBAN-BIC%20Codes-01.12.2022.xlsx';
+  // phpcs:enable
+  public static $country_code = 'LU';
 
   public function update() {
     // First, download the file
@@ -43,8 +43,8 @@ class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
     $excel_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($file_name);
 
     // Set reader options
-    $excel_reader->setReadDataOnly(true);
-    $excel_reader->setLoadSheetsOnly(["Organizations"]);
+    $excel_reader->setReadDataOnly(TRUE);
+    $excel_reader->setLoadSheetsOnly(['Organizations']);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -52,18 +52,20 @@ class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = array();
-    foreach($excel_rows as $excel_row) {
+    $banks[] = [];
+    foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
-      if ($skip_lines >= 0) continue;
+      if ($skip_lines >= 0) {
+        continue;
+      }
 
       // Process row
-      $bank = array(
+      $bank = [
         'value' => $excel_row[1],
         'name' => str_replace(' ', '', $excel_row[2]),
         'label' => $excel_row[0],
-        'description' => ''
-      );
+        'description' => '',
+      ];
       $banks[] = $bank;
     }
 
@@ -77,13 +79,15 @@ class CRM_Bic_Parser_LU extends CRM_Bic_Parser_Parser {
     return $this->updateEntries(CRM_Bic_Parser_LU::$country_code, $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an IBAN.
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
-      substr($iban, 4, 3)
-    );
+    return [
+      substr($iban, 4, 3),
+    ];
   }
 
 }

@@ -1,0 +1,944 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Bic/Page/BicList.php
+
+		-
+			message: '#^Method CRM_Bic_Page_BicList\:\:run\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Page/BicList.php
+
+		-
+			message: '#^Offset \(int\|string\) might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: CRM/Bic/Page/BicList.php
+
+		-
+			message: '#^Only booleans are allowed in an if condition, list\|null given\.$#'
+			identifier: if.condNotBoolean
+			count: 1
+			path: CRM/Bic/Page/BicList.php
+
+		-
+			message: '#^Variable \$default_country might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: CRM/Bic/Page/BicList.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: CRM/Bic/Page/Config.php
+
+		-
+			message: '#^Iterating over an object of an unknown class an\.$#'
+			identifier: class.notFound
+			count: 2
+			path: CRM/Bic/Page/Config.php
+
+		-
+			message: '#^Method CRM_Bic_Page_Config\:\:run\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Page/Config.php
+
+		-
+			message: '#^Offset \(int\|string\) might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: CRM/Bic/Page/Config.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 3
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 7
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_AT\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_AT\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_AT\:\:getDescription\(\) has parameter \$data_set with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_AT\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Parameter \#1 \$keys of function array_combine expects array\<int\|string\>, list\<string\|null\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_getcsv expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_split expects string, file given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_AT\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/AT.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be set\.$#'
+			identifier: function.strict
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Implicit array creation is not allowed \- variable \$banks does not exist\.$#'
+			identifier: variable.implicitArray
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_BE\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_BE\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_BE\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_BE\:\:\$country_code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_BE\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/BE.php
+
+		-
+			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_CH\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_CH\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_CH\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_split expects string, file given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_CH\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/CH.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_DE\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_DE\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_DE\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^NotEqual\: Condition between 1 and string\|null are falsy, please do not mix types\.$#'
+			identifier: voku.NotEqual
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Parameter \#1 \$string of function mb_convert_encoding expects array\|string, string\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_DE\:\:\$country_code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_DE\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/DE.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_ES\:\:csvLineToArray\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_ES\:\:csvLineToArray\(\) has parameter \$str with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_ES\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_ES\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_ES\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Parameter \#2 \$subject of function preg_split expects string, file given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function preg_replace expects array\<float\|int\|string\>\|string, list\<string\>\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_ES\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/ES.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Implicit array creation is not allowed \- variable \$banks does not exist\.$#'
+			identifier: variable.implicitArray
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_LU\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_LU\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_LU\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_LU\:\:\$country_code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_LU\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/LU.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Implicit array creation is not allowed \- variable \$banks does not exist\.$#'
+			identifier: variable.implicitArray
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_NL\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_NL\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_NL\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_NL\:\:\$country_code has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_NL\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/NL.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 2
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Implicit array creation is not allowed \- variable \$banks might not exist\.$#'
+			identifier: variable.implicitArray
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_PL\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_PL\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_PL\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(string\|null\)\: mixed\)\|null, ''trim'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Parameter \#1 \$string of function str_getcsv expects string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Property CRM_Bic_Parser_PL\:\:\$page_url has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Variable \$banks might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Variable \$count in empty\(\) always exists and is not falsy\.$#'
+			identifier: empty.variable
+			count: 1
+			path: CRM/Bic/Parser/PL.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$label\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$value\.$#'
+			identifier: property.notFound
+			count: 2
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Call to an undefined method object\:\:fetch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Cannot access offset ''id'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 3
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Implicit array creation is not allowed \- variable \$countries might not exist\.$#'
+			identifier: variable.implicitArray
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^In method "CRM_Bic_Parser_Parser\:\:updateEntries", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 5
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 3
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:createError\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:createError\(\) has parameter \$message with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:createParserOutdatedError\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:createParserOutdatedError\(\) has parameter \$error_message with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:downloadFile\(\) has invalid return type file\.$#'
+			identifier: class.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:downloadFile\(\) has parameter \$url with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:downloadFile\(\) should return file but returns bool\|string\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:downloadFile\(\) should return file but returns null\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:downloadFile\(\) should return file but returns string\|false\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:extractNBIDfromIBAN\(\) has parameter \$iban with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:extractNBIDfromIBAN\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:extractNBIDfromIBAN\(\) should return array but returns false\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParser\(\) has invalid return type a\.$#'
+			identifier: class.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParser\(\) has parameter \$country_code with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParser\(\) should return a but returns null\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParser\(\) should return a but returns object\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParserList\(\) has invalid return type an\.$#'
+			identifier: class.notFound
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:getParserList\(\) should return an but returns list\<string\>\.$#'
+			identifier: return.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:updateEntries\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Method CRM_Bic_Parser_Parser\:\:updateEntries\(\) has parameter \$entries with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Only booleans are allowed in a negated boolean, int given\.$#'
+			identifier: booleanNot.exprNotBoolean
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '''
+				#^PHPDoc tag @return has invalid value \(array\(   'count' \=\> nr of banks found
+				  'error' \=\> in case of an error\)\: Unexpected token "\(", expected TOKEN_HORIZONTAL_WS at offset 86 on line 4$#
+			'''
+			identifier: phpDoc.parseError
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Parameter \#3 \$value of function curl_setopt expects bool, int given\.$#'
+			identifier: argument.type
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^Variable \$countries might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: CRM/Bic/Parser/Parser.php
+
+		-
+			message: '#^In method "CRM_Bic_Upgrader\:\:enable", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			count: 2
+			path: CRM/Bic/Upgrader.php
+
+		-
+			message: '#^Method CRM_Bic_Upgrader\:\:enable\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: CRM/Bic/Upgrader.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 1
+			path: Civi/Bic/ActionProvider/Action/LookupBic.php
+
+		-
+			message: '#^Method Civi\\Bic\\ContainerSpecs\:\:process\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: Civi/Bic/ContainerSpecs.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Access to an undefined property object\:\:\$country_code\.$#'
+			identifier: property.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Argument of an invalid type an\|list\<mixed\> supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Call to an undefined method object\:\:fetch\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '''
+				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
+				In most cases this can be replaced with
+				  \$list\[\$key\] \?\? \$default
+				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
+				return NULL\.$#
+			'''
+			identifier: staticMethod.deprecated
+			count: 2
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Call to method extractNBIDfromIBAN\(\) on an unknown class a\.$#'
+			identifier: class.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Call to method update\(\) on an unknown class a\.$#'
+			identifier: class.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Cannot access offset ''id'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Cannot access offset ''values'' on array\|int\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
+			identifier: empty.notAllowed
+			count: 10
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Empty catch block\.$#'
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_findbyiban\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_get\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_get\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_getfromiban\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_stats\(\) has invalid return type a\.$#'
+			identifier: class.notFound
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_stats\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_stats\(\) should return a but returns array\.$#'
+			identifier: return.type
+			count: 3
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_update\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function civicrm_api3_bic_update\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^In function "civicrm_api3_bic_get", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			count: 2
+			path: api/v3/Bic.php
+
+		-
+			message: '#^In function "civicrm_api3_bic_getfromiban", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^In function "civicrm_api3_bic_stats", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Loose comparison via "\!\=" is not allowed\.$#'
+			identifier: notEqual.notAllowed
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Loose comparison via "\=\=" is not allowed\.$#'
+			identifier: equal.notAllowed
+			count: 3
+			path: api/v3/Bic.php
+
+		-
+			message: '''
+				#^PHPDoc tag @phpstan\-param has invalid value \(array\{
+				  country\: string, \# country code to update or 'all'
+				\} \$params\)\: Unexpected token "\#", expected type at offset 97 on line 5$#
+			'''
+			identifier: phpDoc.parseError
+			count: 1
+			path: api/v3/Bic.php
+
+		-
+			message: '#^Function bic_civicrm_alterAPIPermissions\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_alterAPIPermissions\(\) has parameter \$action with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_alterAPIPermissions\(\) has parameter \$entity with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_alterAPIPermissions\(\) has parameter \$params with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_alterAPIPermissions\(\) has parameter \$permissions with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_config\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_config\(\) has parameter \$config with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_container\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_enable\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_install\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_navigationMenu\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: bic.php
+
+		-
+			message: '#^Function bic_civicrm_navigationMenu\(\) has parameter \$menu with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: bic.php

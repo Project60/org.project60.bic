@@ -14,11 +14,13 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-require_once 'CRM/Core/Page.php';
+declare(strict_types = 1);
+
 use CRM_Bic_ExtensionUtil as E;
 
 class CRM_Bic_Page_Config extends CRM_Core_Page {
-  function run() {
+
+  public function run() {
 
     CRM_Utils_System::setTitle(E::ts('Available Banks'));
 
@@ -28,13 +30,14 @@ class CRM_Bic_Page_Config extends CRM_Core_Page {
     foreach ($countries as $country) {
       if (isset($stats['values'][$country])) {
         $total_count += $stats['values'][$country];
-      } else {
+      }
+      else {
         $stats['values'][$country] = 0;
       }
     }
 
     // gather the names
-    $country_names = array();
+    $country_names = [];
 
     $config = CRM_Core_Config::singleton();
 
@@ -56,4 +59,5 @@ class CRM_Bic_Page_Config extends CRM_Core_Page {
 
     parent::run();
   }
+
 }

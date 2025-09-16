@@ -1,17 +1,65 @@
 {
-  "name": "project60/org.project60.bic",
-  "description": "Imports and maintains a list of banks",
-  "version": "1.8.0-alpha1",
-  "type": "civicrm-module",
-  "authors": [
-    {
-      "name": "B. Endres",
-      "email": "endres@systopia.de"
+    "name": "project60/org.project60.bic",
+    "description": "Generates and maintains a list of banks",
+    "type": "civicrm-ext",
+    "license": "AGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "SYSTOPIA GmbH",
+            "email": "info@systopia.de",
+            "homepage": "https://www.systopia.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "prepend-autoloader": false,
+        "sort-packages": true,
+        "platform": {
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "civicrm/civicrm-core": ">=5.54",
+        "phpoffice/phpspreadsheet": "^1.30"
+    },
+    "autoload": {
+        "classmap": ["ComposerHelper.php"]
+    },
+    "scripts": {
+        "pre-update-cmd": [
+            "Bic\\ComposerHelper::preUpdate"
+        ],
+        "composer-phpcs": [
+            "@composer --working-dir=tools/phpcs"
+        ],
+        "composer-phpstan": [
+            "@composer --working-dir=tools/phpstan"
+        ],
+        "composer-phpunit": [
+            "@composer --working-dir=tools/phpunit"
+        ],
+        "composer-tools": [
+            "@composer-phpcs",
+            "@composer-phpstan",
+            "@composer-phpunit"
+        ],
+        "phpcs": [
+            "@php tools/phpcs/vendor/bin/phpcs"
+        ],
+        "phpcbf": [
+            "@php tools/phpcs/vendor/bin/phpcbf"
+        ],
+        "phpstan": [
+            "@php tools/phpstan/vendor/bin/phpstan -v"
+        ],
+        "phpunit": [
+            "@php tools/phpunit/vendor/bin/simple-phpunit --coverage-text"
+        ],
+        "test": [
+            "@phpcs",
+            "@phpstan",
+            "@phpunit"
+        ]
     }
-  ],
-  "license": "AGPL-3.0",
-  "require": {
-    "php": "^8.0",
-    "phpoffice/phpspreadsheet": "^1.30"
-  }
 }

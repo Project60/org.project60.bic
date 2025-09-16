@@ -14,19 +14,16 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-// Include Composer's autoloader file.
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://www.betaalvereniging.nl/wp-content/uploads/BIC-lijst-NL.xlsx';
+  public static $page_url = 'https://www.betaalvereniging.nl/wp-content/uploads/BIC-lijst-NL.xlsx';
 
-  static $country_code = 'NL';
+  public static $country_code = 'NL';
 
   public function update() {
     // First, download the file
@@ -44,8 +41,8 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     $excel_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($file_name);
 
     // Set reader options
-    $excel_reader->setReadDataOnly(true);
-    $excel_reader->setLoadSheetsOnly(["BIC-lijst"]);
+    $excel_reader->setReadDataOnly(TRUE);
+    $excel_reader->setLoadSheetsOnly(['BIC-lijst']);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -53,18 +50,20 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = array();
-    foreach($excel_rows as $excel_row) {
+    $banks[] = [];
+    foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
-      if ($skip_lines >= 0) continue;
+      if ($skip_lines >= 0) {
+        continue;
+      }
 
       // Process row
-      $bank = array(
+      $bank = [
         'value' => $excel_row[1],
         'name' => $excel_row[0],
         'label' => $excel_row[2],
-        'description' => ''
-      );
+        'description' => '',
+      ];
       $banks[] = $bank;
     }
 
@@ -78,13 +77,15 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
     return $this->updateEntries(CRM_Bic_Parser_NL::$country_code, $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an IBAN.
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
+    return [
       substr($iban, 4, 4),
-    );
+    ];
   }
 
 }

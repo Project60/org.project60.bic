@@ -14,18 +14,15 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-// Include Composer's autoloader file.
-require_once __DIR__ . '/../../../vendor/autoload.php';
-
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
-  static $country_code = 'BE';
+  public static $page_url = 'https://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
+  public static $country_code = 'BE';
 
   public function update() {
     // First, download the file
@@ -43,8 +40,8 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
     $excel_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($file_name);
 
     // Set reader options
-    $excel_reader->setReadDataOnly(true);
-    $excel_reader->setLoadSheetsOnly(["Q_FULL_LIST_XLS_REPORT"]);
+    $excel_reader->setReadDataOnly(TRUE);
+    $excel_reader->setLoadSheetsOnly(['Q_FULL_LIST_XLS_REPORT']);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
@@ -52,33 +49,37 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = array();
-    foreach($excel_rows as $excel_row) {
+    $banks[] = [];
+    foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
-      if ($skip_lines >= 0) continue;
+      if ($skip_lines >= 0) {
+        continue;
+      }
 
       // Process row
       $bic = str_replace(' ', '', $excel_row[1]);
-      if (in_array(strtolower($bic), array('nav', 'nap', '-')) || substr($bic, 0, 4)=='VRIJ') {
+      if (in_array(strtolower($bic), ['nav', 'nap', '-']) || substr($bic, 0, 4) == 'VRIJ') {
         // these are actually dummy entries
         continue;
       }
 
       // compile bank name
       $bank_name = '';
-      for ($i=2; $i<5; $i++) {
+      for ($i = 2; $i < 5; $i++) {
         $localized_name = trim($excel_row[$i]);
         if (!empty($localized_name)) {
-          if (!empty($bank_name)) $bank_name .= ' / ';
+          if (!empty($bank_name)) {
+            $bank_name .= ' / ';
+          }
           $bank_name .= $localized_name;
         }
       }
-      $bank = array(
+      $bank = [
         'value' => $excel_row[0],
         'name' => $bic,
         'label' => $bank_name,
         'description' => '',
-      );
+      ];
       $banks[] = $bank;
     }
 
@@ -92,13 +93,15 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
     return $this->updateEntries(CRM_Bic_Parser_BE::$country_code, $banks);
   }
 
-  /*
+  /**
+   *
    * Extracts the National Bank Identifier from an Belgium IBAN.
+   *
    */
   public function extractNBIDfromIBAN($iban) {
-    return array(
+    return [
       substr($iban, 4, 3),
-    );
+    ];
   }
 
 }
