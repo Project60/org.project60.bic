@@ -14,6 +14,8 @@ parameters:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/src/Framework/TestCase.php
 	scanDirectories:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/src/Framework
+		- ../action-provider/Civi/
+		- ../org.project60.sepa/CRM/
 	bootstrapFiles:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/vendor/autoload.php
 		- phpstanBootstrap.php

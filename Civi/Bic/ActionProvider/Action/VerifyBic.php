@@ -18,12 +18,11 @@ declare(strict_types = 1);
 
 namespace Civi\Bic\ActionProvider\Action;
 
+use CRM_Bic_ExtensionUtil as E;
 use Civi\ActionProvider\Action\AbstractAction;
 use Civi\ActionProvider\Parameter\ParameterBagInterface;
 use Civi\ActionProvider\Parameter\Specification;
 use Civi\ActionProvider\Parameter\SpecificationBag;
-
-use CRM_Sepa_ExtensionUtil as E;
 
 class VerifyBIC extends AbstractAction {
 

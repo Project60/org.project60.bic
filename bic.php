@@ -6,6 +6,7 @@ declare(strict_types = 1);
 require_once 'bic.civix.php';
 // phpcs:enable
 
+use CRM_Bic_ExtensionUtil as E;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 function _bic_composer_autoload(): void {
@@ -32,7 +33,6 @@ function bic_civicrm_container(ContainerBuilder $container) {
  */
 function bic_civicrm_config(&$config) {
   _bic_composer_autoload();
-
   _bic_civix_civicrm_config($config);
 }
 
@@ -40,14 +40,14 @@ function bic_civicrm_config(&$config) {
  * Implements hook_civicrm_install().
  */
 function bic_civicrm_install() {
-  return _bic_civix_civicrm_install();
+  _bic_civix_civicrm_install();
 }
 
 /**
  * Implements hook_civicrm_enable().
  */
 function bic_civicrm_enable() {
-  return _bic_civix_civicrm_enable();
+  _bic_civix_civicrm_enable();
 }
 
 /**
@@ -70,7 +70,7 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
  */
 function bic_civicrm_navigationMenu(&$menu) {
   _bic_civix_insert_navigation_menu($menu, 'Search', [
-    'label' => ts('Find Banks', ['domain' => 'org.project60.bic']),
+    'label' => E::ts('Find Banks', ['domain' => 'org.project60.bic']),
     'name' => 'BankLists',
     'url' => 'civicrm/bicList',
     'permission' => 'access CiviContribute',

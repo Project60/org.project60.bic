@@ -3,6 +3,7 @@ includes:
 
 parameters:
 	scanDirectories:
+		- ci/vendor/civicrm/civicrm-core/api/
 		- ci/vendor/civicrm/civicrm-core/CRM/
 	bootstrapFiles:
 		- ci/vendor/autoload.php
