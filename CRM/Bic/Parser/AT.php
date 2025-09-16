@@ -14,16 +14,16 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-use CRM_Bic_ExtensionUtil as E;
+declare(strict_types = 1);
 
-require_once 'CRM/Bic/Parser/Parser.php';
+use CRM_Bic_ExtensionUtil as E;
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://www.oenb.at/docroot/downloads_observ/sepa-zv-vz_gesamt.csv';
+  public static $page_url = 'https://www.oenb.at/docroot/downloads_observ/sepa-zv-vz_gesamt.csv';
 
   public function update() {
     // first, download the page
@@ -54,7 +54,9 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
         if (!in_array('Identnummer', $headers)
            || !in_array('Bankleitzahl', $headers)
            || !in_array('SWIFT-Code', $headers)) {
-          return $this->createParserOutdatedError(E::ts("Source file doesn't contain Identnummer/Bankleitzahl/SWIFT-Code"));
+          return $this->createParserOutdatedError(
+            E::ts("Source file doesn't contain Identnummer/Bankleitzahl/SWIFT-Code")
+          );
         }
       }
       else {

@@ -14,14 +14,14 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v2/public/downloads/bcbankenstamm';
+  public static $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v2/public/downloads/bcbankenstamm';
 
   public function update() {
     // first, download the page

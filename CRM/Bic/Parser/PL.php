@@ -15,7 +15,7 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Implementation of abstract class defining the basis for national bank info parsers, Polish banks
@@ -23,7 +23,7 @@ require_once 'CRM/Bic/Parser/Parser.php';
 class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
 
   // official source of Polish National Bank
-  static $page_url = 'https://ewib.nbp.pl/plewibnra?dokNazwa=plewibnra.txt';
+  public static $page_url = 'https://ewib.nbp.pl/plewibnra?dokNazwa=plewibnra.txt';
 
   public function update() {
     // first, download the page, it's a CSV file, so more convenient not to use built in method

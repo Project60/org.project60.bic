@@ -14,6 +14,7 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+declare(strict_types = 1);
 
 namespace Civi\Bic;
 
@@ -32,14 +33,24 @@ class ContainerSpecs implements CompilerPassInterface {
       return;
     }
     $typeFactoryDefinition = $container->getDefinition('action_provider');
-    $typeFactoryDefinition->addMethodCall('addAction', ['LookupBIC', 'Civi\Bic\ActionProvider\Action\LookupBic', E::ts('Look up BIC for IBAN'), [
-      \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
-    ],
-    ]);
-    $typeFactoryDefinition->addMethodCall('addAction', ['VerifyBIC', 'Civi\Bic\ActionProvider\Action\VerifyBic', E::ts('Verify BIC'), [
-      \Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG,
-    ],
-    ]);
+    $typeFactoryDefinition->addMethodCall(
+      'addAction',
+      [
+        'LookupBIC',
+        'Civi\Bic\ActionProvider\Action\LookupBic',
+        E::ts('Look up BIC for IBAN'),
+        [\Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG],
+      ]
+    );
+    $typeFactoryDefinition->addMethodCall(
+      'addAction',
+      [
+        'VerifyBIC',
+        'Civi\Bic\ActionProvider\Action\VerifyBic',
+        E::ts('Verify BIC'),
+        [\Civi\ActionProvider\Action\AbstractAction::DATA_RETRIEVAL_TAG],
+      ]
+    );
   }
 
 }

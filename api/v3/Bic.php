@@ -14,10 +14,12 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 /**
  * API call to look up BIC codes for a given IBAN
  *
- * @param 'iban'  an IBAN number
+ * @phpstan-param array{iban: string} $params
  */
 function civicrm_api3_bic_getfromiban($params) {
   if (empty($params['iban'])) {
@@ -76,7 +78,7 @@ function civicrm_api3_bic_getfromiban($params) {
  *
  * other than getfromiban, this method won't return errors, if nothing was found
  *
- * @param 'iban'  an IBAN number
+ * @phpstan-param array{iban: string} $params
  */
 function civicrm_api3_bic_findbyiban($params) {
   if (empty($params['iban']) || strlen($params['iban']) < 7) {
@@ -143,7 +145,9 @@ function civicrm_api3_bic_get($params) {
 /**
  * API call to update the stored bank data
  *
- * @param 'country'   country code to update or 'all'
+ * @phpstan-param array{
+ *   country: string, # country code to update or 'all'
+ * } $params
  */
 function civicrm_api3_bic_update($params) {
   if (empty($params['country'])) {
@@ -201,7 +205,7 @@ function civicrm_api3_bic_stats($params) {
    COUNT(value)   AS count
   FROM
    civicrm_option_value
-  WHERE 
+  WHERE
    option_group_id = $option_group_id
   GROUP BY country_code;
   ";

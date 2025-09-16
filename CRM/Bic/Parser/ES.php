@@ -14,12 +14,14 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 /**
  * Implements CRM_Bic_Parser_Parser for the Spanish case.
  */
 class CRM_Bic_Parser_ES extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://raw.githubusercontent.com/ixiam/sepa_bic/main/ES/bic.csv';
+  public static $page_url = 'https://raw.githubusercontent.com/ixiam/sepa_bic/main/ES/bic.csv';
 
   public function update() {
     // first, download the page

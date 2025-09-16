@@ -1,6 +1,7 @@
 <?php
 
-require_once 'CRM/Core/Page.php';
+declare(strict_types = 1);
+
 use CRM_Bic_ExtensionUtil as E;
 
 class CRM_Bic_Page_BicList extends CRM_Core_Page {

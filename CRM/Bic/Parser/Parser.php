@@ -14,12 +14,16 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 use CRM_Bic_ExtensionUtil as E;
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
+// phpcs:disable Generic.NamingConventions.AbstractClassNamePrefix.Missing
 abstract class CRM_Bic_Parser_Parser {
+// phpcs:enable
 
   /**
    * static function to instatiate the country parser
@@ -102,7 +106,12 @@ abstract class CRM_Bic_Parser_Parser {
     // if there are no entries given, something probably went wrong.
     // As a result, all existing entries would be deleted. To prevent this, we'll throw an exception
     if (empty($entries)) {
-      $error_message = E::ts('No bank entries could be extracted from the source for country <code>%1</code>. It is possible that the source is outdated. If you can rule out network issues, please report this here: https://github.com/Project60/org.project60.bic/issues.', [1 => $country]);
+      // phpcs:disable Generic.Files.LineLength.TooLong
+      $error_message = E::ts(
+        'No bank entries could be extracted from the source for country <code>%1</code>. It is possible that the source is outdated. If you can rule out network issues, please report this here: https://github.com/Project60/org.project60.bic/issues.',
+        [1 => $country]
+      );
+      // phpcs:enable
       CRM_Core_Session::setStatus($error_message, E::ts('Problem with %1 Data Source', [1 => $country]), 'error');
       throw new CRM_Core_Exception($error_message);
     }
@@ -210,7 +219,11 @@ abstract class CRM_Bic_Parser_Parser {
     // on other sources we use CURL
     $ch = curl_init();
     $timeout = 10;
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36');
+    curl_setopt(
+      $ch,
+      CURLOPT_USERAGENT,
+      'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'
+    );
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
@@ -246,9 +259,17 @@ abstract class CRM_Bic_Parser_Parser {
     $message = ts('<p>An error occurred while updating the bank information:<pre>%1</pre></p>', [1 => $error_message]);
     $message .= ts('<p>Please make sure your server is connected to the internet and try again.</p>');
     $message .= '<br/>';
-    $message .= ts("<p>If the problem persists, the source file (provided by the bank) might have been changed. In this case the 'Little BIC Extension' needs to be updated. Please check <a href=\"https://github.com/Project60/org.project60.bic/releases\">here</a> for a newer release.</p>");
+    // phpcs:disable Generic.Files.LineLength.TooLong
+    $message .= ts(
+      "<p>If the problem persists, the source file (provided by the bank) might have been changed. In this case the 'Little BIC Extension' needs to be updated. Please check <a href=\"https://github.com/Project60/org.project60.bic/releases\">here</a> for a newer release.</p>"
+    );
+    // phpcs:enable
     $message .= '<br/>';
-    $message .= ts("<p>If you are already running the newest version, feel free to contact us via <a href=\"mailto:endres@systopia.de\">email</a> or on <a href=\"https://github.com/Project60/org.project60.bic/issues/new\">GitHub</a>. The sooner we know about this problem, the sooner it'll be fixed.</p>");
+    // phpcs:disable Generic.Files.LineLength.TooLong
+    $message .= ts(
+      "<p>If you are already running the newest version, feel free to contact us via <a href=\"mailto:endres@systopia.de\">email</a> or on <a href=\"https://github.com/Project60/org.project60.bic/issues/new\">GitHub</a>. The sooner we know about this problem, the sooner it'll be fixed.</p>"
+    );
+    // phpcs:enable
     return $this->createError($message);
   }
 

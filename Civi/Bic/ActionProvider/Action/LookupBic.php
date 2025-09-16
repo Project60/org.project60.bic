@@ -14,6 +14,8 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
+declare(strict_types = 1);
+
 namespace Civi\Bic\ActionProvider\Action;
 
 use Civi\ActionProvider\Action\AbstractAction;
