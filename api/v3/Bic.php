@@ -130,8 +130,8 @@ function civicrm_api3_bic_get($params) {
         'bic'         => $value['name'],
         'country'     => substr($value['value'], 0, 2),
         'nbid'        => substr($value['value'], 2),
-        'description' => CRM_Utils_Array::value('description', $value),
-        'title'       => CRM_Utils_Array::value('label', $value),
+        'description' => $value['description'] ?? NULL,
+        'title'       => $value['label'] ?? NULL,
       ];
     }
   }
