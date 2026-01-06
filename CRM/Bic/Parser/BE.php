@@ -21,12 +21,12 @@ declare(strict_types = 1);
  */
 class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
-  public static $page_url = 'https://www.nbb.be/doc/be/be/protocol/r_fulllist_of_codes_current.xls';
+  public static $page_url = 'https://www.nbb.be/doc/be/be/protocol/full_list_current.xlsx';
   public static $country_code = 'BE';
 
   public function update() {
     // First, download the file
-    $file_name = sys_get_temp_dir() . '/be-banks.xls';
+    $file_name = sys_get_temp_dir() . '/be-banks.xlsx';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_BE::$page_url);
     if (empty($downloaded_file)) {
       return $this->createParserOutdatedError(ts("Couldn't download data file"));
