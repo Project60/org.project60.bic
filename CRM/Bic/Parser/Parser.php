@@ -232,7 +232,6 @@ abstract class CRM_Bic_Parser_Parser {
     $data = curl_exec($ch);
 
     $curl_errno = curl_errno($ch);
-    curl_close($ch);
 
     if (!$curl_errno) {
       return $data;
