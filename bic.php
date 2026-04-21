@@ -59,7 +59,8 @@ function bic_civicrm_alterAPIPermissions($entity, $action, &$params, &$permissio
   // TODO: adjust to correct permission
   $permissions['bic']['getfromiban'] = ['access CiviCRM'];
   $permissions['bic']['findbyiban']  = ['access AJAX API'];
-  $permissions['bic']['get']         = ['access CiviCRM'];
+  // Public reference data, no authentication needed. #93
+  $permissions['bic']['get'] = [];
 }
 
 /**
