@@ -517,7 +517,7 @@ parameters:
 			path: CRM/Bic/Parser/Parser.php
 
 		-
-			message: '#^In method "CRM_Bic_Parser_Parser\:\:updateEntries", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			message: '#^In method "CRM_Bic_Parser_Parser\:\:updateEntries", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
 			count: 1
 			path: CRM/Bic/Parser/Parser.php
 
@@ -687,7 +687,7 @@ parameters:
 			path: CRM/Bic/Parser/Parser.php
 
 		-
-			message: '#^In method "CRM_Bic_Upgrader\:\:enable", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			message: '#^In method "CRM_Bic_Upgrader\:\:enable", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
 			count: 2
 			path: CRM/Bic/Upgrader.php
 
@@ -702,12 +702,6 @@ parameters:
 			identifier: empty.notAllowed
 			count: 1
 			path: Civi/Bic/ActionProvider/Action/LookupBic.php
-
-		-
-			message: '#^Method Civi\\Bic\\ContainerSpecs\:\:process\(\) has no return type specified\.$#'
-			identifier: missingType.return
-			count: 1
-			path: Civi/Bic/ContainerSpecs.php
 
 		-
 			message: '#^Access to an undefined property object\:\:\$count\.$#'
@@ -731,18 +725,6 @@ parameters:
 			message: '#^Call to an undefined method object\:\:fetch\(\)\.$#'
 			identifier: method.notFound
 			count: 1
-			path: api/v3/Bic.php
-
-		-
-			message: '''
-				#^Call to deprecated method value\(\) of class CRM_Utils_Array\:
-				In most cases this can be replaced with
-				  \$list\[\$key\] \?\? \$default
-				with the minor difference that when \$list\[\$key\] exists and is NULL, this function will always
-				return NULL\.$#
-			'''
-			identifier: staticMethod.deprecated
-			count: 2
 			path: api/v3/Bic.php
 
 		-
@@ -835,17 +817,17 @@ parameters:
 			path: api/v3/Bic.php
 
 		-
-			message: '#^In function "civicrm_api3_bic_get", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			message: '#^In function "civicrm_api3_bic_get", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
 			count: 2
 			path: api/v3/Bic.php
 
 		-
-			message: '#^In function "civicrm_api3_bic_getfromiban", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			message: '#^In function "civicrm_api3_bic_getfromiban", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
 			count: 1
 			path: api/v3/Bic.php
 
 		-
-			message: '#^In function "civicrm_api3_bic_stats", caught "Exception" must be rethrown\. Either catch a more specific exception or add a "throw" clause in the "catch" block to propagate the exception\. More info\: http\://bit\.ly/failloud$#'
+			message: '#^In function "civicrm_api3_bic_stats", caught "Exception" must be rethrown\. Either catch a more specific exception, add a "throw" clause in the "catch" block to propagate the exception or add a "// @ignoreException" comment\.$#'
 			count: 1
 			path: api/v3/Bic.php
 
