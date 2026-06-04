@@ -42,7 +42,7 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
     // Set reader options
     $excel_reader->setReadDataOnly(TRUE);
-    $excel_reader->setLoadSheetsOnly(['BIC-lijst']);
+    $excel_reader->setLoadSheetsOnly(['BIC-lijst | BIC-list']);
 
     // Read Excel file
     $excel_object = $excel_reader->load($file_name);
