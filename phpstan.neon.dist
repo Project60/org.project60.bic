@@ -1,6 +1,3 @@
-includes:
-   - phpstan-baseline.neon
-
 parameters:
 	paths:
 		- api
@@ -17,8 +14,7 @@ parameters:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/src/Framework/TestCase.php
 	scanDirectories:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/src/Framework
-		- ../action-provider/Civi/
-		- ../org.project60.sepa/CRM/
+		- mixin
 	bootstrapFiles:
 		- tools/phpunit/vendor/bin/.phpunit/phpunit/vendor/autoload.php
 		- phpstanBootstrap.php
@@ -27,9 +23,13 @@ parameters:
 		- Civi\Core\Event\GenericHookEvent
 		- CRM_Core_Config
 		- CRM_Core_DAO
+		- civicrm_api3
 	earlyTerminatingMethodCalls:
+		CRM_Utils_System:
+			- civiExit
+			- redirect
 		CRM_Queue_Runner:
-		  - runAllViaWeb
+			- runAllViaWeb
 	checkTooWideReturnTypesInProtectedAndPublicMethods: true
 	checkUninitializedProperties: true
 	checkMissingCallableSignature: true
