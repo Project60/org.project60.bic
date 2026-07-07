@@ -20,7 +20,7 @@
     <ver>5.76</ver>
   </compatibility>
   <phpCompatibility>
-    <ver>8.4</ver>
+    <ver>8.5</ver>
   </phpCompatibility>
   <phpIncompatibility>
     <ver>7.4</ver>
