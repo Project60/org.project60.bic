@@ -28,7 +28,7 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * static function to instatiate the country parser
    *
-   * @return a parser object
+   * return a parser object TODO: fix the object type for phpstan
    */
   public static function getParser($country_code) {
     // since class_exists() also causes fatal errors, we'll just try to find the .php file
@@ -45,20 +45,21 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * static function to get all known parsers
    *
-   * @return an array of countries
+   * return an array of countries
    */
   public static function getParserList() {
     $dir = dirname(__FILE__);
     $iterator = new DirectoryIterator($dir);
+    $countries = [];
 
     // Iterates through the CRM/Bic/Parser folder looking for country files
     foreach ($iterator as $fileinfo) {
       $file_name = $fileinfo->getFilename();
       $file_name_parts = explode('.', $file_name);
 
-      if ((end($file_name_parts) == 'php') &&
-          (strlen(reset($file_name_parts)) == 2) &&
-          (reset($file_name_parts) != 'Parser')) {
+      if ('php' === (end($file_name_parts)) &&
+          (2 === strlen(reset($file_name_parts))) &&
+          ('Parser' !== reset($file_name_parts))) {
         $countries[] = reset($file_name_parts);
       }
     }
@@ -69,7 +70,7 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * Triggers the parser instance to prepare a full update
    *
-   * @return array(   'count' => nr of banks found
+   * @return array (   'count' => nr of banks found
    *   'error' => in case of an error
    *
    */
@@ -78,7 +79,7 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * Extracts the national bank ID from a given IBAN
    *
-   * @return array list of NBIDs to look for
+   * return array list of NBIDs to look for
    */
   public function extractNBIDfromIBAN($iban) {
     /*
@@ -121,6 +122,7 @@ abstract class CRM_Bic_Parser_Parser {
       $option_group_id = (int) $option_group['id'];
     }
     catch (Exception $e) {
+      // @ignoreException
       return $this->createError('OptionGroup not found. Reinstall extension!');
     }
 
@@ -144,6 +146,7 @@ abstract class CRM_Bic_Parser_Parser {
     AND
       option_group_id = $option_group_id;";
     $current_data = [];
+    /** @var \CRM_Core_DAO $query */
     $query = CRM_Core_DAO::executeQuery($current_data_query);
     while ($query->fetch()) {
       $current_data[$query->value] = [
@@ -175,10 +178,10 @@ abstract class CRM_Bic_Parser_Parser {
       if (isset($current_data[$bank['value']])) {
         $oldbank = $current_data[$bank['value']];
         // it already exists -> update?
-        if ($bank['value'] != $oldbank['value']
-            || $bank['name'] != $oldbank['name']
-            || $bank['label'] != $oldbank['label']
-            || $bank['description'] != $oldbank['description']) {
+        if ($bank['value'] !== $oldbank['value']
+            || $bank['name'] !== $oldbank['name']
+            || $bank['label'] !== $oldbank['label']
+            || $bank['description'] !== $oldbank['description']) {
 
           // this has changed... UPDATE
           $bank['id'] = $oldbank['id'];
@@ -208,10 +211,10 @@ abstract class CRM_Bic_Parser_Parser {
   /**
    * Download a file and return as a string
    *
-   * @return file content or NULL on error
+   * return file content or NULL on error
    */
   protected function downloadFile($url) {
-    if (substr($url, 0, 1) == '/') {
+    if ('/' === substr($url, 0, 1)) {
       // local files we just read
       return file_get_contents($url);
     }

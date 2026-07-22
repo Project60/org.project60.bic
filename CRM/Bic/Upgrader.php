@@ -32,6 +32,7 @@ class CRM_Bic_Upgrader extends CRM_Extension_Upgrader_Base {
       $option_group = civicrm_api3('OptionGroup', 'getsingle', ['name' => 'bank_list']);
     }
     catch (Exception $e) {
+      // @ignoreException
       // group's not there yet, create:
       try {
         $option_group = civicrm_api3('OptionGroup', 'create', [
@@ -42,6 +43,7 @@ class CRM_Bic_Upgrader extends CRM_Extension_Upgrader_Base {
         ]);
       }
       catch (Exception $create_ex) {
+        // @ignoreException
         // TODO: more info?
         Civi::log()->warning("Couldn't create 'bank_list' OptionGroup.");
       }

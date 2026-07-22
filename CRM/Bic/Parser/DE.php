@@ -54,7 +54,7 @@ class CRM_Bic_Parser_DE extends CRM_Bic_Parser_Parser {
       if (empty($data[7])) {
         continue;
       }
-      if ($data[1] != 1) {
+      if ($data[1] !== 1) {
         continue;
       }
 
