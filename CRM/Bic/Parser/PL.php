@@ -34,6 +34,7 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
 
     $data = [];
     $count = 0;
+    $banks = [];
 
     foreach ($lines as $line) {
       // convert to UTF8 - original encoding is IBM Latin 2 (CP852)
@@ -45,7 +46,7 @@ class CRM_Bic_Parser_PL extends CRM_Bic_Parser_Parser {
 
     unset($lines);
 
-    if (empty($count)) {
+    if (0 === $count) {
       return $this->createParserOutdatedError(ts("Couldn't find any bank information in the data source"));
     }
 

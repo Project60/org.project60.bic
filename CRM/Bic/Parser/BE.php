@@ -49,7 +49,7 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = [];
+    $banks = [];
     foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
       if ($skip_lines >= 0) {
@@ -58,7 +58,7 @@ class CRM_Bic_Parser_BE extends CRM_Bic_Parser_Parser {
 
       // Process row
       $bic = str_replace(' ', '', $excel_row[1]);
-      if (in_array(strtolower($bic), ['nav', 'nap', '-']) || substr($bic, 0, 4) == 'VRIJ') {
+      if (in_array(strtolower($bic), ['nav', 'nap', '-'], TRUE) || 'VRIJ' === substr($bic, 0, 4)) {
         // these are actually dummy entries
         continue;
       }

@@ -1,7 +1,7 @@
 site_name: Little BIC extension
 site_description: Generates and maintains a list of banks
 site_author: B. Endres
-site_url: https://github.com/Project60/org.project60.bic
+repo_url: https://github.com/Project60/org.project60.bic
 
 theme:
   name: material
@@ -15,7 +15,7 @@ markdown_extensions:
   - def_list
   - codehilite
   - toc:
-      permalink: True
+      permalink: true
   - pymdownx.superfences
   - pymdownx.inlinehilite
   - pymdownx.tilde

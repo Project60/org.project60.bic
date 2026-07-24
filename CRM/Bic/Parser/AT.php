@@ -29,7 +29,7 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
     // first, download the page
     $raw = $this->downloadFile(CRM_Bic_Parser_AT::$page_url);
     $data = preg_split('/\r\n|\r|\n/', $raw);
-    if (empty($data)) {
+    if ($data === FALSE) {
       return $this->createParserOutdatedError(E::ts("Couldn't download source "));
     }
 
@@ -51,9 +51,9 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
         // first 'real' line should be header
         $headers = $fields;
 
-        if (!in_array('Identnummer', $headers)
-           || !in_array('Bankleitzahl', $headers)
-           || !in_array('SWIFT-Code', $headers)) {
+        if (!in_array('Identnummer', $headers, TRUE)
+           || !in_array('Bankleitzahl', $headers, TRUE)
+           || !in_array('SWIFT-Code', $headers, TRUE)) {
           return $this->createParserOutdatedError(
             E::ts("Source file doesn't contain Identnummer/Bankleitzahl/SWIFT-Code")
           );
@@ -64,10 +64,9 @@ class CRM_Bic_Parser_AT extends CRM_Bic_Parser_Parser {
         $data_set = array_combine($headers, $fields);
 
         // we will only process banks with a BIC/SWIFT Code
-        if (empty($data_set['Identnummer'])
-            || empty($data_set['Bankleitzahl'])
-            || empty($data_set['SWIFT-Code'])
-        ) {
+        if (!isset($data_set['Identnummer']) || $data_set['Identnummer'] === ''
+          || !isset($data_set['Bankleitzahl']) || $data_set['Bankleitzahl'] === ''
+          || !isset($data_set['SWIFT-Code']) || $data_set['SWIFT-Code'] === '') {
           continue;
         }
 

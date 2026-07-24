@@ -6,7 +6,7 @@ use CRM_Bic_ExtensionUtil as E;
 
 class CRM_Bic_Page_BicList extends CRM_Core_Page {
 
-  public function run() {
+  public function run() : void {
     // Prepares variables for being sent to Smarty
 
     CRM_Utils_System::setTitle(E::ts('Find Banks'));
@@ -14,13 +14,17 @@ class CRM_Bic_Page_BicList extends CRM_Core_Page {
     //Only show countries with attached information
     $countries = NULL;
     $stats = civicrm_api3('Bic', 'stats');
+    if (!is_array($stats)) {
+      throw new CRM_Core_Exception('Unexpected result from Bic.stats API: array expected');
+    }
     foreach ($stats['values'] as $country => $count) {
       $countries[] = $country;
     }
 
     // Get country names
     $country_names = NULL;
-    if ($countries) {
+    $default_country = '';
+    if ($countries !== NULL) {
 
       $config = CRM_Core_Config::singleton();
 
@@ -38,6 +42,7 @@ class CRM_Bic_Page_BicList extends CRM_Core_Page {
 
     // Sends variables to Smarty
     $this->assign('countries', $countries);
+
     $this->assign('country_names', $country_names);
     $this->assign('default_country', $default_country);
     $this->assign('show_message', TRUE);

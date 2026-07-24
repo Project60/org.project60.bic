@@ -50,7 +50,7 @@ class CRM_Bic_Parser_NL extends CRM_Bic_Parser_Parser {
 
     // Process Excel data
     $skip_lines = 2;
-    $banks[] = [];
+    $banks = [];
     foreach ($excel_rows as $excel_row) {
       $skip_lines -= 1;
       if ($skip_lines >= 0) {

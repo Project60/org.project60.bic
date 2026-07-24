@@ -33,7 +33,7 @@ function civicrm_api3_bic_getfromiban($params) {
   }
 
   $nbids = $parser->extractNBIDfromIBAN($params['iban']);
-  if ($nbids == FALSE) {
+  if (FALSE === $nbids) {
     return civicrm_api3_create_error("IBAN parsing not supported for country '$country'!");
   }
 
@@ -43,11 +43,11 @@ function civicrm_api3_bic_getfromiban($params) {
       // check if all entities are the same
       $candidate = NULL;
       foreach ($search['values'] as $entity) {
-        if ($candidate == NULL) {
+        if (NULL === $candidate) {
           $candidate = $entity;
         }
         else {
-          if ($candidate != $entity) {
+          if ($candidate !== $entity) {
             // two different matches found!
             Civi::log()->debug("LittleBIC: contradicting bank records detected: {$country}{$nbid}");
             return civicrm_api3_create_error("Contradicting bank records detected: {$country}{$nbid}");
@@ -66,6 +66,7 @@ function civicrm_api3_bic_getfromiban($params) {
 
     }
     catch (Exception $e) {
+      // @ignoreException
       // not found? no problem, just keep looking
     }
   }
@@ -119,6 +120,7 @@ function civicrm_api3_bic_get($params) {
     $query['option_group_id'] = $option_group['id'];
   }
   catch (Exception $e) {
+    // @ignoreException
     return civicrm_api3_create_error('OptionGroup not found. Reinstall extension!');
   }
 
@@ -136,6 +138,7 @@ function civicrm_api3_bic_get($params) {
     }
   }
   catch (Exception $e) {
+    // @ignoreException
     return civicrm_api3_create_error('Entity does not exist.');
   }
 
@@ -146,7 +149,7 @@ function civicrm_api3_bic_get($params) {
  * API call to update the stored bank data
  *
  * @phpstan-param array{
- *   country: string, # country code to update or 'all'
+ *   country: string,
  * } $params
  */
 function civicrm_api3_bic_update($params) {
@@ -155,7 +158,7 @@ function civicrm_api3_bic_update($params) {
   }
 
   $countries = [];
-  if ($params['country'] == 'all') {
+  if ('all' === $params['country']) {
     $countries = CRM_Bic_Parser_Parser::getParserList();
   }
   else {
@@ -184,13 +187,14 @@ function civicrm_api3_bic_update($params) {
 /**
  * API call get stats about the stored banks
  *
- * @return a array of item_count per country
+ * return a array of item_count per country
  */
 function civicrm_api3_bic_stats($params) {
   try {
     $option_group = civicrm_api3('OptionGroup', 'getsingle', ['name' => 'bank_list']);
   }
   catch (Exception $e) {
+    // @ignoreException
     return civicrm_api3_create_error('OptionGroup not found. Reinstall extension!');
   }
 
@@ -210,6 +214,7 @@ function civicrm_api3_bic_stats($params) {
   GROUP BY country_code;
   ";
   $result = [];
+  /** @var \CRM_Core_DAO $query_result */
   $query_result = CRM_Core_DAO::executeQuery($query);
   while ($query_result->fetch()) {
     $result[$query_result->country_code] = (int) $query_result->count;

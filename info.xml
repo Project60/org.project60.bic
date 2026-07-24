@@ -17,10 +17,10 @@
     <url desc="Support">https://github.com/Project60/org.project60.bic/issues</url>
   </urls>
   <compatibility>
-    <ver>5.54</ver>
+    <ver>5.76</ver>
   </compatibility>
   <phpCompatibility>
-    <ver>8.0</ver>
+    <ver>8.5</ver>
   </phpCompatibility>
   <phpIncompatibility>
     <ver>7.4</ver>
