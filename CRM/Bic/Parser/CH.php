@@ -21,49 +21,58 @@ declare(strict_types = 1);
  */
 class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
 
-  public static $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v2/public/downloads/bcbankenstamm';
+  public static string $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v3/bankmaster_V3.csv';
+
+  public static string $country_code = 'CH';
 
   public function update() {
-    // first, download the page
-    $banks = [];
-    $data = $this->downloadFile(CRM_Bic_Parser_CH::$page_url);
-    if (empty($data)) {
-      return $this->createParserOutdatedError(ts("Couldn't download data set"));
+    // First, download the file
+    $file_name = sys_get_temp_dir() . '/CH-banks.csv';
+    $downloaded_file = $this->downloadFile(CRM_Bic_Parser_CH::$page_url);
+
+    if (empty($downloaded_file)) {
+      return $this->createParserOutdatedError(ts("Couldn't download data file"));
     }
 
-    $lines = preg_split('/\n/', $data);
+    // store file
+    file_put_contents($file_name, $downloaded_file);
+    unset($downloaded_file);
 
-    foreach ($lines as $line) {
-      $bc_code = substr($line, 16, 5);
-      $bic     = trim(substr($line, 284, 11));
-      $name    = trim(substr($line, 54, 60));
-      $address = substr($line, 184, 4) . ' ' . trim(substr($line, 194, 35));
+    // Open and read CSV file
+    if (($handle = fopen($file_name, 'r')) === FALSE) {
+      return $this->createParserOutdatedError(ts("Couldn't open data file"));
+    }
 
-      // we only want branches with BICs
-      if (empty($bic)) {
+    // Skip header row
+    fgetcsv($handle, 1000, ';');
+
+    $banks = [];
+    while (($data = fgetcsv($handle, 1000, ';')) !== FALSE) {
+      // skip entries with no bic
+      if (empty($data[14])) {
         continue;
       }
 
-      // encode names
-      $name    = mb_convert_encoding($name, 'UTF-8', 'ISO-8859-1');
-      $address = mb_convert_encoding($address, 'UTF-8', 'ISO-8859-1');
-
-      $banks[$bc_code] = [
-        'value'       => $bc_code,
-        'name'        => $bic,
-        'label'       => $name,
-        'description' => $address,
+      // Process row
+      $bank = [
+        'value' => $data[0],
+        'name' => $data[14],
+        'label' => $data[8],
+        'description' => $data[8],
       ];
+
+      $banks[] = $bank;
     }
 
-    // // finally, update DB
-    return $this->updateEntries('CH', $banks);
+    fclose($handle);
+    unlink($file_name);
+
+    // Finally, update DB
+    return $this->updateEntries(CRM_Bic_Parser_CH::$country_code, $banks);
   }
 
   /**
-   *
-   * Extracts the National Bank Identifier from an Austrian IBAN.
-   *
+   * Extracts the National Bank Identifier from an IBAN.
    */
   public function extractNBIDfromIBAN($iban) {
     return [

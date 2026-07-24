@@ -121,12 +121,6 @@ parameters:
 			path: CRM/Bic/Parser/BE.php
 
 		-
-			message: '#^Argument of an invalid type list\<string\>\|false supplied for foreach, only iterables are supported\.$#'
-			identifier: foreach.nonIterable
-			count: 1
-			path: CRM/Bic/Parser/CH.php
-
-		-
 			message: '#^Construct empty\(\) is not allowed\. Use more strict comparison\.$#'
 			identifier: empty.notAllowed
 			count: 2
@@ -147,12 +141,6 @@ parameters:
 		-
 			message: '#^Method CRM_Bic_Parser_CH\:\:update\(\) return type has no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: CRM/Bic/Parser/CH.php
-
-		-
-			message: '#^Property CRM_Bic_Parser_CH\:\:\$page_url has no type specified\.$#'
-			identifier: missingType.property
 			count: 1
 			path: CRM/Bic/Parser/CH.php
 
