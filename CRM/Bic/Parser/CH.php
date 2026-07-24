@@ -14,25 +14,24 @@
 | written permission from the original author(s).        |
 +--------------------------------------------------------*/
 
-require_once 'CRM/Bic/Parser/Parser.php';
+declare(strict_types = 1);
 
 /**
  * Abstract class defining the basis for national bank info parsers
  */
 class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
 
-  static $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v3/bankmaster_V3.csv';
+  public static string $page_url = 'https://api.six-group.com/api/epcd/bankmaster/v3/bankmaster_V3.csv';
 
-  static $country_code = 'CH';
+  public static string $country_code = 'CH';
 
-  public function update()
-  {
+  public function update() {
     // First, download the file
     $file_name = sys_get_temp_dir() . '/CH-banks.csv';
     $downloaded_file = $this->downloadFile(CRM_Bic_Parser_CH::$page_url);
 
     if (empty($downloaded_file)) {
-        return $this->createParserOutdatedError(ts("Couldn't download data file"));
+      return $this->createParserOutdatedError(ts("Couldn't download data file"));
     }
 
     // store file
@@ -40,25 +39,27 @@ class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
     unset($downloaded_file);
 
     // Open and read CSV file
-    if (($handle = fopen($file_name, "r")) === false) {
-        return $this->createParserOutdatedError(ts("Couldn't open data file"));
+    if (($handle = fopen($file_name, 'r')) === FALSE) {
+      return $this->createParserOutdatedError(ts("Couldn't open data file"));
     }
 
     // Skip header row
     fgetcsv($handle, 1000, ';');
 
     $banks = [];
-    while (($data = fgetcsv($handle, 1000, ';')) !== false) {
+    while (($data = fgetcsv($handle, 1000, ';')) !== FALSE) {
       // skip entries with no bic
-      if (empty($data[14])) continue;
+      if (empty($data[14])) {
+        continue;
+      }
 
       // Process row
-      $bank = array(
+      $bank = [
         'value' => $data[0],
         'name' => $data[14],
         'label' => $data[8],
         'description' => $data[8],
-      );
+      ];
 
       $banks[] = $bank;
     }
@@ -70,13 +71,13 @@ class CRM_Bic_Parser_CH extends CRM_Bic_Parser_Parser {
     return $this->updateEntries(CRM_Bic_Parser_CH::$country_code, $banks);
   }
 
-  /*
+  /**
    * Extracts the National Bank Identifier from an IBAN.
    */
-  public function extractNBIDfromIBAN($iban)
-  {
-      return array(
-          substr($iban, 4, 5),
-      );
+  public function extractNBIDfromIBAN($iban) {
+    return [
+      substr($iban, 4, 5),
+    ];
   }
+
 }
