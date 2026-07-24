@@ -1,5 +1,5 @@
 {
-    "name": "systopia/org.project60.bic",
+    "name": "project60/org.project60.bic",
     "description": "Generates and maintains a list of banks",
     "type": "civicrm-ext",
     "license": "AGPL-3.0-or-later",
